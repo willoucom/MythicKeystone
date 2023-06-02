@@ -1,0 +1,16 @@
+## Interface: 100100
+## Title: MythicKeystone
+## Version: @project-version@
+## Notes: Mythic Keystone
+## OptionalDeps: Ace3
+## SavedVariables: MythicKeystoneDB
+## RequiredDeps: LibMythicKeystone
+## IconTexture: 525134
+## X-Curse-Project-ID: 869300
+
+#@no-lib-strip@
+libs\LibStub\LibStub.lua
+#@end-no-lib-strip@
+
+Core.lua
+Debug.lua
