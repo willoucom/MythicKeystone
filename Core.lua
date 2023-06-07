@@ -113,11 +113,6 @@ GroupRightText:SetJustifyH("LEFT")
 GroupRightText:SetJustifyV("TOP")
 GroupRightText:SetText("---")
 
-
-
-
-
-
 function Addon.UpdateAltsFrame()
     local list = Addon.AltKeys or {}
     local sorted_table = {}
