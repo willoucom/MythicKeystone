@@ -44,6 +44,7 @@ LibMythicKeystoneDebug:SetScript("OnEvent", function(self, event, addOnName, ...
             Addon.UpdateGroupFrame()
             Addon.UpdateAltsFrame()
         end)
+
         buttons[1] = CreateFrame("Button", nil, Debug, "UIPanelButtonTemplate")
         buttons[1]:SetText("BG")
         buttons[1]:SetScript("OnClick", function(self, button)

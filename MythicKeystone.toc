@@ -13,4 +13,5 @@ libs\LibStub\LibStub.lua
 #@end-no-lib-strip@
 
 Core.lua
+AutoKeystone.lua
 Debug.lua
