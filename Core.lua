@@ -228,17 +228,89 @@ function Addon.UpdateGroupFrame()
     GroupRightText:SetText(textright)
 end
 
-function Addon.updateAll()
-    Addon.Mykey = lib.getMyKeystone()
-    Addon.AltKeys = lib.getAltsKeystone()
-    Addon.PartyKeys = lib.getPartyKeystone()
-    Addon.UpdateGroupFrame()
-    Addon.UpdateAltsFrame()
+local function formatText(obj)
+    local name = obj["name"] or ""
+    name = string.sub(name, 1, 12) -- cut long name
+    local color = "|cFFFFFFF"
+    if obj["class"] ~= "" then
+        color = C_ClassColor.GetClassColor(obj["class"]):GenerateHexColorMarkup()
+        name = color .. name .. "|r"
+    end
+
+    local keylevel = obj["current_keylevel"]
+    -- not so proud of this
+    if keylevel < 10 then keylevel = "      "..keylevel
+    else keylevel = "    "..keylevel end
+    -- returns formated string
+    return string.format("%s %s", keylevel, name)
+end
+
+local function tableGroupByKeyLevel(obj)
+    local keys = {}
+    for _, key in pairs(obj) do
+        keys[key["current_key"]] = keys[key["current_key"]] or {}
+        local tmp = { key["fullname"], key["current_keylevel"] }
+        tinsert(keys[key["current_key"]], tmp)
+    end
+
+    for keyid in pairs(keys) do
+        local tmptable = keys[keyid]
+        table.sort(tmptable, function(a, b) return a[2] > b[2] end)
+    end
+    return keys
+end
+
+function Addon.updateGuildFrame()
+    local text = ""
+    guild["text"]:SetHeight(5)
+    if Addon.GuildKeys then
+        local keys = tableGroupByKeyLevel(Addon.GuildKeys) or {}
+        for keyid in pairs(keys) do
+            local keystoneMapName = keyid and C_ChallengeMode.GetMapUIInfo(keyid) or " "
+            text = text .. "  " .. keystoneMapName .. "\n"
+            guild["text"]:SetHeight(guild["text"]:GetHeight() + guild["text"]:GetLineHeight())
+            for char in pairs(keys[keyid]) do
+                char = keys[keyid][char][1]
+                text = text .. "  " .. formatText(Addon.GuildKeys[char]) .. "\n"
+                guild["text"]:SetHeight(guild["text"]:GetHeight() + guild["text"]:GetLineHeight())
+            end
+        end
+    end
+    guild["text"]:SetText(text)
+end
+
+function Addon.getTableKeys(t)
+    local keys = {}
+    for key, _ in pairs(t) do
+        table.insert(keys, key)
+    end
+    return keys
 end
 
 local f = CreateFrame("frame")
+local throttle = 0
 f:SetScript("OnUpdate", function(self, elap)
-    Addon.updateAll()
+    if PVEFrame:IsShown() then
+        local oldparty = Addon.PartyKeys
+        Addon.PartyKeys = lib.getPartyKeystone()
+        if table.concat(Addon.getTableKeys(Addon.PartyKeys)) ~= table.concat(Addon.getTableKeys(oldparty)) then
+            Addon.UpdateGroupFrame()
+        end
+        if RaiderIO_ProfileTooltip then
+            RaiderIO_ProfileTooltip:SetPoint("TOPLEFT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 15, 0)
+        end
+        if throttle == 0 then
+            Addon.AltKeys = lib.getAltsKeystone()
+            Addon.GuildKeys = lib.getGuildKeystone()
+            Addon.UpdateAltsFrame()
+            Addon.updateGuildFrame()
+            Addon.UpdateGroupFrame()
+            throttle = 100
+        end
+        throttle = throttle - 1
+    else
+        throttle = 0
+    end
 end)
 
 
