@@ -6,10 +6,8 @@ if not lib then return end
 Addon.Name = GetAddOnMetadata(ADDON, "Title")
 Addon.ShortName = GetAddOnMetadata(ADDON, "X-Short-Name") or string.sub(ADDON, 1, 16)
 Addon.Version = GetAddOnMetadata(ADDON, "X-Packaged-Version")
-Addon.Modules = {}
 Addon.AltKeys = {}
 Addon.PartyKeys = {}
-Addon.Mykey = {}
 
 
 -- Create frame to hold Alts informations
@@ -130,7 +128,7 @@ function Addon.UpdateAltsFrame()
         -- left column
         local name = list[key]["fullname"] or ""
         if string.find(name, "-") then
-            name,_ = string.split("-", name)
+            name, _ = string.split("-", name)
         end
         name = string.sub(name, 1, 12) -- cut long name
 
@@ -170,7 +168,7 @@ function Addon.UpdateGroupFrame()
         -- left column
         local name = char or ""
         if string.find(name, "-") then
-            name,_ = string.split("-", name)
+            name, _ = string.split("-", name)
         end
         name = string.sub(name, 1, 12) -- cut long name
 
