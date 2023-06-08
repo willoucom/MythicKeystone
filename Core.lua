@@ -19,10 +19,6 @@ AltsFrame:SetAlpha(.90)
 AltsFrame:SetPoint("BOTTOMLEFT", 0, -200)
 -- Make frame almost beautiful
 AltsFrame:SetBackdrop(BACKDROP_TUTORIAL_16_16) ---@diagnostic disable-line: param-type-mismatch
-AltsFrame:SetBackdropBorderColor(TOOLTIP_DEFAULT_COLOR:GetRGB()) ---@diagnostic disable-line: param-type-mismatch
-AltsFrame:SetBackdropColor(TOOLTIP_DEFAULT_BACKGROUND_COLOR:GetRGB()) ---@diagnostic disable-line: param-type-mismatch
-AltsFrame:SetBackdropColor(0, 0, 0, 1) ---@diagnostic disable-line: param-type-mismatch
-AltsFrame:ApplyBackdrop()
 
 -- Create the scrolling parent frame and size it to fit inside the texture
 AltsFrame.ScrollFrame = AltsFrame.ScrollFrame or CreateFrame("ScrollFrame", nil, AltsFrame, "UIPanelScrollFrameTemplate")
@@ -72,13 +68,9 @@ local GroupFrame = CreateFrame("Frame", nil, PVEFrame, "BackdropTemplate")
 GroupFrame:SetWidth(280)
 GroupFrame:SetHeight(150)
 GroupFrame:SetAlpha(.90)
-GroupFrame:SetPoint("BOTTOMLEFT", 290, -200)
+GroupFrame:SetPoint("BOTTOMLEFT", 280, -200)
 -- Make frame almost beautiful
 GroupFrame:SetBackdrop(BACKDROP_TUTORIAL_16_16) ---@diagnostic disable-line: param-type-mismatch
-GroupFrame:SetBackdropBorderColor(TOOLTIP_DEFAULT_COLOR:GetRGB()) ---@diagnostic disable-line: param-type-mismatch
-GroupFrame:SetBackdropColor(TOOLTIP_DEFAULT_BACKGROUND_COLOR:GetRGB()) ---@diagnostic disable-line: param-type-mismatch
-GroupFrame:SetBackdropColor(0, 0, 0, 1) ---@diagnostic disable-line: param-type-mismatch
-GroupFrame:ApplyBackdrop()
 
 local Group = GroupFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
 Group:SetPoint("TOPLEFT", 5, -5)
