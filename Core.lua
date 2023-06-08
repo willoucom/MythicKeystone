@@ -10,6 +10,7 @@ Addon.AltKeys = {}
 Addon.PartyKeys = {}
 
 
+-------------------------------------------
 -- Create frame to hold Alts informations
 local AltsFrame = CreateFrame("Frame", nil, PVEFrame, "BackdropTemplate")
 -- frame size
@@ -62,6 +63,8 @@ AltsRightText:SetJustifyH("LEFT")
 AltsRightText:SetJustifyV("TOP")
 AltsRightText:SetText("---")
 
+
+-------------------------------------------
 -- Create frame to hold Group informations
 local GroupFrame = CreateFrame("Frame", nil, PVEFrame, "BackdropTemplate")
 -- frame size
@@ -102,6 +105,43 @@ GroupRightText:SetHeight(150)
 GroupRightText:SetJustifyH("LEFT")
 GroupRightText:SetJustifyV("TOP")
 GroupRightText:SetText("---")
+
+
+-------------------------------------------
+-- Create frame to hold Guild informations
+local GuildFrame = CreateFrame("Frame", nil, PVEFrame, "BackdropTemplate")
+-- frame size
+GuildFrame:SetWidth(280)
+GuildFrame:SetHeight(PVEFrame:GetHeight())
+GuildFrame:SetAlpha(.90)
+GuildFrame:SetPoint("TOPRIGHT", PVEFrame:GetWidth() - GuildFrame:GetWidth(), 0)
+-- Make frame almost beautiful
+GuildFrame:SetBackdrop(BACKDROP_TUTORIAL_16_16) ---@diagnostic disable-line: param-type-mismatch
+
+-- Create the scrolling parent frame and size it to fit inside the texture
+GuildFrame.ScrollFrame = GuildFrame.ScrollFrame or
+    CreateFrame("ScrollFrame", nil, GuildFrame, "UIPanelScrollFrameTemplate")
+GuildFrame.ScrollFrame:SetPoint("TOPLEFT", 0, -24)
+GuildFrame.ScrollFrame:SetPoint("BOTTOMRIGHT", -27, 4)
+
+-- Create the scrolling child frame, set its width to fit, and give it an arbitrary minimum height (such as 1)
+local GuildScrollChild = CreateFrame("Frame")
+GuildFrame.ScrollFrame:SetScrollChild(GuildScrollChild)
+GuildScrollChild:SetWidth(GuildFrame:GetWidth())
+GuildScrollChild:SetHeight(1)
+local guild = {}
+guild["title"] = GuildFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
+guild["title"]:SetPoint("TOPLEFT", 5, -5)
+guild["title"]:SetText("Guild Keystones")
+
+guild["text"] = GuildScrollChild:CreateFontString("ARTWORK", nil, "GameFontWhite")
+guild["text"]:SetTextColor(255, 255, 255)
+guild["text"]:SetPoint("TOPLEFT", 10, 0)
+guild["text"]:SetWidth(GuildFrame:GetWidth())
+guild["text"]:SetHeight(50)
+guild["text"]:SetJustifyH("LEFT")
+guild["text"]:SetJustifyV("TOP")
+guild["text"]:SetText("---")
 
 function Addon.UpdateAltsFrame()
     local list = Addon.AltKeys or {}
