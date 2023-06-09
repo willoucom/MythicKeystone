@@ -64,7 +64,13 @@ LibMythicKeystoneDebug:SetScript("OnEvent", function(self, event, addOnName, ...
         buttons[3] = CreateFrame("Button", nil, Debug, "UIPanelButtonTemplate")
         buttons[3]:SetText("Concat Party")
         buttons[3]:SetScript("OnClick", function(self, button)
-            Addon.Debug(table.concat(Addon.getTableKeys(Addon.PartyKeys), " "))
+            Addon.Debug(Addon.getTableKeys(Addon.PartyKeys))
+        end)
+
+        buttons[4] = CreateFrame("Button", nil, Debug, "UIPanelButtonTemplate")
+        buttons[4]:SetText("Concat Alts")
+        buttons[4]:SetScript("OnClick", function(self, button)
+            Addon.Debug(Addon.getTableKeys(Addon.AltKeys))
         end)
 
         for key in pairs(buttons) do

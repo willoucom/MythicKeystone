@@ -8,7 +8,7 @@ Addon.ShortName = GetAddOnMetadata(ADDON, "X-Short-Name") or string.sub(ADDON, 1
 Addon.Version = GetAddOnMetadata(ADDON, "X-Packaged-Version")
 Addon.AltKeys = {}
 Addon.PartyKeys = {}
-
+Addon.GuildKeys = {}
 
 -------------------------------------------
 -- Create frame to hold Alts informations
@@ -280,36 +280,50 @@ function Addon.updateGuildFrame()
 end
 
 function Addon.getTableKeys(t)
-    local keys = {}
+    local keys = ""
     for key, _ in pairs(t) do
-        table.insert(keys, key)
+        keys = keys .."|".. key
     end
     return keys
 end
 
+local oldparty = Addon.getTableKeys(Addon.PartyKeys)
+local oldguild = Addon.getTableKeys(Addon.GuildKeys)
+local oldalts = Addon.getTableKeys(Addon.AltKeys)
+local newparty = "Start"
+local newguild = "Start"
+local newalts = "Start"
+
 local f = CreateFrame("frame")
-local throttle = 0
 f:SetScript("OnUpdate", function(self, elap)
     if PVEFrame:IsShown() then
-        local oldparty = Addon.PartyKeys
+        -- Update Party
+        oldparty = Addon.getTableKeys(Addon.PartyKeys)
         Addon.PartyKeys = lib.getPartyKeystone()
-        if table.concat(Addon.getTableKeys(Addon.PartyKeys)) ~= table.concat(Addon.getTableKeys(oldparty)) then
+        if newparty ~= oldparty then
             Addon.UpdateGroupFrame()
         end
+        -- Update Guild 
+        oldguild = Addon.getTableKeys(Addon.GuildKeys)
+        Addon.GuildKeys = lib.getGuildKeystone()
+        if newguild ~= oldguild then
+            Addon.updateGuildFrame()
+        end
+        -- Update Alts 
+        oldalts = Addon.getTableKeys(Addon.AltKeys)
+        Addon.AltKeys = lib.getAltsKeystone()
+        if newalts ~= oldalts then
+            Addon.UpdateAltsFrame()
+        end
+        -- Move raider io frame
         if RaiderIO_ProfileTooltip then
             RaiderIO_ProfileTooltip:SetPoint("TOPLEFT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 15, 0)
         end
-        if throttle == 0 then
-            Addon.AltKeys = lib.getAltsKeystone()
-            Addon.GuildKeys = lib.getGuildKeystone()
-            Addon.UpdateAltsFrame()
-            Addon.updateGuildFrame()
-            Addon.UpdateGroupFrame()
-            throttle = 100
-        end
-        throttle = throttle - 1
-    else
-        throttle = 0
+        
+        newparty = Addon.getTableKeys(Addon.PartyKeys)
+        newguild = Addon.getTableKeys(Addon.GuildKeys)
+        newalts = Addon.getTableKeys(Addon.AltKeys)
+        
     end
 end)
 
