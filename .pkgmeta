@@ -2,4 +2,3 @@ package-as: MythicKeystone
 
 ignore:
   - .gitignore
-  - .github
