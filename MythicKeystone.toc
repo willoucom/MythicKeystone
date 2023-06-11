@@ -15,4 +15,3 @@ libs\LibStub\LibStub.lua
 
 Core.lua
 AutoKeystone.lua
-Debug.lua
