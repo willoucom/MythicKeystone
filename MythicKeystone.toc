@@ -13,5 +13,5 @@
 libs\LibStub\LibStub.lua
 #@end-no-lib-strip@
 
-Core.lua
+MythicKeystone.lua
 AutoKeystone.lua

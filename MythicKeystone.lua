@@ -160,7 +160,7 @@ function Addon.UpdateAltsFrame()
         -- left column
         local name = list[key]["fullname"] or ""
         if string.find(name, "-") then
-            name, _ = string.split("-", name)
+            name, _ = strsplit("-", name)
         end
         name = string.sub(name, 1, 12) -- cut long name
 
@@ -200,7 +200,7 @@ function Addon.UpdateGroupFrame()
         -- left column
         local name = char or ""
         if string.find(name, "-") then
-            name, _ = string.split("-", name)
+            name, _ = strsplit("-", name)
         end
         name = string.sub(name, 1, 12) -- cut long name
 
@@ -281,9 +281,11 @@ end
 
 function Addon.getTableKeys(t)
     local keys = ""
-    for key, _ in pairs(t) do
-        keys = keys .."|".. key
-    end
+    if (type(t) == "table") then
+        for key, _ in pairs(t) do
+            keys = keys .."|".. key
+        end
+      end
     return keys
 end
 
