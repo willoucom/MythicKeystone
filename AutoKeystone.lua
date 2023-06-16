@@ -20,6 +20,7 @@ local function countdown()
         SendChatMessage(msg, "PARTY")
         if (C_ChallengeMode.HasSlottedKeystone()) then
             C_ChallengeMode.StartChallengeMode()
+            C_ChallengeMode.CloseKeystoneFrame()
         end
     else
         if timer <= 3 then
