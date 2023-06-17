@@ -43,7 +43,7 @@ AltsLeftText:SetWidth(120)
 AltsLeftText:SetHeight(50)
 AltsLeftText:SetJustifyH("LEFT")
 AltsLeftText:SetJustifyV("TOP")
-AltsLeftText:SetText("---")
+AltsLeftText:SetText("")
 
 local AltsCenterText = AltsScrollChild:CreateFontString("ARTWORK", nil, "GameFontWhite")
 AltsCenterText:SetTextColor(255, 255, 255)
@@ -52,7 +52,7 @@ AltsCenterText:SetWidth(20)
 AltsCenterText:SetHeight(50)
 AltsCenterText:SetJustifyH("RIGHT")
 AltsCenterText:SetJustifyV("TOP")
-AltsCenterText:SetText("---")
+AltsCenterText:SetText("")
 
 local AltsRightText = AltsScrollChild:CreateFontString("ARTWORK", nil, "GameFontWhite")
 AltsRightText:SetTextColor(255, 255, 255)
@@ -61,7 +61,7 @@ AltsRightText:SetWidth(280)
 AltsRightText:SetHeight(50)
 AltsRightText:SetJustifyH("LEFT")
 AltsRightText:SetJustifyV("TOP")
-AltsRightText:SetText("---")
+AltsRightText:SetText("")
 
 
 -------------------------------------------
@@ -86,7 +86,7 @@ GroupLeftText:SetWidth(280)
 GroupLeftText:SetHeight(150)
 GroupLeftText:SetJustifyH("LEFT")
 GroupLeftText:SetJustifyV("TOP")
-GroupLeftText:SetText("---")
+GroupLeftText:SetText("")
 
 local GroupCenterText = GroupFrame:CreateFontString("ARTWORK", nil, "GameFontWhite")
 GroupCenterText:SetTextColor(255, 255, 255)
@@ -95,7 +95,7 @@ GroupCenterText:SetWidth(20)
 GroupCenterText:SetHeight(150)
 GroupCenterText:SetJustifyH("RIGHT")
 GroupCenterText:SetJustifyV("TOP")
-GroupCenterText:SetText("---")
+GroupCenterText:SetText("")
 
 local GroupRightText = GroupFrame:CreateFontString("ARTWORK", nil, "GameFontWhite")
 GroupRightText:SetTextColor(255, 255, 255)
@@ -104,7 +104,7 @@ GroupRightText:SetWidth(280)
 GroupRightText:SetHeight(150)
 GroupRightText:SetJustifyH("LEFT")
 GroupRightText:SetJustifyV("TOP")
-GroupRightText:SetText("---")
+GroupRightText:SetText("")
 
 
 -------------------------------------------
@@ -141,7 +141,7 @@ guild["text"]:SetWidth(GuildFrame:GetWidth())
 guild["text"]:SetHeight(50)
 guild["text"]:SetJustifyH("LEFT")
 guild["text"]:SetJustifyV("TOP")
-guild["text"]:SetText("---")
+guild["text"]:SetText("")
 
 function Addon.UpdateAltsFrame()
     local list = Addon.AltKeys or {}
@@ -222,7 +222,6 @@ function Addon.UpdateGroupFrame()
         end
         textright = textright .. keystoneMapName .. "\n"
     end
-
     GroupLeftText:SetText(textleft)
     GroupCenterText:SetText(textcenter)
     GroupRightText:SetText(textright)
@@ -239,8 +238,11 @@ local function formatText(obj)
 
     local keylevel = obj["current_keylevel"]
     -- not so proud of this
-    if keylevel < 10 then keylevel = "      "..keylevel
-    else keylevel = "    "..keylevel end
+    if keylevel < 10 then
+        keylevel = "      " .. keylevel
+    else
+        keylevel = "    " .. keylevel
+    end
     -- returns formated string
     return string.format("%s %s", keylevel, name)
 end
@@ -283,51 +285,28 @@ function Addon.getTableKeys(t)
     local keys = ""
     if (type(t) == "table") then
         for key, _ in pairs(t) do
-            keys = keys .."|".. key
+            keys = keys .. "|" .. key
         end
-      end
+    end
     return keys
 end
 
-local oldparty = Addon.getTableKeys(Addon.PartyKeys)
-local oldguild = Addon.getTableKeys(Addon.GuildKeys)
-local oldalts = Addon.getTableKeys(Addon.AltKeys)
-local newparty = "Start"
-local newguild = "Start"
-local newalts = "Start"
-
-local f = CreateFrame("frame")
-f:SetScript("OnUpdate", function(self, elap)
+C_Timer.NewTicker(1, function()
     if PVEFrame:IsShown() then
         -- Update Party
-        oldparty = Addon.getTableKeys(Addon.PartyKeys)
         Addon.PartyKeys = lib.getPartyKeystone()
-        if newparty ~= oldparty then
-            Addon.UpdateGroupFrame()
-        end
-        -- Update Guild 
-        oldguild = Addon.getTableKeys(Addon.GuildKeys)
+        Addon.UpdateGroupFrame()
+        -- Update Guild
         Addon.GuildKeys = lib.getGuildKeystone()
-        if newguild ~= oldguild then
-            Addon.updateGuildFrame()
-        end
-        -- Update Alts 
-        oldalts = Addon.getTableKeys(Addon.AltKeys)
+        Addon.updateGuildFrame()
+        -- Update Alts
         Addon.AltKeys = lib.getAltsKeystone()
-        if newalts ~= oldalts then
-            Addon.UpdateAltsFrame()
-        end
+        Addon.UpdateAltsFrame()
         -- Move raider io frame
         if RaiderIO_ProfileTooltip then
             RaiderIO_ProfileTooltip:SetPoint("TOPLEFT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 15, 0)
         end
-        
-        newparty = Addon.getTableKeys(Addon.PartyKeys)
-        newguild = Addon.getTableKeys(Addon.GuildKeys)
-        newalts = Addon.getTableKeys(Addon.AltKeys)
-        
     end
 end)
-
 
 _G[ADDON] = Addon
