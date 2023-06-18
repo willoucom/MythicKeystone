@@ -11,6 +11,17 @@ Addon.PartyKeys = {}
 Addon.GuildKeys = {}
 
 -------------------------------------------
+-- Tooltip
+local tooltipshow = function(self)
+    GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 0 , -20)
+    GameTooltip:SetText("Clic to refresh.", 1, 1, 1,  0.9, true);
+    GameTooltip:Show();
+end
+local tooltiphide = function(self)
+    GameTooltip:Hide();
+end
+
+-------------------------------------------
 -- Create frame to hold Alts informations
 local AltsFrame = CreateFrame("Frame", nil, PVEFrame, "BackdropTemplate")
 -- frame size
@@ -63,6 +74,15 @@ AltsRightText:SetJustifyH("LEFT")
 AltsRightText:SetJustifyV("TOP")
 AltsRightText:SetText("")
 
+local AltsButton = CreateFrame("Button", nil, AltsFrame)
+AltsButton:SetWidth(AltsFrame:GetWidth())
+AltsButton:SetHeight(AltsFrame:GetHeight())
+AltsButton:SetPoint("TOPLEFT", 0, 0)
+AltsButton:SetScript("OnClick", function(self, button)
+    Addon.UpdateAltsFrame()
+end)
+AltsButton:SetScript("OnEnter", tooltipshow)
+AltsButton:SetScript("OnLeave", tooltiphide)
 
 -------------------------------------------
 -- Create frame to hold Group informations
@@ -106,6 +126,16 @@ GroupRightText:SetJustifyH("LEFT")
 GroupRightText:SetJustifyV("TOP")
 GroupRightText:SetText("")
 
+local GroupButton = CreateFrame("Button", nil, GroupFrame)
+GroupButton:SetWidth(GroupFrame:GetWidth())
+GroupButton:SetHeight(GroupFrame:GetHeight())
+GroupButton:SetPoint("TOPLEFT", 0, 0)
+GroupButton:SetScript("OnClick", function(self, button)
+    Addon.UpdateGroupFrame()
+end)
+GroupButton:SetScript("OnEnter", tooltipshow)
+GroupButton:SetScript("OnLeave", tooltiphide)
+
 
 -------------------------------------------
 -- Create frame to hold Guild informations
@@ -129,6 +159,18 @@ local GuildScrollChild = CreateFrame("Frame")
 GuildFrame.ScrollFrame:SetScrollChild(GuildScrollChild)
 GuildScrollChild:SetWidth(GuildFrame:GetWidth())
 GuildScrollChild:SetHeight(1)
+
+local GuildButton = CreateFrame("Button", nil, GuildFrame)
+GuildButton:SetWidth(GuildFrame:GetWidth())
+GuildButton:SetHeight(GuildFrame:GetHeight())
+GuildButton:SetPoint("TOPLEFT", 0, 0)
+GuildButton:SetScript("OnClick", function(self, button)
+    Addon.updateGuildFrame()
+end)
+GuildButton:SetScript("OnEnter", tooltipshow)
+GuildButton:SetScript("OnLeave", tooltiphide)
+
+
 local guild = {}
 guild["title"] = GuildFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
 guild["title"]:SetPoint("TOPLEFT", 5, -5)
@@ -142,6 +184,7 @@ guild["text"]:SetHeight(50)
 guild["text"]:SetJustifyH("LEFT")
 guild["text"]:SetJustifyV("TOP")
 guild["text"]:SetText("")
+
 
 function Addon.UpdateAltsFrame()
     local list = Addon.AltKeys or {}
@@ -291,22 +334,44 @@ function Addon.getTableKeys(t)
     return keys
 end
 
-C_Timer.NewTicker(1, function()
+PVEFrame:SetScript("OnShow", function(...)
+    -- Move raider io frame
+    if RaiderIO_ProfileTooltip then
+        RaiderIO_ProfileTooltip:SetPoint("TOPLEFT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 15, 0)
+    end
+    -- Update Party
+    Addon.PartyKeys = lib.getPartyKeystone()
+    -- Update Guild
+    Addon.GuildKeys = lib.getGuildKeystone()
+    -- Update Alts
+    Addon.AltKeys = lib.getAltsKeystone()
+    -- Update frames
+    Addon.UpdateGroupFrame()
+    Addon.updateGuildFrame()
+    Addon.UpdateAltsFrame()
+end)
+
+
+-- Update frame every 10 seconds 
+C_Timer.NewTicker(10, function()
     if PVEFrame:IsShown() then
-        -- Update Party
-        Addon.PartyKeys = lib.getPartyKeystone()
         Addon.UpdateGroupFrame()
-        -- Update Guild
-        Addon.GuildKeys = lib.getGuildKeystone()
         Addon.updateGuildFrame()
-        -- Update Alts
-        Addon.AltKeys = lib.getAltsKeystone()
         Addon.UpdateAltsFrame()
-        -- Move raider io frame
-        if RaiderIO_ProfileTooltip then
-            RaiderIO_ProfileTooltip:SetPoint("TOPLEFT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 15, 0)
-        end
     end
 end)
 
+-- Update data every 1 second 
+C_Timer.NewTicker(1, function()
+    -- Update Party
+    Addon.PartyKeys = lib.getPartyKeystone()
+    -- Update Guild
+    Addon.GuildKeys = lib.getGuildKeystone()
+    -- Update Alts
+    Addon.AltKeys = lib.getAltsKeystone()
+    -- Move raider io frame
+    if RaiderIO_ProfileTooltip then
+        RaiderIO_ProfileTooltip:SetPoint("TOPLEFT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 15, 0)
+    end
+end)
 _G[ADDON] = Addon
