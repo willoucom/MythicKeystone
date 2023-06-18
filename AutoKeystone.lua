@@ -10,6 +10,14 @@ local OnShow = function()
             end
         end
     end
+    if (not ChallengesKeystoneFrame:IsMovable()) then
+        ChallengesKeystoneFrame:SetFrameLevel(1000)
+        ChallengesKeystoneFrame:SetMovable(true)
+        ChallengesKeystoneFrame:SetClampedToScreen(true)
+        ChallengesKeystoneFrame:RegisterForDrag("LeftButton")
+        ChallengesKeystoneFrame:SetScript("OnDragStart", ChallengesKeystoneFrame.StartMoving)
+        ChallengesKeystoneFrame:SetScript("OnDragStop", ChallengesKeystoneFrame.StopMovingOrSizing)
+    end
 end
 
 local timer = 0
