@@ -22,17 +22,20 @@ end
 
 local timer = 0
 local function countdown()
-    local msg = " ... " .. timer 
+    local msg = " ... " .. timer
     if timer <= 0 then
         msg = " Start"
-        SendChatMessage(msg, "PARTY")
+        if IsInGroup(LE_PARTY_CATEGORY_HOME) then
+            SendChatMessage(msg, "PARTY")
+        end
         if (C_ChallengeMode.HasSlottedKeystone()) then
             C_ChallengeMode.StartChallengeMode()
-            C_ChallengeMode.CloseKeystoneFrame()
         end
     else
         if timer <= 3 then
-            SendChatMessage(msg, "PARTY")
+            if IsInGroup(LE_PARTY_CATEGORY_HOME) then
+                SendChatMessage(msg, "PARTY")
+            end
         end
         timer = timer - 1
         C_Timer.After(1, countdown)
