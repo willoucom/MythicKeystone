@@ -2,6 +2,7 @@ local ADDON, Addon = ...
 
 local lib = LibStub("LibMythicKeystone-1.0")
 if not lib then return end
+local L = LibStub("AceLocale-3.0"):GetLocale(ADDON)
 
 Addon.Name = GetAddOnMetadata(ADDON, "Title")
 Addon.ShortName = GetAddOnMetadata(ADDON, "X-Short-Name") or string.sub(ADDON, 1, 16)
@@ -14,7 +15,7 @@ Addon.GuildKeys = {}
 -- Tooltip
 local tooltipshow = function(self)
     GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 0 , -20)
-    GameTooltip:SetText("Clic to refresh.", 1, 1, 1,  0.9, true);
+    GameTooltip:SetText(L["Refresh"], 1, 1, 1,  0.9, true);
     GameTooltip:Show();
 end
 local tooltiphide = function(self)
@@ -45,7 +46,7 @@ AltsScrollChild:SetHeight(1)
 
 local alts = AltsFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
 alts:SetPoint("TOPLEFT", 5, -5)
-alts:SetText("My Keystones")
+alts:SetText(L["Alts"])
 
 local AltsLeftText = AltsScrollChild:CreateFontString("ARTWORK", nil, "GameFontWhite")
 AltsLeftText:SetTextColor(255, 255, 255)
@@ -97,7 +98,7 @@ GroupFrame:SetBackdrop(BACKDROP_TUTORIAL_16_16) ---@diagnostic disable-line: par
 
 local Group = GroupFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
 Group:SetPoint("TOPLEFT", 5, -5)
-Group:SetText("My Group")
+Group:SetText(L["Group"])
 
 local GroupLeftText = GroupFrame:CreateFontString("ARTWORK", nil, "GameFontWhite")
 GroupLeftText:SetTextColor(255, 255, 255)
@@ -174,7 +175,7 @@ GuildButton:SetScript("OnLeave", tooltiphide)
 local guild = {}
 guild["title"] = GuildFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
 guild["title"]:SetPoint("TOPLEFT", 5, -5)
-guild["title"]:SetText("Guild Keystones")
+guild["title"]:SetText(L["Guild"])
 
 guild["text"] = GuildScrollChild:CreateFontString("ARTWORK", nil, "GameFontWhite")
 guild["text"]:SetTextColor(255, 255, 255)

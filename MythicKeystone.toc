@@ -10,8 +10,12 @@
 ## X-Wago-ID: QNlqz86e
 
 #@no-lib-strip@
-libs\LibStub\LibStub.lua
+Libs\LibStub\LibStub.lua
+Libs\AceLocale-3.0\AceLocale-3.0.lua
 #@end-no-lib-strip@
+
+Locales/enUS.lua
+Locales\frFR.lua
 
 MythicKeystone.lua
 AutoKeystone.lua
