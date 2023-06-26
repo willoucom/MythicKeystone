@@ -189,19 +189,21 @@ guild["text"]:SetText("")
 function Addon.UpdateAltsFrame()
     local list = Addon.AltKeys or {}
     local sorted_table = {}
-    for key in pairs(list) do
-        table.insert(sorted_table, key)
+    for _, value in pairs(list) do
+        table.insert(sorted_table, value)
     end
-    table.sort(sorted_table)
+    table.sort(sorted_table, function(a, b) return a["current_keylevel"] > b["current_keylevel"] end)
+
     local textleft = ""
     local textcenter = ""
     local textright = ""
     AltsLeftText:SetHeight(5)
     AltsCenterText:SetHeight(5)
     AltsRightText:SetHeight(5)
-    for _, key in pairs(sorted_table) do
+    for _, value in pairs(sorted_table) do
+        local key = value["fullname"]
         -- left column
-        local name = list[key]["fullname"] or ""
+        local name = list[key]["name"] or ""
         if string.find(name, "-") then
             name, _ = strsplit("-", name)
         end
