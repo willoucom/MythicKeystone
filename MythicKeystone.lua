@@ -207,11 +207,11 @@ function Addon.UpdateAltsFrame()
         end
         name = string.sub(name, 1, 12) -- cut long name
 
-        local color = "|cFFFF000"
+        local color = ""
         if list[key]["class"] ~= "" then
             color = C_ClassColor.GetClassColor(list[key]["class"]):GenerateHexColorMarkup()
         end
-        textleft = textleft .. color .. name .. "\n"
+        textleft = textleft .. color .. name .. "|r \n"
         -- center column
         local keylevel = list[key]["current_keylevel"]
         textcenter = textcenter .. keylevel .. "\n"
