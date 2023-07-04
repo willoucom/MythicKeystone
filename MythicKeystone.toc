@@ -1,5 +1,6 @@
 ## Interface: 100100
 ## Title: MythicKeystone
+## Title-zhTW: 傳奇鑰石
 ## Version: @project-version@
 ## Notes: Mythic Keystone
 ## OptionalDeps: Ace3
@@ -14,8 +15,9 @@ Libs\LibStub\LibStub.lua
 Libs\AceLocale-3.0\AceLocale-3.0.lua
 #@end-no-lib-strip@
 
-Locales/enUS.lua
+Locales\enUS.lua
 Locales\frFR.lua
+Locales\zhTW.lua
 
 MythicKeystone.lua
 AutoKeystone.lua
