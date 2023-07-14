@@ -1,4 +1,4 @@
-## Interface: 100100
+## Interface: 100105
 ## Title: MythicKeystone
 ## Title-zhTW: 傳奇鑰石
 ## Version: @project-version@
