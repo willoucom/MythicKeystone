@@ -4,9 +4,9 @@ local lib = LibStub("LibMythicKeystone-1.0")
 if not lib then return end
 local L = LibStub("AceLocale-3.0"):GetLocale(ADDON)
 
-Addon.Name = GetAddOnMetadata(ADDON, "Title")
-Addon.ShortName = GetAddOnMetadata(ADDON, "X-Short-Name") or string.sub(ADDON, 1, 16)
-Addon.Version = GetAddOnMetadata(ADDON, "X-Packaged-Version")
+Addon.Name = C_AddOns.GetAddOnMetadata(ADDON, "Title")
+Addon.ShortName = C_AddOns.GetAddOnMetadata(ADDON, "X-Short-Name") or string.sub(ADDON, 1, 16)
+Addon.Version = C_AddOns.GetAddOnMetadata(ADDON, "X-Packaged-Version")
 Addon.AltKeys = {}
 Addon.PartyKeys = {}
 Addon.GuildKeys = {}
