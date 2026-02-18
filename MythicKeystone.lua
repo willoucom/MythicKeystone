@@ -366,6 +366,10 @@ PVEFrame:SetScript("OnShow", function(...)
     if RaiderIO_ProfileTooltip then
         RaiderIO_ProfileTooltip:SetPoint("TOPLEFT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 15, 0)
     end
+    -- Move WTCompatibility frame
+    if WTCompatibilityFrame then 
+        GuildFrame:SetPoint("TOPRIGHT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 240, 0)
+    end
     -- Update Party
     Addon.PartyKeys = lib.getPartyKeystone()
     -- Update Guild
