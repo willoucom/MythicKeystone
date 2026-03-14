@@ -366,16 +366,6 @@ function Addon.UpdateGuildFrame()
     guild["text"]:SetText(table.concat(textParts))
 end
 
-function Addon.getTableKeys(t)
-    local keys = ""
-    if (type(t) == "table") then
-        for key, _ in pairs(t) do
-            keys = keys .. "|" .. key
-        end
-    end
-    return keys
-end
-
 PVEFrame:SetScript("OnShow", function(...)
     -- Move raider io frame
     if RaiderIO_ProfileTooltip then
