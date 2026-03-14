@@ -1,15 +1,57 @@
-#MythicKeystone
+# MythicKeystone
 
-The Mythic Keystone Tracker is a powerful and user-friendly addon designed specifically for World of Warcraft players who engage in mythic dungeons. It enhances the default "Looking for Group" (LFG) frame by displaying comprehensive information about the Mythic Keystone associated with each group listing.
+**Stop alt-tabbing. Stop asking in guild chat. Everything you need to plan your Mythic+ run is now right inside the LFG frame.**
 
-With the Mythic Keystone Tracker addon, finding and joining groups for mythic dungeons becomes much more efficient and convenient. The addon seamlessly integrates into the LFG interface, providing an intuitive and visually appealing display of relevant information.
+MythicKeystone is a lightweight addon that displays your alts' keystones, your party members' keystones, and your guild's keystones — all in one place, updated in real time.
 
-Key Features:
+---
 
-Mythic Keystone Display: The addon prominently showcases the current Mythic Keystone level associated with each member listing in the LFG frame. This allows players to quickly assess whether a player matches their desired challenge level.
+## Features
 
-Automatic Keystone: The addon automatically puts your key in the slot, and adds two buttons, the left one allows you to do a readycheck and the right one starts a countdown with automatic key start.
+### 🗝️ Alts Panel
+See all your characters' keystones at a glance directly in the LFG frame:
+- Character name (colored by class)
+- Current keystone level & dungeon
+- Weekly best and run count
 
-Integration with Keystone Management Addons: The Mythic Keystone Tracker addon seamlessly integrates with popular Keystone management addons, enabling players to directly interact with their Keystone inventory.
+No more logging into each alt to check what key they have.
 
-This addon uses the library [LibMythicKeystone](https://legacy.curseforge.com/wow/addons/libmythickeystone) 
+### 👥 Party Panel
+Before you enter the dungeon, check what keys your group members are holding — level and dungeon — without asking in chat.
+
+### 🏰 Guild Panel
+Browse your guild's keystones grouped by dungeon. Find who has the key you need in seconds. Perfect for organizing guild runs or quickly spotting available keys at the start of the week.
+
+### ⚡ Auto Keystone
+When you open the Mythic+ UI, your keystone is automatically slotted. Two extra buttons are added to the challenge frame:
+
+- **Ready Check** — calls a ready check if you are group leader, or sends "Ready?" in party chat if you are not
+- **Countdown** — sends a 5-second countdown in chat and automatically starts the dungeon when it hits zero. Cancel at any time.
+
+---
+
+## Why MythicKeystone?
+
+- **No configuration needed** — install and it works
+- **Real-time updates** — data refreshes every second, display updates every 10 seconds
+- **Zero UI clutter** — panels appear only inside the LFG frame and take no screen space elsewhere
+- **Click to force refresh** — click any panel to manually trigger an update
+- **Lightweight** — no saved settings, no bloat
+
+---
+
+## Requirements
+
+- **[LibMythicKeystone](https://legacy.curseforge.com/wow/addons/libmythickeystone)** — required (handles data collection across your characters and guild)
+
+---
+
+## Supported Languages
+
+🇺🇸 English &nbsp;|&nbsp; 🇫🇷 Français &nbsp;|&nbsp; 🇩🇪 Deutsch &nbsp;|&nbsp; 🇹🇼 繁體中文
+
+---
+
+## Feedback & Issues
+
+Found a bug or have a suggestion? Open an issue on [GitHub](https://github.com/willoucom/MythicKeystone).
