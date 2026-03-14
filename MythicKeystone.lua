@@ -175,7 +175,7 @@ GuildButton:SetWidth(GuildFrame:GetWidth())
 GuildButton:SetHeight(GuildFrame:GetHeight())
 GuildButton:SetPoint("TOPLEFT", 0, 0)
 GuildButton:SetScript("OnClick", function(self, button)
-    Addon.updateGuildFrame()
+    Addon.UpdateGuildFrame()
 end)
 GuildButton:SetScript("OnEnter", tooltipshow)
 GuildButton:SetScript("OnLeave", tooltiphide)
@@ -214,46 +214,49 @@ function Addon.UpdateAltsFrame()
     AltsRightText:SetHeight(5)
     for _, value in pairs(sorted_table) do
         local key = value["fullname"]
+        local entry = list[key]
+        if not entry then break end
+
         -- left column
-        local name = list[key]["name"] or ""
+        local name = entry["name"] or ""
         if string.find(name, "-") then
             name, _ = strsplit("-", name)
         end
         name = string.sub(name, 1, 12) -- cut long name
 
         local color = ""
-        if list[key]["class"] ~= "" then
-            color = C_ClassColor.GetClassColor(list[key]["class"]):GenerateHexColorMarkup()
+        if entry["class"] ~= "" then
+            color = C_ClassColor.GetClassColor(entry["class"]):GenerateHexColorMarkup()
         end
         textleft = textleft .. color .. name .. "|r \n"
         -- center column
-        local keylevel = list[key]["current_keylevel"]
+        local keylevel = entry["current_keylevel"] or 0
         textcenter = textcenter .. keylevel .. "\n"
-        -- right column
+        -- center-right column
         local keystoneMapName = ""
-        if list[key]["current_key"] ~= "" then
-            keystoneMapName = list[key]["current_key"] and C_ChallengeMode.GetMapUIInfo(list[key]["current_key"]) or " "
+        if entry["current_key"] ~= "" then
+            keystoneMapName = C_ChallengeMode.GetMapUIInfo(entry["current_key"]) or " "
         end
         if string.len(keystoneMapName) > 35 then
-            keystoneMapName = string.sub(keystoneMapName or "", 1, 35) .. "..."
+            keystoneMapName = string.sub(keystoneMapName, 1, 35) .. "..."
         end
         textcenterright = textcenterright .. keystoneMapName .. "\n"
 
-        local weeklybest = list[key]["weeklybest"] or ""
-        local weeklycount = list[key]["weeklycount"] or ""
+        -- right column
+        local weeklybest = entry["weeklybest"] or ""
+        local weeklycount = entry["weeklycount"] or ""
         if weeklybest ~= "" and weeklybest > 0 then
-            weeklybest = "|cFFFFFFFFRuns("..weeklycount..") Best("..  weeklybest ..")|r"
+            weeklybest = "|cFFFFFFFFRuns(" .. weeklycount .. ") Best(" .. weeklybest .. ")|r"
         else
             weeklybest = "|cFFFF0000No Weekly Best|r"
         end
-
         textright = textright .. weeklybest .. "\n"
 
-        -- resize
-        AltsLeftText:SetHeight(AltsLeftText:GetHeight() + (AltsLeftText:GetLineHeight()))
-        AltsCenterText:SetHeight(AltsCenterText:GetHeight() + (AltsLeftText:GetLineHeight()))
-        AltsCenterRightText:SetHeight(AltsCenterRightText:GetHeight() + (AltsCenterRightText:GetLineHeight()))
-        AltsRightText:SetHeight(AltsRightText:GetHeight() + (AltsLeftText:GetLineHeight()))
+        -- resize: each column uses its own line height
+        AltsLeftText:SetHeight(AltsLeftText:GetHeight() + AltsLeftText:GetLineHeight())
+        AltsCenterText:SetHeight(AltsCenterText:GetHeight() + AltsCenterText:GetLineHeight())
+        AltsCenterRightText:SetHeight(AltsCenterRightText:GetHeight() + AltsCenterRightText:GetLineHeight())
+        AltsRightText:SetHeight(AltsRightText:GetHeight() + AltsRightText:GetLineHeight())
     end
     AltsLeftText:SetText(textleft)
     AltsCenterText:SetText(textcenter)
@@ -288,7 +291,7 @@ function Addon.UpdateGroupFrame()
             keystoneMapName = C_ChallengeMode.GetMapUIInfo(value["current_key"]) or " "
         end
         if string.len(keystoneMapName) > 25 then
-            keystoneMapName = string.sub(keystoneMapName or "", 1, 25) .. "..."
+            keystoneMapName = string.sub(keystoneMapName, 1, 25) .. "..."
         end
         textright = textright .. keystoneMapName .. "\n"
     end
@@ -298,9 +301,10 @@ function Addon.UpdateGroupFrame()
 end
 
 local function formatText(obj)
+    if not obj then return "" end
     local name = obj["name"] or ""
     name = string.sub(name, 1, 14) -- cut long name
-    local color = "|cFFFFFFF"
+    local color = "|cFFFFFFFF"
     if obj["class"] ~= "" then
         color = C_ClassColor.GetClassColor(obj["class"]):GenerateHexColorMarkup()
         name = color .. name .. "|r"
@@ -313,7 +317,7 @@ local function formatText(obj)
     else
         keylevel = "    " .. keylevel
     end
-    -- returns formated string
+    -- returns formatted string
     return string.format("%s %s", keylevel, name)
 end
 
@@ -332,7 +336,7 @@ local function tableGroupByKeyLevel(obj)
     return keys
 end
 
-function Addon.updateGuildFrame()
+function Addon.UpdateGuildFrame()
     local text = ""
     guild["text"]:SetHeight(5)
     if Addon.GuildKeys then
@@ -341,9 +345,9 @@ function Addon.updateGuildFrame()
             local keystoneMapName = keyid and C_ChallengeMode.GetMapUIInfo(keyid) or " "
             text = text .. "  " .. keystoneMapName .. "\n"
             guild["text"]:SetHeight(guild["text"]:GetHeight() + guild["text"]:GetLineHeight())
-            for char in pairs(keys[keyid]) do
-                char = keys[keyid][char][1]
-                text = text .. "  " .. formatText(Addon.GuildKeys[char]) .. "\n"
+            for _, entry in ipairs(keys[keyid]) do
+                local charName = entry[1]
+                text = text .. "  " .. formatText(Addon.GuildKeys[charName]) .. "\n"
                 guild["text"]:SetHeight(guild["text"]:GetHeight() + guild["text"]:GetLineHeight())
             end
         end
@@ -367,7 +371,7 @@ PVEFrame:SetScript("OnShow", function(...)
         RaiderIO_ProfileTooltip:SetPoint("TOPLEFT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 15, 0)
     end
     -- Move WTCompatibility frame
-    if WTCompatibilityFrame then 
+    if WTCompatibilityFrame then
         GuildFrame:SetPoint("TOPRIGHT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 240, 0)
     end
     -- Update Party
@@ -378,21 +382,21 @@ PVEFrame:SetScript("OnShow", function(...)
     Addon.AltKeys = lib.getAltsKeystone()
     -- Update frames
     Addon.UpdateGroupFrame()
-    Addon.updateGuildFrame()
+    Addon.UpdateGuildFrame()
     Addon.UpdateAltsFrame()
 end)
 
 
--- Update frame every 10 seconds 
+-- Update frame every 10 seconds
 C_Timer.NewTicker(10, function()
     if PVEFrame:IsShown() then
         Addon.UpdateGroupFrame()
-        Addon.updateGuildFrame()
+        Addon.UpdateGuildFrame()
         Addon.UpdateAltsFrame()
     end
 end)
 
--- Update data every 1 second 
+-- Update data every 1 second
 C_Timer.NewTicker(1, function()
     -- Update Party
     Addon.PartyKeys = lib.getPartyKeystone()
