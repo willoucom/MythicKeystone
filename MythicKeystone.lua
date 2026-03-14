@@ -204,14 +204,12 @@ function Addon.UpdateAltsFrame()
     end
     table.sort(sorted_table, function(a, b) return a["current_keylevel"] > b["current_keylevel"] end)
 
-    local textleft = ""
-    local textcenter = ""
-    local textcenterright = ""
-    local textright = ""
-    AltsLeftText:SetHeight(5)
-    AltsCenterText:SetHeight(5)
-    AltsCenterRightText:SetHeight(5)
-    AltsRightText:SetHeight(5)
+    local leftParts = {}
+    local centerParts = {}
+    local centerRightParts = {}
+    local rightParts = {}
+    local lineCount = 0
+
     for _, value in pairs(sorted_table) do
         local key = value["fullname"]
         local entry = list[key]
@@ -228,10 +226,12 @@ function Addon.UpdateAltsFrame()
         if entry["class"] ~= "" then
             color = C_ClassColor.GetClassColor(entry["class"]):GenerateHexColorMarkup()
         end
-        textleft = textleft .. color .. name .. "|r \n"
+        table.insert(leftParts, color .. name .. "|r \n")
+
         -- center column
         local keylevel = entry["current_keylevel"] or 0
-        textcenter = textcenter .. keylevel .. "\n"
+        table.insert(centerParts, keylevel .. "\n")
+
         -- center-right column
         local keystoneMapName = ""
         if entry["current_key"] ~= "" then
@@ -240,7 +240,7 @@ function Addon.UpdateAltsFrame()
         if string.len(keystoneMapName) > 35 then
             keystoneMapName = string.sub(keystoneMapName, 1, 35) .. "..."
         end
-        textcenterright = textcenterright .. keystoneMapName .. "\n"
+        table.insert(centerRightParts, keystoneMapName .. "\n")
 
         -- right column
         local weeklybest = entry["weeklybest"] or ""
@@ -250,25 +250,30 @@ function Addon.UpdateAltsFrame()
         else
             weeklybest = "|cFFFF0000No Weekly Best|r"
         end
-        textright = textright .. weeklybest .. "\n"
+        table.insert(rightParts, weeklybest .. "\n")
 
-        -- resize: each column uses its own line height
-        AltsLeftText:SetHeight(AltsLeftText:GetHeight() + AltsLeftText:GetLineHeight())
-        AltsCenterText:SetHeight(AltsCenterText:GetHeight() + AltsCenterText:GetLineHeight())
-        AltsCenterRightText:SetHeight(AltsCenterRightText:GetHeight() + AltsCenterRightText:GetLineHeight())
-        AltsRightText:SetHeight(AltsRightText:GetHeight() + AltsRightText:GetLineHeight())
+        lineCount = lineCount + 1
     end
-    AltsLeftText:SetText(textleft)
-    AltsCenterText:SetText(textcenter)
-    AltsCenterRightText:SetText(textcenterright)
-    AltsRightText:SetText(textright)
+
+    -- resize: compute line height once, apply once after the loop
+    local lineHeight = AltsLeftText:GetLineHeight()
+    local totalHeight = 5 + lineCount * lineHeight
+    AltsLeftText:SetHeight(totalHeight)
+    AltsCenterText:SetHeight(totalHeight)
+    AltsCenterRightText:SetHeight(totalHeight)
+    AltsRightText:SetHeight(totalHeight)
+
+    AltsLeftText:SetText(table.concat(leftParts))
+    AltsCenterText:SetText(table.concat(centerParts))
+    AltsCenterRightText:SetText(table.concat(centerRightParts))
+    AltsRightText:SetText(table.concat(rightParts))
 end
 
 function Addon.UpdateGroupFrame()
-    -- Group
-    local textleft = ""
-    local textcenter = ""
-    local textright = ""
+    local leftParts = {}
+    local centerParts = {}
+    local rightParts = {}
+
     for char, value in pairs(Addon.PartyKeys) do
         -- left column
         local name = char or ""
@@ -281,10 +286,12 @@ function Addon.UpdateGroupFrame()
         if value["class"] and value["class"] ~= "" then
             color = C_ClassColor.GetClassColor(value["class"]):GenerateHexColorMarkup()
         end
-        textleft = textleft .. color .. name .. "\n"
+        table.insert(leftParts, color .. name .. "\n")
+
         -- center column
         local keylevel = value["current_keylevel"] or 0
-        textcenter = textcenter .. keylevel .. "\n"
+        table.insert(centerParts, keylevel .. "\n")
+
         -- right column
         local keystoneMapName = ""
         if value["current_key"] then
@@ -293,11 +300,12 @@ function Addon.UpdateGroupFrame()
         if string.len(keystoneMapName) > 25 then
             keystoneMapName = string.sub(keystoneMapName, 1, 25) .. "..."
         end
-        textright = textright .. keystoneMapName .. "\n"
+        table.insert(rightParts, keystoneMapName .. "\n")
     end
-    GroupLeftText:SetText(textleft)
-    GroupCenterText:SetText(textcenter)
-    GroupRightText:SetText(textright)
+
+    GroupLeftText:SetText(table.concat(leftParts))
+    GroupCenterText:SetText(table.concat(centerParts))
+    GroupRightText:SetText(table.concat(rightParts))
 end
 
 local function formatText(obj)
@@ -337,22 +345,25 @@ local function tableGroupByKeyLevel(obj)
 end
 
 function Addon.UpdateGuildFrame()
-    local text = ""
-    guild["text"]:SetHeight(5)
+    local textParts = {}
+    local lineCount = 0
     if Addon.GuildKeys then
         local keys = tableGroupByKeyLevel(Addon.GuildKeys) or {}
         for keyid in pairs(keys) do
             local keystoneMapName = keyid and C_ChallengeMode.GetMapUIInfo(keyid) or " "
-            text = text .. "  " .. keystoneMapName .. "\n"
-            guild["text"]:SetHeight(guild["text"]:GetHeight() + guild["text"]:GetLineHeight())
+            table.insert(textParts, "  " .. keystoneMapName .. "\n")
+            lineCount = lineCount + 1
             for _, entry in ipairs(keys[keyid]) do
                 local charName = entry[1]
-                text = text .. "  " .. formatText(Addon.GuildKeys[charName]) .. "\n"
-                guild["text"]:SetHeight(guild["text"]:GetHeight() + guild["text"]:GetLineHeight())
+                table.insert(textParts, "  " .. formatText(Addon.GuildKeys[charName]) .. "\n")
+                lineCount = lineCount + 1
             end
         end
     end
-    guild["text"]:SetText(text)
+    -- resize: compute line height once, apply once after the loop
+    local lineHeight = guild["text"]:GetLineHeight()
+    guild["text"]:SetHeight(5 + lineCount * lineHeight)
+    guild["text"]:SetText(table.concat(textParts))
 end
 
 function Addon.getTableKeys(t)
