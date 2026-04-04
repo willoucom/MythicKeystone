@@ -1,0 +1,4 @@
+package-as: MythicKeystone_LibDataBroker
+
+ignore:
+  - .gitignore
