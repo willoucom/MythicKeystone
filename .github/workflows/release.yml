@@ -19,8 +19,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Create .git symlink for monorepo
-        run: ln -s $GITHUB_WORKSPACE/.git LibMythicKeystone/.git
       - name: Package and release LibMythicKeystone
         uses: BigWigsMods/packager@v2
         with:
@@ -38,8 +36,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Create .git symlink for monorepo
-        run: ln -s $GITHUB_WORKSPACE/.git MythicKeystone/.git
       - name: Package and release MythicKeystone
         uses: BigWigsMods/packager@v2
         with:
@@ -57,8 +53,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Create .git symlink for monorepo
-        run: ln -s $GITHUB_WORKSPACE/.git MythicKeystone_LibDataBroker/.git
       - name: Package and release MythicKeystone_LibDataBroker
         uses: BigWigsMods/packager@v2
         with:
