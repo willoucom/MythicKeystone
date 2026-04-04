@@ -84,9 +84,7 @@ local OnEvent = function(self, event, adDon)
                     local msg = "" .. L["DungeonCountdown"] .. ""
                     SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
                     C_Timer.After(1, countdown)
-                    -- if UnitIsGroupLeader("player") then
-                    --     C_PartyInfo.DoCountdown(5)
-                    -- end
+                    C_PartyInfo.DoCountdown(5)
                     self:SetText(L["Countdown_cancel"])
                 end
             else
