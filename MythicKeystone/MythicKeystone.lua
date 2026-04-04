@@ -213,7 +213,7 @@ function Addon.UpdateAltsFrame()
     for _, value in pairs(sorted_table) do
         local key = value["fullname"]
         local entry = list[key]
-        if not entry then break end
+        if not entry then goto continue end
 
         -- left column
         local name = entry["name"] or ""
@@ -223,7 +223,7 @@ function Addon.UpdateAltsFrame()
         name = string.sub(name, 1, 12) -- cut long name
 
         local color = ""
-        if entry["class"] ~= "" then
+        if entry["class"] and entry["class"] ~= "" then
             color = C_ClassColor.GetClassColor(entry["class"]):GenerateHexColorMarkup()
         end
         table.insert(leftParts, color .. name .. "|r \n")
@@ -253,6 +253,7 @@ function Addon.UpdateAltsFrame()
         table.insert(rightParts, weeklybest .. "\n")
 
         lineCount = lineCount + 1
+        ::continue::
     end
 
     -- resize: compute line height once, apply once after the loop
@@ -313,12 +314,12 @@ local function formatText(obj)
     local name = obj["name"] or ""
     name = string.sub(name, 1, 14) -- cut long name
     local color = "|cFFFFFFFF"
-    if obj["class"] ~= "" then
+    if obj["class"] and obj["class"] ~= "" then
         color = C_ClassColor.GetClassColor(obj["class"]):GenerateHexColorMarkup()
         name = color .. name .. "|r"
     end
 
-    local keylevel = obj["current_keylevel"]
+    local keylevel = obj["current_keylevel"] or 0
     -- not so proud of this
     if keylevel < 10 then
         keylevel = "      " .. keylevel

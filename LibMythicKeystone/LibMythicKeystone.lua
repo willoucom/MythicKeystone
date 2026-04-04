@@ -33,7 +33,8 @@ function lib.getMyKeystone()
 end
 
 function lib.getAltsKeystone()
-    return LibMythicKeystoneDB['Alts']
+    if not LibMythicKeystoneDB then return {} end
+    return LibMythicKeystoneDB['Alts'] or {}
 end
 
 function lib.getPartyKeystone()
@@ -41,8 +42,9 @@ function lib.getPartyKeystone()
 end
 
 function lib.getGuildKeystone()
+    if not LibMythicKeystoneDB or not LibMythicKeystoneDB['Guilds'] then return {} end
     local GuildName = GetGuildInfo("player") or "none"
-    return LibMythicKeystoneDB['Guilds'][GuildName]
+    return LibMythicKeystoneDB['Guilds'][GuildName] or {}
 end
 
 --
