@@ -1,6 +1,7 @@
 local ADDON, Addon = ...
 local L = LibStub("AceLocale-3.0"):GetLocale(ADDON)
 local button = {}
+local isKeyOwner = false
 
 local OnShow = function()
     for bag = 0, NUM_BAG_SLOTS do
@@ -10,6 +11,7 @@ local OnShow = function()
                 C_Container.PickupContainerItem(bag, slot)
                 if (CursorHasItem()) then
                     C_ChallengeMode.SlotKeystone()
+                    isKeyOwner = true
                 end
             end
         end
@@ -49,7 +51,15 @@ local function countdown()
     end
 end
 
-local OnEvent = function(self, event, adDon)
+local OnEvent = function(self, event, ...)
+    if event == "CHALLENGE_MODE_COMPLETED" then
+        if isKeyOwner then
+            isKeyOwner = false
+            SendChatMessage(L["DungeonCompleted"], IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
+        end
+        return
+    end
+    local adDon = ...
     if (adDon ~= "Blizzard_ChallengesUI") then
         return
     end
@@ -97,4 +107,5 @@ end
 
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
+frame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 frame:SetScript("OnEvent", OnEvent)
