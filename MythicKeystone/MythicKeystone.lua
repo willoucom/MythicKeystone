@@ -213,47 +213,46 @@ function Addon.UpdateAltsFrame()
     for _, value in pairs(sorted_table) do
         local key = value["fullname"]
         local entry = list[key]
-        if not entry then goto continue end
+        if entry then
+            -- left column
+            local name = entry["name"] or ""
+            if string.find(name, "-") then
+                name, _ = strsplit("-", name)
+            end
+            name = string.sub(name, 1, 12) -- cut long name
 
-        -- left column
-        local name = entry["name"] or ""
-        if string.find(name, "-") then
-            name, _ = strsplit("-", name)
+            local color = ""
+            if entry["class"] and entry["class"] ~= "" then
+                color = C_ClassColor.GetClassColor(entry["class"]):GenerateHexColorMarkup()
+            end
+            table.insert(leftParts, color .. name .. "|r \n")
+
+            -- center column
+            local keylevel = entry["current_keylevel"] or 0
+            table.insert(centerParts, keylevel .. "\n")
+
+            -- center-right column
+            local keystoneMapName = ""
+            if entry["current_key"] ~= "" then
+                keystoneMapName = C_ChallengeMode.GetMapUIInfo(entry["current_key"]) or " "
+            end
+            if string.len(keystoneMapName) > 35 then
+                keystoneMapName = string.sub(keystoneMapName, 1, 35) .. "..."
+            end
+            table.insert(centerRightParts, keystoneMapName .. "\n")
+
+            -- right column
+            local weeklybest = entry["weeklybest"] or ""
+            local weeklycount = entry["weeklycount"] or ""
+            if weeklybest ~= "" and weeklybest > 0 then
+                weeklybest = "|cFFFFFFFFRuns(" .. weeklycount .. ") Best(" .. weeklybest .. ")|r"
+            else
+                weeklybest = "|cFFFF0000No Weekly Best|r"
+            end
+            table.insert(rightParts, weeklybest .. "\n")
+
+            lineCount = lineCount + 1
         end
-        name = string.sub(name, 1, 12) -- cut long name
-
-        local color = ""
-        if entry["class"] and entry["class"] ~= "" then
-            color = C_ClassColor.GetClassColor(entry["class"]):GenerateHexColorMarkup()
-        end
-        table.insert(leftParts, color .. name .. "|r \n")
-
-        -- center column
-        local keylevel = entry["current_keylevel"] or 0
-        table.insert(centerParts, keylevel .. "\n")
-
-        -- center-right column
-        local keystoneMapName = ""
-        if entry["current_key"] ~= "" then
-            keystoneMapName = C_ChallengeMode.GetMapUIInfo(entry["current_key"]) or " "
-        end
-        if string.len(keystoneMapName) > 35 then
-            keystoneMapName = string.sub(keystoneMapName, 1, 35) .. "..."
-        end
-        table.insert(centerRightParts, keystoneMapName .. "\n")
-
-        -- right column
-        local weeklybest = entry["weeklybest"] or ""
-        local weeklycount = entry["weeklycount"] or ""
-        if weeklybest ~= "" and weeklybest > 0 then
-            weeklybest = "|cFFFFFFFFRuns(" .. weeklycount .. ") Best(" .. weeklybest .. ")|r"
-        else
-            weeklybest = "|cFFFF0000No Weekly Best|r"
-        end
-        table.insert(rightParts, weeklybest .. "\n")
-
-        lineCount = lineCount + 1
-        ::continue::
     end
 
     -- resize: compute line height once, apply once after the loop
