@@ -201,7 +201,7 @@ function Addon.sendKeystone()
     local GuildName = GetGuildInfo("player")
     if not GuildName then return end
     for _, value in pairs(LibMythicKeystoneDB['Alts']) do
-        if value['guild'] == GuildName and value["current_key"] > 0 then
+        if value['guild'] == GuildName and tonumber(value["current_key"] or 0) > 0 then
             local data = value["current_key"] .. ":"
                 .. value["current_keylevel"] .. ":"
                 .. value["class"] .. ":"
