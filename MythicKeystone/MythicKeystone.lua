@@ -225,7 +225,7 @@ function Addon.UpdateAltsFrame()
             if entry["class"] and entry["class"] ~= "" then
                 color = C_ClassColor.GetClassColor(entry["class"]):GenerateHexColorMarkup()
             end
-            table.insert(leftParts, color .. name .. "|r \n")
+            table.insert(leftParts, color .. name .. (color ~= "" and "|r" or "") .. " \n")
 
             -- center column
             local keylevel = entry["current_keylevel"] or 0
@@ -233,7 +233,7 @@ function Addon.UpdateAltsFrame()
 
             -- center-right column
             local keystoneMapName = ""
-            if entry["current_key"] ~= "" then
+            if entry["current_key"] and entry["current_key"] ~= 0 then
                 keystoneMapName = C_ChallengeMode.GetMapUIInfo(entry["current_key"]) or " "
             end
             if string.len(keystoneMapName) > 35 then
