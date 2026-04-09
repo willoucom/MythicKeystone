@@ -44,6 +44,9 @@ AddonCompartmentFrame:RegisterAddon({
         dataobj.OnTooltipShow(GameTooltip)
         GameTooltip:Show()
     end,
+    funcOnLeave = function()
+        GameTooltip:Hide()
+    end,
 })
 
 C_Timer.NewTicker(1, function()
