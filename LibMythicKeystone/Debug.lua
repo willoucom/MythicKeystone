@@ -12,6 +12,7 @@ local LibMythicKeystoneDebug = CreateFrame("Frame")
 LibMythicKeystoneDebug:RegisterEvent("ADDON_LOADED")
 LibMythicKeystoneDebug:SetScript("OnEvent", function(self, event, addOnName, ...)
     if addOnName == "LibMythicKeystone" then
+        LibMythicKeystoneDB = LibMythicKeystoneDB or {}
         if not LibMythicKeystoneDB["options"] then
             LibMythicKeystoneDB["options"] = {}
         end
@@ -235,10 +236,14 @@ SLASH_LMK1 = "/lmk"
 SlashCmdList["LMK"] = function(msg)
     if msg == "debug on" then
         Addon.debug = true
+        LibMythicKeystoneDB = LibMythicKeystoneDB or {}
+        LibMythicKeystoneDB["options"] = LibMythicKeystoneDB["options"] or {}
         LibMythicKeystoneDB["options"]["debug"] = Addon.debug
         print("LMK Debug activated, please reload ui")
     elseif msg == "debug off" then
         Addon.debug = false
+        LibMythicKeystoneDB = LibMythicKeystoneDB or {}
+        LibMythicKeystoneDB["options"] = LibMythicKeystoneDB["options"] or {}
         LibMythicKeystoneDB["options"]["debug"] = Addon.debug
         print("LMK Debug disabled, please reload ui")
     else 
