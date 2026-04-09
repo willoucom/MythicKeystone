@@ -73,12 +73,12 @@ local function formatText(obj, type)
     end
 
     local color = "|cFFFFFFFF"
-    if obj["class"] ~= "" then
+    if obj["class"] and obj["class"] ~= "" then
         color = C_ClassColor.GetClassColor(obj["class"]):GenerateHexColorMarkup()
         name = color .. name .. "|r"
     end
 
-    local keylevel = obj["current_keylevel"]
+    local keylevel = obj["current_keylevel"] or 0
     if keylevel < 10 then
         keylevel = "     " .. keylevel
     else
