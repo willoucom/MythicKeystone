@@ -6,6 +6,8 @@ f:SetScript("OnEvent", function(self, event, addOnName, ...)
     if AstralKeys then
         local GuildName = GetGuildInfo("player")
         if not GuildName then return end
+        if not LibMythicKeystoneDB then return end
+        LibMythicKeystoneDB['Guilds'] = LibMythicKeystoneDB['Guilds'] or {}
         LibMythicKeystoneDB['Guilds'][GuildName] = LibMythicKeystoneDB['Guilds'][GuildName] or {}
         for _, value in pairs(AstralKeys) do
             if value['source'] == "guild" then
