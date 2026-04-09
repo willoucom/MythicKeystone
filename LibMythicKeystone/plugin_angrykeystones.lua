@@ -12,19 +12,19 @@ local function OnEvent(self, event, addOnName, message, channel, character)
             -- print(message)
             local _, key = strsplit("|", message)
             local keyname, keylevel = strsplit(":", key)
-            local character = strsplit("-", character)
+            local charName = strsplit("-", character)
             if keyname and keylevel then
-                AngryKeystoneStorage[character] = AngryKeystoneStorage[character] or {}
-                AngryKeystoneStorage[character]["current_key"] = keyname
-                AngryKeystoneStorage[character]["current_keylevel"] = keylevel
+                AngryKeystoneStorage[charName] = AngryKeystoneStorage[charName] or {}
+                AngryKeystoneStorage[charName]["current_key"] = keyname
+                AngryKeystoneStorage[charName]["current_keylevel"] = keylevel
             end
         end
     end
 
-    for key in pairs(AngryKeystoneStorage) do
-        Addon.PartyKeys[key] = Addon.PartyKeys[key] or {}
-        Addon.PartyKeys[key]["current_key"] = AngryKeystoneStorage[key]["current_key"]
-        Addon.PartyKeys[key]["current_keylevel"] = AngryKeystoneStorage[key]["current_keylevel"]
+    for charName in pairs(AngryKeystoneStorage) do
+        Addon.PartyKeys[charName] = Addon.PartyKeys[charName] or {}
+        Addon.PartyKeys[charName]["current_key"] = AngryKeystoneStorage[charName]["current_key"]
+        Addon.PartyKeys[charName]["current_keylevel"] = AngryKeystoneStorage[charName]["current_keylevel"]
     end
 end
 
