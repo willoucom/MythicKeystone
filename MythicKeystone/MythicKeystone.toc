@@ -1,4 +1,4 @@
-## Interface: 120001, 120000
+## Interface: 120001, 120005
 ## Title: MythicKeystone
 ## Title-zhTW: 傳奇鑰石
 ## Version: @project-version@
