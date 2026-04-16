@@ -38,17 +38,17 @@ local function countdown()
             ChallengesKeystoneFrame:Hide()
             -- Send message
             msg = "" .. L["DungeonStarted"]
-            SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
+            C_ChatInfo.SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
         else
             msg = " ... " .. timer
-            SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
+            C_ChatInfo.SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
             timer = timer - 1
             C_Timer.After(1, countdown)
         end
     else
         timer = -1
         msg = "" .. L["DungeonCountdownStop"]
-        SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
+        C_ChatInfo.SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
     end
 end
 
@@ -61,9 +61,9 @@ local OnEvent = function(self, event, ...)
         if isKeyOwner then
             isKeyOwner = false
             if MythicKeystoneDB and MythicKeystoneDB.completionMessage then
-                local completionInfo = C_ChallengeMode.GetCompletionInfo()
+                local completionInfo = C_ChallengeMode.GetChallengeCompletionInfo()
                 local msgs = (completionInfo and completionInfo.onTime) and Addon.completionMessagesSuccess or Addon.completionMessagesFailure
-                SendChatMessage(msgs[math.random(#msgs)], IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
+                C_ChatInfo.SendChatMessage(msgs[math.random(#msgs)], IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
             end
         end
         return
@@ -87,7 +87,7 @@ local OnEvent = function(self, event, ...)
                 DoReadyCheck()
             else
                 local msg = ""..L["Ready"]
-                SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
+                C_ChatInfo.SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
             end
         end)
         -- Countdown button
@@ -101,7 +101,7 @@ local OnEvent = function(self, event, ...)
                 if (C_ChallengeMode.HasSlottedKeystone()) then
                     timer = 4
                     local msg = "" .. L["DungeonCountdown"] .. ""
-                    SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
+                    C_ChatInfo.SendChatMessage(msg, IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
                     C_Timer.After(1, countdown)
                     C_PartyInfo.DoCountdown(5)
                     self:SetText(L["Countdown_cancel"])

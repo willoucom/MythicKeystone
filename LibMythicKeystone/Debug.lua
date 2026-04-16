@@ -194,7 +194,7 @@ LibMythicKeystoneDebug:SetScript("OnEvent", function(self, event, addOnName, ...
             buttons[ibutton] = CreateFrame("Button", nil, Debug, "UIPanelButtonTemplate")
             buttons[ibutton]:SetText("homePlayers")
             buttons[ibutton]:SetScript("OnClick", function(self, button)
-                local homePlayers = GetHomePartyInfo()
+                local homePlayers = GetHomePartyInfo({})
                 Addon.trace(homePlayers)
                 if homePlayers then
                     for _, name in pairs(homePlayers) do

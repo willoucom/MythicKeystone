@@ -320,13 +320,14 @@ local function formatText(obj)
 
     local keylevel = obj["current_keylevel"] or 0
     -- not so proud of this
+    local keylevelStr
     if keylevel < 10 then
-        keylevel = "      " .. keylevel
+        keylevelStr = "      " .. tostring(keylevel)
     else
-        keylevel = "    " .. keylevel
+        keylevelStr = "    " .. tostring(keylevel)
     end
     -- returns formatted string
-    return string.format("%s %s", keylevel, name)
+    return string.format("%s %s", keylevelStr, name)
 end
 
 local function tableGroupByKeyLevel(obj)
