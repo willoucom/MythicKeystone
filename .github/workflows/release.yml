@@ -21,7 +21,12 @@ jobs:
       - name: Find previous tag
         id: prev_tag
         run: |
-          PREV_TAG=$(git tag --sort=-creatordate | grep -v "^${{ github.ref_name }}$" | head -1)
+          CURRENT_TAG="${{ github.ref_name }}"
+          if echo "$CURRENT_TAG" | grep -qi "beta"; then
+            PREV_TAG=$(git tag --sort=-creatordate | grep -v "^${CURRENT_TAG}$" | head -1)
+          else
+            PREV_TAG=$(git tag --sort=-creatordate | grep -v "^${CURRENT_TAG}$" | grep -iv "beta" | head -1)
+          fi
           echo "tag=$PREV_TAG" >> $GITHUB_OUTPUT
       - uses: dorny/paths-filter@v3
         id: filter
