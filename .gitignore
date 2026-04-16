@@ -6,6 +6,4 @@ libs/
 
 # MythicDungeonNotes
 MythicDungeonNotes/Guide/Dungeons/Images
-MythicDungeonNotes/Assets/
-MythicDungeonNotes/convert_assets.py
 MythicDungeonNotes/deploy.ps1
