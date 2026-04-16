@@ -1,15 +1,9 @@
 package-as: MythicKeystone_LibDataBroker
 
 externals:
-  Libs/LibStub:
-    url: https://repos.wowace.com/wow/libstub/trunk
-    type: svn
-  Libs/AceLocale-3.0:
-    url: https://repos.wowace.com/wow/ace3/trunk/AceLocale-3.0
-    type: svn
-  Libs/CallbackHandler-1.0:
-    url: https://repos.wowace.com/wow/ace3/trunk/CallbackHandler-1.0
-    type: svn
+  Libs/LibStub: https://github.com/WoWUIDev/Ace3/LibStub
+  Libs/AceLocale-3.0: https://github.com/WoWUIDev/Ace3/AceLocale-3.0
+  Libs/CallbackHandler-1.0: https://github.com/WoWUIDev/Ace3/CallbackHandler-1.0
   Libs/LibDataBroker-1:
     url: https://github.com/tekkub/LibDataBroker-1-1
     type: git
