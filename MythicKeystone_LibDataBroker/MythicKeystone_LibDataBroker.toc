@@ -9,10 +9,10 @@
 ## X-Wago-ID: XKq9ADKy
 
 #@no-lib-strip@
-libs\LibStub\LibStub.lua
-libs\LibDataBroker-1\LibDataBroker-1.1.lua
-libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
-libs\AceLocale-3.0\AceLocale-3.0.lua
+Libs\LibStub\LibStub.lua
+Libs\LibDataBroker-1\LibDataBroker-1.1.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\AceLocale-3.0\AceLocale-3.0.lua
 #@end-no-lib-strip@
 
 Locales\enUS.lua

@@ -1,4 +1,12 @@
 package-as: LibMythicKeystone
 
+externals:
+  Libs/LibStub:
+    url: https://repos.wowace.com/wow/libstub/trunk
+    type: svn
+  Libs/ChatThrottleLib:
+    url: https://repos.wowace.com/wow/chatthrottlelib/trunk
+    type: svn
+
 ignore:
   - .gitignore

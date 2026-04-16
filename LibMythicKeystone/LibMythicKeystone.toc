@@ -9,8 +9,8 @@
 ## X-Wago-ID: vNAegpNo
 
 #@no-lib-strip@
-libs\LibStub\LibStub.lua
-libs\ChatThrottleLib\ChatThrottleLib.lua
+Libs\LibStub\LibStub.lua
+Libs\ChatThrottleLib\ChatThrottleLib.lua
 #@end-no-lib-strip@
 
 # for debug
