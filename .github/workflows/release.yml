@@ -23,6 +23,8 @@ jobs:
         run: |
           git config core.worktree "$GITHUB_WORKSPACE"
           ln -s "$GITHUB_WORKSPACE/.git" LibMythicKeystone/.git
+      - name: Install subversion
+        run: sudo apt-get install -yq subversion
       - name: Package and release LibMythicKeystone
         uses: BigWigsMods/packager@v2
         with:
@@ -44,6 +46,8 @@ jobs:
         run: |
           git config core.worktree "$GITHUB_WORKSPACE"
           ln -s "$GITHUB_WORKSPACE/.git" MythicKeystone/.git
+      - name: Install subversion
+        run: sudo apt-get install -yq subversion
       - name: Package and release MythicKeystone
         uses: BigWigsMods/packager@v2
         with:
@@ -65,6 +69,8 @@ jobs:
         run: |
           git config core.worktree "$GITHUB_WORKSPACE"
           ln -s "$GITHUB_WORKSPACE/.git" MythicKeystone_LibDataBroker/.git
+      - name: Install subversion
+        run: sudo apt-get install -yq subversion
       - name: Package and release MythicKeystone_LibDataBroker
         uses: BigWigsMods/packager@v2
         with:
