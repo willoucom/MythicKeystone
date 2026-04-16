@@ -740,7 +740,7 @@ local function BuildButton()
     end)
     GuideBtn:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_LEFT")
-        GameTooltip:SetText("MythicPlus Guide", 1, 0.82, 0)
+        GameTooltip:SetText("Mythic Dungeon Notes", 1, 0.82, 0)
         GameTooltip:AddLine(L["GUIDE_tooltip_click"], 1, 1, 1)
         GameTooltip:AddLine(L["GUIDE_tooltip_drag"],  0.6, 0.6, 0.6)
         GameTooltip:Show()
@@ -783,7 +783,7 @@ local function BuildWindow()
 
     local titleFS = titleBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     titleFS:SetPoint("LEFT", 10, 0)
-    titleFS:SetText("|cffFFD700[M+]|r  MythicPlus Guide")
+    titleFS:SetText("Mythic Dungeon Notes")
 
     -- ── Close button ───────────────────────────────────────────────────────
     local closeBtn = CreateFrame("Button", nil, GuideWin, "UIPanelCloseButton")
