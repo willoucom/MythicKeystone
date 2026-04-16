@@ -193,7 +193,8 @@ def main() -> None:
     args = parser.parse_args()
 
     repo_root = Path(__file__).parent
-    pkgmeta_files = sorted(repo_root.glob("**/.pkgmeta"))
+    # Only look one level deep so we don't recurse into fetched Libs/ dirs.
+    pkgmeta_files = sorted(repo_root.glob("*/.pkgmeta"))
 
     if not pkgmeta_files:
         print("No .pkgmeta files found.")
