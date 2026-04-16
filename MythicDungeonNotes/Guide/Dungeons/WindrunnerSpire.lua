@@ -9,7 +9,7 @@ local L = ns.L
 -------------------------------------------------------------------------------
 
 -- HTML helpers
-local function h1(s) return "<h1>" .. s .. "</h1>" end
+local function h1(s) return "<h1>" .. s:gsub("&", "&amp;") .. "</h1>" end
 local function p(s)  return "<p>"  .. s .. "</p>"  end
 local function fmt(key, ...) return string.format(L[key], ...) end
 
