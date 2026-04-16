@@ -1,0 +1,11 @@
+package-as: MythicDungeonNotes
+
+externals:
+  Libs/LibStub: https://github.com/WoWUIDev/Ace3/LibStub
+  Libs/AceLocale-3.0: https://github.com/WoWUIDev/Ace3/AceLocale-3.0
+
+ignore:
+  - .gitignore
+  - Assets
+  - convert_assets.py
+  - deploy.ps1

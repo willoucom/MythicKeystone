@@ -1,0 +1,37 @@
+## Interface: 120001, 120005
+## Title: Mythic Dungeon Notes
+## Title-frFR: Mythic Dungeon Notes
+## Version: @project-version@
+## Notes: Mythic Dungeon Notes
+## Notes-frFR: Notes pour les donjons Mythique
+## SavedVariables: Mythic Dungeon Notes
+## X-Curse-Project-ID: 1515356
+## IconTexture: 525134
+
+# Libraries
+Libs\LibStub\LibStub.lua
+Libs\AceLocale-3.0\AceLocale-3.0.xml
+
+# Locale files
+Locales\enUS.lua
+Locales\frFR.lua
+
+core.lua
+
+# Guide module (standalone)
+Guide\GuideData.lua
+Guide\GuideFrame.lua
+
+# Guide — one file per dungeon (loaded after GuideData.lua)
+Guide\Dungeons\AlgetharAcademy.lua
+Guide\Dungeons\BlindingVale.lua
+Guide\Dungeons\DenOfNalorakk.lua
+Guide\Dungeons\MagistersTerrace.lua
+Guide\Dungeons\MaisaraCaverns.lua
+Guide\Dungeons\NexusPointXenas.lua
+Guide\Dungeons\PitOfSaron.lua
+Guide\Dungeons\SeatOfTriumvirate.lua
+Guide\Dungeons\Skyreach.lua
+Guide\Dungeons\WindrunnerSpire.lua
+Guide\Dungeons\MurderRow.lua
+Guide\Dungeons\VoidscarArena.lua

@@ -7,7 +7,33 @@ on:
 
 jobs:
 
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      libmythickeystone: ${{ steps.filter.outputs.libmythickeystone }}
+      mythickeystone: ${{ steps.filter.outputs.mythickeystone }}
+      mythickeystone-libdatabroker: ${{ steps.filter.outputs.mythickeystone-libdatabroker }}
+      mythicdungeonnotes: ${{ steps.filter.outputs.mythicdungeonnotes }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            libmythickeystone:
+              - 'LibMythicKeystone/**'
+            mythickeystone:
+              - 'MythicKeystone/**'
+            mythickeystone-libdatabroker:
+              - 'MythicKeystone_LibDataBroker/**'
+            mythicdungeonnotes:
+              - 'MythicDungeonNotes/**'
+
   release-libmythickeystone:
+    needs: changes
+    if: needs.changes.outputs.libmythickeystone == 'true'
     runs-on: ubuntu-latest
     env:
       CF_API_KEY: ${{ secrets.CF_API_KEY }}
@@ -29,6 +55,8 @@ jobs:
           args: -t LibMythicKeystone
 
   release-mythickeystone:
+    needs: changes
+    if: needs.changes.outputs.mythickeystone == 'true'
     runs-on: ubuntu-latest
     env:
       CF_API_KEY: ${{ secrets.CF_API_KEY }}
@@ -50,6 +78,8 @@ jobs:
           args: -t MythicKeystone
 
   release-mythickeystone-libdatabroker:
+    needs: changes
+    if: needs.changes.outputs.mythickeystone-libdatabroker == 'true'
     runs-on: ubuntu-latest
     env:
       CF_API_KEY: ${{ secrets.CF_API_KEY }}
@@ -69,3 +99,36 @@ jobs:
         uses: BigWigsMods/packager@v2
         with:
           args: -t MythicKeystone_LibDataBroker
+
+  release-mythicdungeonnotes:
+    needs: changes
+    if: needs.changes.outputs.mythicdungeonnotes == 'true'
+    runs-on: ubuntu-latest
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+      WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create .git symlink for monorepo
+        run: |
+          git config core.worktree "$GITHUB_WORKSPACE"
+          ln -s "$GITHUB_WORKSPACE/.git" MythicDungeonNotes/.git
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install Pillow
+        run: pip install Pillow
+      - name: Convert assets to TGA
+        run: python convert_assets.py
+      - name: Stage generated TGA files for packager
+        run: git add -f MythicDungeonNotes/Guide/Dungeons/Images/
+      - name: Package and release MythicDungeonNotes
+        uses: BigWigsMods/packager@v2
+        with:
+          args: -t MythicDungeonNotes
