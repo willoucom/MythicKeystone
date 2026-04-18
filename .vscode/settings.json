@@ -143,7 +143,6 @@
         "Add",
         "ChatFrame1",
         "WHISPER",
-        "GetAddOnMetadata",
         "GameFontHighlightLarge",
         "UISpecialFrames",
         "class",
@@ -162,7 +161,6 @@
         "UIDropDownMenu_AddButton",
         "GUILD",
         "FRIENDS",
-        "GetCursorPosition",
         "FriendsFrame",
         "UNKNOWN",
         "REMOTE_CHAT",
@@ -266,7 +264,6 @@
         "SecureButton_GetUnit",
         "BOOKTYPE_SPELL",
         "NUM_PET_ACTION_SLOTS",
-        "GetText",
         "CreateObjectPool",
         "STANDARD_TEXT_FONT",
         "MAX_TALENT_TIERS",
@@ -392,6 +389,23 @@
         "BACKDROP_CHARACTER_CREATE_TOOLTIP_32_32",
         "BACKDROP_DIALOG_32_32",
         "NUM_BAG_FRAMES",
-        "RaiderIO_ProfileTooltip"
-    ]
+        "RaiderIO_ProfileTooltip",
+        "NUM_BAG_SLOTS"
+    ],
+    "Lua.runtime.version": "Lua 5.1",
+    "Lua.runtime.builtin": {
+        "basic": "disable",
+        "debug": "disable",
+        "io": "disable",
+        "math": "disable",
+        "os": "disable",
+        "package": "disable",
+        "string": "disable",
+        "table": "disable",
+        "utf8": "disable"
+    },
+    "Lua.workspace.library": [
+        "~\\.vscode\\extensions\\ketho.wow-api-0.22.3\\Annotations\\Core"
+    ],
+    "Lua.type.weakUnionCheck": true
 }
