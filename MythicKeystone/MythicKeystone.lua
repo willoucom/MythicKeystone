@@ -14,7 +14,7 @@ Addon.GuildKeys = {}
 -------------------------------------------
 -- Tooltip
 local tooltipshow = function(self)
-    GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 0 , -20)
+    GameTooltip:SetOwner(self, "ANCHOR_CURSOR", -10 , -20)
     GameTooltip:SetText(L["Refresh"], 1, 1, 1,  0.9, true);
     GameTooltip:Show();
 end

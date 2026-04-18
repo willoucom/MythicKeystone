@@ -22,3 +22,4 @@ Locales\zhTW.lua
 
 MythicKeystone.lua
 AutoKeystone.lua
+TeleportButtons.lua
