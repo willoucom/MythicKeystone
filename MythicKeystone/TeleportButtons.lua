@@ -142,6 +142,16 @@ local function createToggleButton()
     return toggle
 end
 
+local function updateButtonPositions()
+    for _, entry in ipairs(findDungeonFrames()) do
+        local btn = teleportButtons[entry.mapID]
+        if btn then
+            btn:ClearAllPoints()
+            btn:SetPoint("BOTTOMRIGHT", entry.frame, "BOTTOMRIGHT", -2, 2)
+        end
+    end
+end
+
 local function initTeleportButtons()
     if initialized then return end
 
@@ -163,6 +173,7 @@ local function initTeleportButtons()
     initialized = next(teleportButtons) ~= nil
     if initialized then
         createToggleButton()
+        ChallengesFrame:HookScript("OnShow", updateButtonPositions)
     end
 end
 
