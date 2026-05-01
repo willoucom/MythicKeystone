@@ -1,7 +1,6 @@
-local ADDON, Addon = ...
+local ADDON = ...
 local L = LibStub("AceLocale-3.0"):GetLocale(ADDON)
 local button = {}
-local isKeyOwner = false
 
 
 local OnShow = function()
@@ -12,7 +11,6 @@ local OnShow = function()
                 C_Container.PickupContainerItem(bag, slot)
                 if (CursorHasItem()) then
                     C_ChallengeMode.SlotKeystone()
-                    isKeyOwner = true
                 end
             end
         end
@@ -53,21 +51,6 @@ local function countdown()
 end
 
 local OnEvent = function(self, event, ...)
-    if event == "CHALLENGE_MODE_RESET" then
-        isKeyOwner = false
-        return
-    end
-    if event == "CHALLENGE_MODE_COMPLETED" then
-        if isKeyOwner then
-            isKeyOwner = false
-            if MythicKeystoneDB and MythicKeystoneDB.completionMessage then
-                local completionInfo = C_ChallengeMode.GetChallengeCompletionInfo()
-                local msgs = (completionInfo and completionInfo.onTime) and Addon.completionMessagesSuccess or Addon.completionMessagesFailure
-                C_ChatInfo.SendChatMessage(msgs[math.random(#msgs)], IsInGroup(LE_PARTY_CATEGORY_HOME) and "PARTY" or "SAY")
-            end
-        end
-        return
-    end
     local adDon = ...
     if (adDon ~= "Blizzard_ChallengesUI") then
         return
@@ -111,33 +94,9 @@ local OnEvent = function(self, event, ...)
                 self:SetText(L["Countdown"])
             end
         end)
-
-        -- Options panel to the right of ChallengesKeystoneFrame
-        local optionsPanel = CreateFrame("Frame", nil, ChallengesKeystoneFrame, "BackdropTemplate")
-        optionsPanel:SetWidth(220)
-        optionsPanel:SetHeight(ChallengesKeystoneFrame:GetHeight())
-        optionsPanel:SetPoint("LEFT", ChallengesKeystoneFrame, "RIGHT", 5, 0)
-        optionsPanel:SetBackdrop(BACKDROP_TUTORIAL_16_16) ---@diagnostic disable-line: param-type-mismatch
-        optionsPanel:SetAlpha(0.9)
-
-        local optionsTitle = optionsPanel:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
-        optionsTitle:SetPoint("TOPLEFT", 8, -8)
-        optionsTitle:SetText(L["Options"])
-
-        -- Checkbox: send chat message on challenge completion
-        local chkCompletion = CreateFrame("CheckButton", nil, optionsPanel, "UICheckButtonTemplate")
-        chkCompletion:SetPoint("TOPLEFT", 4, -32)
-        chkCompletion.text:SetText(L["CompletionMessage"])
-        chkCompletion:SetChecked(MythicKeystoneDB and MythicKeystoneDB.completionMessage == true)
-        chkCompletion:SetScript("OnClick", function(self)
-            MythicKeystoneDB = MythicKeystoneDB or {}
-            MythicKeystoneDB.completionMessage = self:GetChecked()
-        end)
     end
 end
 
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
-frame:RegisterEvent("CHALLENGE_MODE_RESET")
-frame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 frame:SetScript("OnEvent", OnEvent)
