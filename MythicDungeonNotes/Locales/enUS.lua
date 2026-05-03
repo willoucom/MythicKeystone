@@ -25,6 +25,8 @@ L["COMMON_cc_immune"]       = "• Immune to CC"
 -- Algeth'ar Academy (AA) — uiMapId 2097
 L["AA_name"]              = "Algeth'ar Academy"
 L["AA_entrance_label"]    = "Entrance"
+L["AA_entrance_intro"]    = "Algeth'ar Academy — Dragonflight Legacy, Dragon Isles."
+L["AA_entrance_bosses"]   = "4 bosses: Overgrown Ancient -> Crawth -> Vexamus -> Echo of Doragosa."
 L["AA_entrance_desc"]     = "Each teacher grants a buff depending on their dragonflight."
 L["AA_bronze_drake_desc"] = "Bronze Dragonflight Recruiter"
 L["AA_bronze_drake"]      = "5% Haste"

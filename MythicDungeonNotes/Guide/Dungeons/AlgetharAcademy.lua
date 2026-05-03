@@ -33,8 +33,8 @@ ns.guideData[#ns.guideData + 1] = {
         {
             name = L["AA_entrance_label"],
             htmlContent = table.concat({
-                p("Académie d'Algeth'ar — Héritage Dragonflight, Ile aux dragons."),
-                p("4 bosses : Arbre-ancêtre envahi -> Crawth -> Vexamus -> Echo de Doragosa."),
+                p(L["AA_entrance_intro"]),
+                p(L["AA_entrance_bosses"]),
                 p(L["AA_entrance_desc"]),
                 "<img src='Interface/Addons/" .. myname .. "/Guide/Dungeons/Images/AA_map' width='500' height='300'/>",
                 p("|cffCD9B3A• |r" .. ICON_BRONZE .. " |cffCD9B3A" .. L["AA_bronze_drake_desc"] .. "|r — " .. L["AA_bronze_drake"] .. " — " .. ns.Spell(389512)),

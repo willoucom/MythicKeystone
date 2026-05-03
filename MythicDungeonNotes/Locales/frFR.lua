@@ -27,6 +27,8 @@ L["COMMON_cc_immune"]       = "• Immunisé aux CC"
 -- Académie d'Algeth'ar (AA) — uiMapId 2097
 L["AA_name"]              = "Académie d'Algeth'ar"
 L["AA_entrance_label"]    = "Entrée"
+L["AA_entrance_intro"]    = "Académie d'Algeth'ar — Héritage Dragonflight, Île aux Dragons."
+L["AA_entrance_bosses"]   = "4 bosses : Arbre-ancêtre envahi -> Crawth -> Vexamus -> Écho de Doragosa."
 L["AA_entrance_desc"]     = "Chaque professeur vous octroie un buff selon le type de sa Légion."
 L["AA_bronze_drake_desc"] = "Bronze"
 L["AA_bronze_drake"]      = "Hâte"
