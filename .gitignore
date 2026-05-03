@@ -5,5 +5,7 @@ Libs/
 libs/
 
 # MythicDungeonNotes
-MythicDungeonNotes/Guide/Dungeons/Images
+# Track .png sources (used by the web build), ignore .tga (regenerated locally
+# by convert_assets.py before packaging the addon).
+MythicDungeonNotes/Guide/Dungeons/Images/*.tga
 MythicDungeonNotes/deploy.ps1
