@@ -1,0 +1,21 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+  /** Path WITHOUT leading lang prefix and without trailing slash (e.g. "" for index, "AA" for guide). */
+  altPath: string;
+  title?: string;
+}
+const { lang, altPath, title } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const tEN = lang === 'en' ? 'active' : '';
+const tFR = lang === 'fr' ? 'active' : '';
+const enHref = `${base}en/${altPath ? altPath + '/' : ''}`;
+const frHref = `${base}fr/${altPath ? altPath + '/' : ''}`;
+---
+<header class="site">
+  <h1><a href={`${base}${lang}/`} style="color:inherit">{title ?? 'Mythic Dungeon Notes'}</a></h1>
+  <nav class="lang-switcher" aria-label="Language">
+    <a href={enHref} class={tEN}>EN</a>
+    <a href={frHref} class={tFR}>FR</a>
+  </nav>
+</header>

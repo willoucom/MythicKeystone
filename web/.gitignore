@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+src/data/locales/
+src/data/guides/
+src/data/index.json
+src/assets/
+public/images/

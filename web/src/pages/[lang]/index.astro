@@ -1,0 +1,68 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import AddonBanner from '../../components/AddonBanner.astro';
+import indexData from '../../data/index.json';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'fr' } }];
+}
+
+const { lang } = Astro.params as { lang: 'en' | 'fr' };
+const base = import.meta.env.BASE_URL;
+
+interface IndexEntry {
+  id: string;
+  shortName: string;
+  groups: string[];
+  name: Record<string, string>;
+}
+
+const dungeons = (indexData as { dungeons: IndexEntry[] }).dungeons;
+
+// Group by primary season group (S1, S2, ...). Fallback bucket "Other".
+const groupOrder = ['S1', 'S2', 'S3', 'S4'];
+const buckets: Record<string, IndexEntry[]> = {};
+for (const d of dungeons) {
+  const season = d.groups.find(g => groupOrder.includes(g)) ?? 'Other';
+  (buckets[season] ??= []).push(d);
+}
+
+const sortedSeasons = Object.keys(buckets).sort((a, b) => {
+  const ia = groupOrder.indexOf(a);
+  const ib = groupOrder.indexOf(b);
+  if (ia === -1 && ib === -1) return a.localeCompare(b);
+  if (ia === -1) return 1;
+  if (ib === -1) return -1;
+  return ia - ib;
+});
+
+const seasonLabel: Record<string, Record<string, string>> = {
+  en: { S1: 'Season 1', S2: 'Season 2', S3: 'Season 3', S4: 'Season 4', Other: 'Other dungeons' },
+  fr: { S1: 'Saison 1', S2: 'Saison 2', S3: 'Saison 3', S4: 'Saison 4', Other: 'Autres donjons' },
+};
+
+const pageTitle = lang === 'fr' ? 'Notes M+ — Donjons' : 'Mythic+ Notes — Dungeons';
+---
+<Base title={pageTitle} lang={lang}>
+  <Header lang={lang} altPath="" />
+  <main>
+    <AddonBanner lang={lang} />
+    {sortedSeasons.map(season => (
+      <section class="season-group">
+        <h2>{seasonLabel[lang][season] ?? season}</h2>
+        <div class="dungeon-grid">
+          {buckets[season]
+            .slice()
+            .sort((a, b) => (a.name[lang] ?? a.id).localeCompare(b.name[lang] ?? b.id))
+            .map(d => (
+              <article class="dungeon-card">
+                <a href={`${base}${lang}/${d.id}/`}>{d.name[lang] ?? d.id}</a>
+                <div class="short">{d.shortName}</div>
+              </article>
+            ))}
+        </div>
+      </section>
+    ))}
+  </main>
+</Base>

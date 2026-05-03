@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/MythicDungeonNotes.png';
+
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+
+const CURSEFORGE_URL = 'https://www.curseforge.com/wow/addons/mythic-dungeon-notes';
+const GITHUB_URL = 'https://github.com/willoucom/MythicKeystone';
+
+const t = {
+  en: {
+    title: 'Get the addon',
+    desc: 'These guides come from the MythicDungeonNotes addon. Install it to read them directly in-game while you run your keys — no Alt-Tab, no second screen.',
+    bullets: [
+      'Floating, draggable button — your guides are always one click away',
+      'Auto-selects the right guide when you enter a known dungeon',
+      'Teleport buttons added to the M+ challenge UI',
+      'Available in English and French',
+    ],
+    cta: 'Download on CurseForge',
+    sourceLabel: 'Source on GitHub',
+  },
+  fr: {
+    title: 'Téléchargez l\'addon',
+    desc: 'Ces guides proviennent de l\'addon MythicDungeonNotes. Installe-le pour les consulter directement en jeu pendant tes clés — pas d\'Alt-Tab, pas de second écran.',
+    bullets: [
+      'Bouton flottant déplaçable — tes guides toujours à un clic',
+      'Sélectionne automatiquement le bon guide à l\'entrée d\'un donjon connu',
+      'Boutons de téléportation ajoutés à l\'interface M+',
+      'Disponible en anglais et en français',
+    ],
+    cta: 'Télécharger sur CurseForge',
+    sourceLabel: 'Code source sur GitHub',
+  },
+};
+
+const labels = t[lang];
+---
+<aside class="addon-banner" role="complementary">
+  <Image
+    class="addon-banner__logo"
+    src={logo}
+    alt=""
+    width={120}
+    height={120}
+    densities={[1, 2]}
+    format="webp"
+    loading="eager"
+  />
+  <div class="addon-banner__text">
+    <h2>{labels.title}</h2>
+    <p>{labels.desc}</p>
+    <ul>
+      {labels.bullets.map(b => <li>{b}</li>)}
+    </ul>
+  </div>
+  <div class="addon-banner__actions">
+    <a
+      class="addon-banner__cta"
+      href={CURSEFORGE_URL}
+      rel="noopener"
+      target="_blank"
+      data-goatcounter-click="cta-curseforge"
+      data-goatcounter-title={`CurseForge download (${lang})`}
+    >
+      {labels.cta}
+    </a>
+    <a
+      class="addon-banner__source"
+      href={GITHUB_URL}
+      rel="noopener"
+      target="_blank"
+      data-goatcounter-click="cta-github"
+      data-goatcounter-title={`GitHub source (${lang})`}
+    >
+      {labels.sourceLabel}
+    </a>
+  </div>
+</aside>

@@ -1,0 +1,28 @@
+---
+import '../styles/main.scss';
+
+interface Props {
+  title: string;
+  lang: 'en' | 'fr';
+}
+const { title, lang } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <script is:inline>
+      // Must execute BEFORE power.js so the config is read.
+      // is:inline prevents Astro from bundling this as a deferred module.
+      var whTooltips = { colorLinks: true, iconizeLinks: true, renameLinks: true };
+    </script>
+    <script is:inline async src="https://wow.zamimg.com/widgets/power.js"></script>
+    <!-- GoatCounter analytics (cookieless, GDPR-friendly, auto-skips localhost) -->
+    <script is:inline data-goatcounter="https://mythickeystone.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

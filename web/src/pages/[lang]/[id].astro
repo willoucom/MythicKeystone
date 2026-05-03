@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import GuideSection from '../../components/GuideSection.astro';
+import indexData from '../../data/index.json';
+
+interface IndexEntry { id: string; shortName: string; groups: string[]; name: Record<string, string>; }
+interface GuideJson {
+  id: string;
+  name: string;
+  shortName: string;
+  groups: string[];
+  sections: { name: string; html: string }[];
+}
+
+export async function getStaticPaths() {
+  const idx = (await import('../../data/index.json')).default as { dungeons: IndexEntry[] };
+  const paths = [];
+  for (const lang of ['en', 'fr'] as const) {
+    for (const d of idx.dungeons) {
+      const guide = (await import(`../../data/guides/${lang}/${d.id}.json`)).default as GuideJson;
+      paths.push({ params: { lang, id: d.id }, props: { guide } });
+    }
+  }
+  return paths;
+}
+
+const { lang } = Astro.params as { lang: 'en' | 'fr' };
+const { guide } = Astro.props as { guide: GuideJson };
+const base = import.meta.env.BASE_URL;
+
+const backLabel = lang === 'fr' ? '← Retour à la liste' : '← Back to list';
+const noContent = lang === 'fr' ? 'Le guide pour ce donjon est en cours de rédaction.' : 'The guide for this dungeon is being written.';
+---
+<Base title={`${guide.name} — Mythic Notes`} lang={lang}>
+  <Header lang={lang} altPath={guide.id} />
+  <main>
+    <a href={`${base}${lang}/`} class="guide-back">{backLabel}</a>
+    <div class="guide-header">
+      <h1>{guide.name}</h1>
+    </div>
+    {guide.sections.length === 0 ? (
+      <p class="guide-section"><em>{noContent}</em></p>
+    ) : (
+      guide.sections.map(s => <GuideSection name={s.name} html={s.html} />)
+    )}
+  </main>
+</Base>

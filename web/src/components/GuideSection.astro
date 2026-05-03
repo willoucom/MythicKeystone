@@ -1,0 +1,11 @@
+---
+interface Props {
+  name: string;
+  html: string;
+}
+const { name, html } = Astro.props;
+---
+<section class="guide-section">
+  <h2>{name}</h2>
+  <div set:html={html} />
+</section>

@@ -1,0 +1,258 @@
+// ─── Theme ────────────────────────────────────────────────────────────────
+// Defined as CSS custom properties so they can be overridden at runtime
+// (light theme switch, per-page accent, etc.) without recompiling SCSS.
+
+:root {
+  --bg: #1a1612;
+  --bg-elev: #241e18;
+  --fg: #e6dcc8;
+  --muted: #9c907a;
+  --accent: #ffcc00;
+  --accent-soft: #ffd97a;
+  --border: #3a322a;
+  --link: #71d5ff;
+}
+
+// ─── SCSS tokens (compile-time only) ──────────────────────────────────────
+$radius-sm: 3px;
+$radius-md: 6px;
+$container-max: 1100px;
+
+// ─── Resets & base ────────────────────────────────────────────────────────
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.55;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+main {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+// ─── Header ───────────────────────────────────────────────────────────────
+header.site {
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+}
+
+.lang-switcher {
+  display: flex;
+  gap: 0.25rem;
+
+  a {
+    padding: 0.25rem 0.5rem;
+    border-radius: $radius-sm;
+    color: var(--muted);
+
+    &.active {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 600;
+    }
+  }
+}
+
+// ─── Addon promotion banner ───────────────────────────────────────────────
+.addon-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, var(--bg-elev), color-mix(in srgb, var(--accent) 8%, var(--bg-elev)));
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+  border-radius: $radius-md;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+
+  &__logo {
+    flex: 0 0 auto;
+    width: 120px;
+    height: 120px;
+    border-radius: $radius-md;
+    box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  &__text {
+    flex: 1 1 320px;
+
+    h2 {
+      margin: 0 0 0.4rem;
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 0 0 0.5rem;
+      color: var(--fg);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+
+      li {
+        margin: 0.15rem 0;
+      }
+    }
+  }
+
+  &__actions {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+  }
+
+  &__cta {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    padding: 0.6rem 1.2rem;
+    border-radius: $radius-sm;
+    text-decoration: none;
+    transition: transform 0.1s, filter 0.1s;
+
+    &:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+  }
+
+  &__source {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+}
+
+// ─── Dungeon index ────────────────────────────────────────────────────────
+.season-group h2 {
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.25rem;
+  margin-top: 2rem;
+}
+
+.dungeon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.dungeon-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
+  padding: 1rem;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: var(--accent);
+  }
+
+  a {
+    color: var(--fg);
+    font-weight: 600;
+    display: block;
+  }
+
+  .short {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
+}
+
+// ─── Guide page ───────────────────────────────────────────────────────────
+.guide-header h1 {
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.guide-back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+
+.guide-section {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+
+  > h2 {
+    margin-top: 0;
+    color: var(--accent);
+    font-size: 1.15rem;
+  }
+
+  h1 {
+    font-size: 1.05rem;
+    color: var(--accent-soft);
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.15rem;
+  }
+
+  p {
+    margin: 0.4rem 0;
+  }
+
+  img:not(.wow-icon) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+  }
+}
+
+// ─── Wowhead-decorated bits ───────────────────────────────────────────────
+.wow-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 2px;
+  border-radius: $radius-sm;
+}
+
+.wow-link {
+  white-space: nowrap;
+}
