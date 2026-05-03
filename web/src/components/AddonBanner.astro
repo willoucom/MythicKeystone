@@ -8,6 +8,7 @@ interface Props {
 const { lang } = Astro.props;
 
 const CURSEFORGE_URL = 'https://www.curseforge.com/wow/addons/mythic-dungeon-notes';
+const WAGO_URL = 'https://addons.wago.io/addons/mythic-dungeon-notes';
 const GITHUB_URL = 'https://github.com/willoucom/MythicKeystone';
 
 const t = {
@@ -20,7 +21,8 @@ const t = {
       'Teleport buttons added to the M+ challenge UI',
       'Available in English and French',
     ],
-    cta: 'Download on CurseForge',
+    ctaCurseforge: 'Download on CurseForge',
+    ctaWago: 'Download on Wago',
     sourceLabel: 'Source on GitHub',
   },
   fr: {
@@ -32,7 +34,8 @@ const t = {
       'Boutons de téléportation ajoutés à l\'interface M+',
       'Disponible en anglais et en français',
     ],
-    cta: 'Télécharger sur CurseForge',
+    ctaCurseforge: 'Télécharger sur CurseForge',
+    ctaWago: 'Télécharger sur Wago',
     sourceLabel: 'Code source sur GitHub',
   },
 };
@@ -66,7 +69,17 @@ const labels = t[lang];
       data-goatcounter-click="cta-curseforge"
       data-goatcounter-title={`CurseForge download (${lang})`}
     >
-      {labels.cta}
+      {labels.ctaCurseforge}
+    </a>
+    <a
+      class="addon-banner__cta"
+      href={WAGO_URL}
+      rel="noopener"
+      target="_blank"
+      data-goatcounter-click="cta-wago"
+      data-goatcounter-title={`Wago download (${lang})`}
+    >
+      {labels.ctaWago}
     </a>
     <a
       class="addon-banner__source"
