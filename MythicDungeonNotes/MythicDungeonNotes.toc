@@ -6,6 +6,7 @@
 ## Notes-frFR: Notes pour les donjons Mythique
 ## SavedVariables: Mythic Dungeon Notes
 ## X-Curse-Project-ID: 1515356
+## X-Wago-ID: rN4kdzGD
 ## IconTexture: 525134
 
 # Libraries
