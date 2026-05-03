@@ -334,6 +334,7 @@ L["MT_boss3_desc4"]                   = "• %s — If targeted, move away from 
 L["MT_boss4_desc1"]                   = "• Avoid the %s beam that cuts the arena in two, and split the group on both sides of the beam to soak %s."
 L["MT_boss4_desc2"]                   = "• The tank must avoid cleaving allies with %s, then back away and get dispelled by the healer to remove the magic DoT and place the pool away from melee. The boss does not melee: it uses %s on the tank regardless of position."
 L["MT_boss4_desc3"]                   = "• %s — Debuffs multiple players with different durations; be ready with a defensive if the duration is long, and aim orbs so other players can see them."
+L["MT_boss4_desc4"]                   = "|cffFF4444!! Critical:|r Degentrius periodically casts %s, which bounces around the room before forming a %s. The closest player must rush onto the zone to soak the damage and prevent the rest of the group from taking it."
 
 -- Maisara Caverns (MC) — uiMapId 2501
 L["MC_name"]              = "Maisara Caverns"

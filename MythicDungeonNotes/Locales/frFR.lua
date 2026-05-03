@@ -336,6 +336,7 @@ L["MT_boss3_desc4"]                   = "• %s — Si ciblé, s'éloigner du pu
 L["MT_boss4_desc1"]                   = "• Éviter le rayon %s qui coupe l'arène en deux, et répartir le groupe des deux côtés du rayon pour absorber les %s."
 L["MT_boss4_desc2"]                   = "• Le tank doit éviter de cleave les alliés avec %s, puis reculer et se faire dispel par le healer pour retirer le DoT magique et déposer la flaque hors de la mêlée. Le boss ne mêle pas : il utilise %s sur le tank quelle que soit sa position."
 L["MT_boss4_desc3"]                   = "• %s — Debuff plusieurs joueurs avec des durées différentes ; être prêt avec un défensif si la durée est longue, et orienter les orbes de façon à ce qu'ils soient visibles pour les autres joueurs."
+L["MT_boss4_desc4"]                   = "|cffFF4444!! Critique :|r Degentrius lance périodiquement %s qui rebondit dans la pièce avant de former une %s. Le joueur le plus proche doit se précipiter sur la zone pour absorber les dégâts et éviter qu'ils ne touchent tout le groupe."
 
 -- Cavernes de Maisara (MC) — uiMapId 2501
 L["MC_name"]              = "Cavernes de Maisara"

@@ -130,6 +130,7 @@ ns.guideData[#ns.guideData + 1] = {
             name = L["MT_boss4"],
             htmlContent = table.concat({
                 h1(L["MT_boss4"]),
+                p(fmt("MT_boss4_desc4", ns.Spell(1215087), ns.Spell(1215941))),
                 p(fmt("MT_boss4_desc1", ns.Spell(1214714), ns.Spell(1215157))),
                 p(fmt("MT_boss4_desc2", ns.Spell(1280113), ns.Spell(1271066))),
                 p(fmt("MT_boss4_desc3", ns.Spell(1215897))),
