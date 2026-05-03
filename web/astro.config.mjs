@@ -1,12 +1,13 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
-// For GitHub Pages at https://<user>.github.io/MythicKeystone/
-// Same base used in dev (URL is http://localhost:4321/MythicKeystone/en/).
-const base = '/MythicKeystone';
+// Production canonical URL — used for sitemap, OpenGraph absolute URLs, etc.
+const SITE = 'https://www.willou.com';
+const BASE = '/MythicKeystone';
 
 export default defineConfig({
-  site: 'https://example.github.io',
-  base,
+  site: SITE,
+  base: BASE,
   trailingSlash: 'always',
   i18n: {
     defaultLocale: 'en',
@@ -18,4 +19,12 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'en', fr: 'fr' },
+      },
+    }),
+  ],
 });

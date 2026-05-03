@@ -42,9 +42,26 @@ const seasonLabel: Record<string, Record<string, string>> = {
   fr: { S1: 'Saison 1', S2: 'Saison 2', S3: 'Saison 3', S4: 'Saison 4', Other: 'Autres donjons' },
 };
 
-const pageTitle = lang === 'fr' ? 'Notes M+ — Donjons' : 'Mythic+ Notes — Dungeons';
+const pageTitle = lang === 'fr'
+  ? 'Notes M+ — Guides de donjons Mythique+ pour World of Warcraft'
+  : 'Mythic+ Notes — World of Warcraft Mythic+ dungeon guides';
+const pageDescription = lang === 'fr'
+  ? 'Guides Mythique+ pour les 12 donjons de la saison : stratégies de boss, mécaniques de trash, routes et téléportation. Site compagnon de l\'addon MythicDungeonNotes, bilingue EN/FR.'
+  : 'Mythic+ guides for the 12 seasonal dungeons: boss strategies, trash mechanics, routes and teleports. Companion site for the MythicDungeonNotes addon, in English and French.';
+
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: pageTitle,
+  itemListElement: dungeons.map((d, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: d.name[lang] ?? d.id,
+    url: `${Astro.site!.href.replace(/\/$/, '')}${base}${lang}/${d.id}/`,
+  })),
+};
 ---
-<Base title={pageTitle} lang={lang}>
+<Base title={pageTitle} description={pageDescription} lang={lang} altPath="" jsonLd={itemListJsonLd}>
   <Header lang={lang} altPath="" />
   <main>
     <AddonBanner lang={lang} />

@@ -28,11 +28,81 @@ export async function getStaticPaths() {
 const { lang } = Astro.params as { lang: 'en' | 'fr' };
 const { guide } = Astro.props as { guide: GuideJson };
 const base = import.meta.env.BASE_URL;
+const SITE = Astro.site!.href.replace(/\/$/, '');
 
 const backLabel = lang === 'fr' ? '← Retour à la liste' : '← Back to list';
 const noContent = lang === 'fr' ? 'Le guide pour ce donjon est en cours de rédaction.' : 'The guide for this dungeon is being written.';
+
+// SEO ────────────────────────────────────────────────────────────────────────
+const pageTitle = lang === 'fr'
+  ? `${guide.name} — Guide Mythique+ | Notes M+`
+  : `${guide.name} — Mythic+ guide | Mythic Notes`;
+
+// Build a description from the first paragraph(s) of the guide content.
+// Strips HTML tags, collapses whitespace, and truncates to ~155 chars.
+function htmlToPlainText(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function truncate(s: string, max: number): string {
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut) + '…';
+}
+
+const fallbackDesc = lang === 'fr'
+  ? `Guide Mythique+ pour ${guide.name} : stratégies de boss, mécaniques de trash et mobs notables. Issu de l'addon MythicDungeonNotes.`
+  : `Mythic+ guide for ${guide.name}: boss strategies, trash mechanics and notable mobs. From the MythicDungeonNotes addon.`;
+
+const firstSectionText = guide.sections.length > 0 ? htmlToPlainText(guide.sections[0].html) : '';
+const pageDescription = firstSectionText.length > 60
+  ? truncate(firstSectionText, 155)
+  : fallbackDesc;
+
+// JSON-LD: Article + BreadcrumbList for rich snippets.
+const pageUrl = `${SITE}${base}${lang}/${guide.id}/`;
+const indexUrl = `${SITE}${base}${lang}/`;
+const indexLabel = lang === 'fr' ? 'Donjons' : 'Dungeons';
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: `${guide.name} — ${lang === 'fr' ? 'Guide Mythique+' : 'Mythic+ guide'}`,
+  description: pageDescription,
+  inLanguage: lang === 'fr' ? 'fr-FR' : 'en-US',
+  url: pageUrl,
+  mainEntityOfPage: pageUrl,
+  about: {
+    '@type': 'Thing',
+    name: guide.name,
+  },
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: indexLabel, item: indexUrl },
+    { '@type': 'ListItem', position: 2, name: guide.name, item: pageUrl },
+  ],
+};
 ---
-<Base title={`${guide.name} — Mythic Notes`} lang={lang}>
+<Base
+  title={pageTitle}
+  description={pageDescription}
+  lang={lang}
+  altPath={guide.id}
+  jsonLd={[articleJsonLd, breadcrumbJsonLd]}
+>
   <Header lang={lang} altPath={guide.id} />
   <main>
     <a href={`${base}${lang}/`} class="guide-back">{backLabel}</a>
