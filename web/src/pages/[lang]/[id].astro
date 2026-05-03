@@ -35,8 +35,8 @@ const noContent = lang === 'fr' ? 'Le guide pour ce donjon est en cours de réda
 
 // SEO ────────────────────────────────────────────────────────────────────────
 const pageTitle = lang === 'fr'
-  ? `${guide.name} — Guide Mythique+ | Notes M+`
-  : `${guide.name} — Mythic+ guide | Mythic Notes`;
+  ? `${guide.name} — Guide Mythique+ WoW | Notes M+`
+  : `${guide.name} — World of Warcraft Mythic+ guide | Mythic Notes`;
 
 // Build a description from the first paragraph(s) of the guide content.
 // Strips HTML tags, collapses whitespace, and truncates to ~155 chars.
@@ -59,14 +59,18 @@ function truncate(s: string, max: number): string {
   return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut) + '…';
 }
 
-const fallbackDesc = lang === 'fr'
-  ? `Guide Mythique+ pour ${guide.name} : stratégies de boss, mécaniques de trash et mobs notables. Issu de l'addon MythicDungeonNotes.`
-  : `Mythic+ guide for ${guide.name}: boss strategies, trash mechanics and notable mobs. From the MythicDungeonNotes addon.`;
+// Structured prefix carries the SEO keywords ("World of Warcraft", "Mythic+");
+// the auto-extracted content adds dungeon-specific text after it.
+const seoPrefix = lang === 'fr'
+  ? `Guide Mythique+ World of Warcraft pour ${guide.name}.`
+  : `World of Warcraft Mythic+ guide for ${guide.name}.`;
 
 const firstSectionText = guide.sections.length > 0 ? htmlToPlainText(guide.sections[0].html) : '';
-const pageDescription = firstSectionText.length > 60
-  ? truncate(firstSectionText, 155)
-  : fallbackDesc;
+const fallbackDetail = lang === 'fr'
+  ? 'Stratégies de boss, mécaniques de trash, routes et abilities. Issu de l\'addon MythicDungeonNotes.'
+  : 'Boss strategies, trash mechanics, routes and key abilities. From the MythicDungeonNotes addon.';
+const detail = firstSectionText.length > 60 ? firstSectionText : fallbackDetail;
+const pageDescription = truncate(`${seoPrefix} ${detail}`, 158);
 
 // JSON-LD: Article + BreadcrumbList for rich snippets.
 const pageUrl = `${SITE}${base}${lang}/${guide.id}/`;
@@ -76,15 +80,19 @@ const indexLabel = lang === 'fr' ? 'Donjons' : 'Dungeons';
 const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: `${guide.name} — ${lang === 'fr' ? 'Guide Mythique+' : 'Mythic+ guide'}`,
+  headline: lang === 'fr'
+    ? `${guide.name} — Guide Mythique+ World of Warcraft`
+    : `${guide.name} — World of Warcraft Mythic+ guide`,
   description: pageDescription,
   inLanguage: lang === 'fr' ? 'fr-FR' : 'en-US',
   url: pageUrl,
   mainEntityOfPage: pageUrl,
   about: {
-    '@type': 'Thing',
-    name: guide.name,
+    '@type': 'VideoGame',
+    name: 'World of Warcraft',
+    sameAs: 'https://www.wikidata.org/wiki/Q131908',
   },
+  keywords: ['World of Warcraft', 'WoW', 'Mythic+', 'M+', guide.name, 'dungeon guide', 'MythicDungeonNotes'],
 };
 
 const breadcrumbJsonLd = {

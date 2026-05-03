@@ -43,16 +43,18 @@ const seasonLabel: Record<string, Record<string, string>> = {
 };
 
 const pageTitle = lang === 'fr'
-  ? 'Notes M+ — Guides de donjons Mythique+ pour World of Warcraft'
-  : 'Mythic+ Notes — World of Warcraft Mythic+ dungeon guides';
+  ? 'Guides Mythique+ World of Warcraft — Notes M+'
+  : 'World of Warcraft Mythic+ Dungeon Guides — Mythic Notes';
 const pageDescription = lang === 'fr'
-  ? 'Guides Mythique+ pour les 12 donjons de la saison : stratégies de boss, mécaniques de trash, routes et téléportation. Site compagnon de l\'addon MythicDungeonNotes, bilingue EN/FR.'
-  : 'Mythic+ guides for the 12 seasonal dungeons: boss strategies, trash mechanics, routes and teleports. Companion site for the MythicDungeonNotes addon, in English and French.';
+  ? 'Guides Mythique+ World of Warcraft pour les 12 donjons de la saison : stratégies de boss, mécaniques de trash, routes et téléportation. Site compagnon de l\'addon MythicDungeonNotes, bilingue EN/FR.'
+  : 'World of Warcraft Mythic+ guides for the 12 seasonal dungeons: boss strategies, trash mechanics, routes and teleports. Companion site for the MythicDungeonNotes addon, in English and French.';
 
 const itemListJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: pageTitle,
+  description: pageDescription,
+  keywords: ['World of Warcraft', 'WoW', 'Mythic+', 'M+', 'dungeon guide', 'MythicDungeonNotes'],
   itemListElement: dungeons.map((d, i) => ({
     '@type': 'ListItem',
     position: i + 1,
