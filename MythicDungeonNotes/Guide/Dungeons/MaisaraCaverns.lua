@@ -50,6 +50,8 @@ ns.guideData[#ns.guideData + 1] = {
                 p(fmt("MC_trash_soulrender_desc1", ns.Spell(1259677), ns.Spell(1264327), ns.Spell(1271623))),
                 h1(L["MC_trash_defender_name"]),
                 p(fmt("MC_trash_defender_desc1", ns.Spell(1259270), ns.Spell(1259651), ns.Spell(269928))),
+                h1(L["MC_trash_shade_name"]),
+                p(fmt("MC_trash_shade_desc1", ns.Spell(1259255))),
             }),
         },
         -- ── Boss 1 : Muro'jin & Nekraxx ───────────────────────────────────
