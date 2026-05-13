@@ -236,10 +236,39 @@ L["BV_name"]              = "The Blinding Vale"
 -- Den of Nalorakk (DN) — uiMapId 2513
 L["DN_name"]              = "Den of Nalorakk"
 L["DN_intro_label"]       = "Introduction"
-L["DN_intro_desc"]        = "Den of Nalorakk — New dungeon, Midnight Season 1."
+L["DN_intro_desc1"]       = "Den of Nalorakk — New dungeon, Midnight Season 2."
+L["DN_intro_desc2"]       = "3 bosses: The Hoardmonger -> Sentinel of Winter -> Nalorakk."
 L["DN_incense_label"]     = "Warding Incense"
 L["DN_incense_desc"]      = "A Warding Incense brazier is located near the dungeon entrance."
 L["DN_buff_alchemy_desc"] = "Midnight Alchemists (skill 25) and Bear Form Druids can burn incense: +1% Versatility for 10 minutes for the whole party."
+-- Notable Trash
+L["DN_trash_label"]       = "Notable Trash"
+L["DN_trash_todo"]        = "TODO: list notable Amani trash (Beasthandlers, Frost Loa Initiates, patrolling Wind Serpents) and their key abilities."
+-- Boss names (used as section titles)
+L["DN_boss1"]             = "The Hoardmonger"
+L["DN_boss2"]             = "Sentinel of Winter"
+L["DN_boss3"]             = "Nalorakk"
+-- Boss 1 — The Hoardmonger
+L["DN_boss1_desc1"]       = "%s — At 90%%, 60%% and 30%% HP, the boss raids a resource pile and gains a new ability. On Mythic, every gained ability is kept until the end."
+L["DN_boss1_desc2"]       = "%s — The boss tosses rotten food at random players (Nature damage) or seeds Rotten Mushrooms across the arena. Mushrooms detonate after 12s in a Putrid Burst, applying %s (stacking poison DoT). Soak only if needed and never in melee."
+L["DN_boss1_desc3"]       = "%s — Frontal cone Nature slam. Stay out of his front; tank face the wall."
+L["DN_boss1_desc4"]       = "%s — Raid-wide Physical roar that ignores armor. Use a personal or major raid CD on cast."
+L["DN_boss1_desc5"]       = "Possible add-ons via Resourceful Measures: %s (more mushrooms), %s (frontal + lasting bone spikes that root), %s (raid burst + 8s bleeding DoT, ignores armor)."
+-- Boss 2 — Sentinel of Winter
+L["DN_boss2_desc1"]       = "%s — The boss splits ice into two icicles that splinter for Frost damage and reveal a Fractured Shivercore add. Spread targeted markers."
+L["DN_boss2_desc2"]       = "%s — The Shivercore channels: interrupt it (Frost damage + stacking +10%% Frost taken for 20s). Kill the Shivercore quickly."
+L["DN_boss2_desc3"]       = "%s — Wandering frost storms (1m30) that hit on impact and damage anyone within 2 yards. Dodge them all fight long."
+L["DN_boss2_desc4"]       = "%s — Frost DoT every 2s for 16s. Dispellable — clear it on healers/DPS first."
+L["DN_boss2_desc5"]       = "%s — At 100 energy, the Sentinel raises a frozen veil absorbing 15%% max HP that pushes everyone back and ticks Frost damage every second until broken. Burn it down ASAP, save big CDs."
+L["DN_boss2_desc6"]       = "%s — On Shivercore death, a snowdrift spawns: -40%% movement speed but immune to forced movement. Use it to negate Eternal Winter knockbacks."
+L["DN_boss2_desc7"]       = "Mythic: %s spawns ice shards landing after 6s — players must intercept them, otherwise %s roots the whole raid for 4s."
+-- Boss 3 — Nalorakk
+L["DN_boss3_intro"]       = "Zul'jarra (friendly NPC) fights alongside the group and interposes between the tank and Nalorakk. She alternates between two roles: shielding the tank from Onslaught while standing in front, and being targeted by Echoes that the group must intercept."
+L["DN_boss3_desc1"]       = "%s — Nalorakk headbutts Zul'jarra into %s, then commands Echoes to charge her. Echoes hitting their first target inflict %s — DPS must intercept before they reach Zul'jarra."
+L["DN_boss3_desc2"]       = "%s — Players are marked for 4s; an Echo then spawns at their location dealing Nature damage in 8 yards. Drop these away from the group."
+L["DN_boss3_desc3"]       = "%s — Raid-wide Physical shout, ignores armor, 3s knockback. Use personals; position so the knockback doesn't push you into Echoes."
+L["DN_boss3_desc4"]       = "%s — Tank takes repeated swipes over 4s, stacking damage taken. Move behind Zul'jarra to gain %s (-50%% damage from Onslaught)."
+L["DN_boss3_desc5"]       = "Mythic: %s — Echoes apply a 20s stacking bleed on slashed players. Avoid Echo paths."
 
 -- Magisters' Terrace (MT) — uiMapId 2520
 L["MT_name"]              = "Magisters' Terrace"

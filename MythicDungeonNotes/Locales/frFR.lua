@@ -238,10 +238,39 @@ L["BV_name"]              = "Le val Aveuglant"
 -- Tanière de Nalorakk (DN) — uiMapId 2513
 L["DN_name"]              = "Tanière de Nalorakk"
 L["DN_intro_label"]       = "Introduction"
-L["DN_intro_desc"]        = "Tanière de Nalorakk — Midnight Saison 1, nouveau donjon."
+L["DN_intro_desc1"]       = "Tanière de Nalorakk — Midnight Saison 2, nouveau donjon."
+L["DN_intro_desc2"]       = "3 boss : Le Thésauriseur -> Sentinelle de l'Hiver -> Nalorakk."
 L["DN_incense_label"]     = "Encens Protecteur"
 L["DN_incense_desc"]      = "Un brasero d'Encens Protecteur est situé près de l'entrée du donjon."
 L["DN_buff_alchemy_desc"] = "Les Alchimistes de Minuit (compétence 25) et les Druides en forme d'ours peuvent brûler l'encens : +1% Polyvalence pendant 10 minutes pour tout le groupe."
+-- Trash notable
+L["DN_trash_label"]       = "Trash notable"
+L["DN_trash_todo"]        = "TODO : lister les trash Amani notables (Maîtres-bêtes, Initiés du Loa de Glace, Serpents-vents en patrouille) et leurs sorts clés."
+-- Noms de sections (titres de boss)
+L["DN_boss1"]             = "Le Thésauriseur"
+L["DN_boss2"]             = "Sentinelle de l'Hiver"
+L["DN_boss3"]             = "Nalorakk"
+-- Boss 1 — Le Thésauriseur
+L["DN_boss1_desc1"]       = "%s — À 90%%, 60%% et 30%% PV, le boss pille un tas de ressources et gagne un nouveau sort. En Mythique, les sorts gagnés sont conservés jusqu'à la fin."
+L["DN_boss1_desc2"]       = "%s — Le boss lance de la nourriture pourrie sur des cibles aléatoires (dégâts de Nature) ou disperse des Champignons Pourris dans l'arène. Ces champignons explosent après 12 s en Souffle Putride, appliquant %s (DoT poison cumulable). Ne pas soak en mêlée."
+L["DN_boss1_desc3"]       = "%s — Slam de Nature en cône frontal. Sortir du frontal ; le tank oriente le boss face au mur."
+L["DN_boss1_desc4"]       = "%s — Rugissement Physique sur le raid qui ignore l'armure. Pop une perso ou une CD raid au cast."
+L["DN_boss1_desc5"]       = "Sorts ajoutés via Mesures Astucieuses : %s (plus de champignons), %s (cône + pics d'os persistants qui root), %s (burst raid + saignement 8 s, ignore l'armure)."
+-- Boss 2 — Sentinelle de l'Hiver
+L["DN_boss2_desc1"]       = "%s — Le boss fend la glace en deux icicles qui éclatent en dégâts de Givre et révèlent un Cœur de Givre Fissuré (add). Espacer les marqueurs."
+L["DN_boss2_desc2"]       = "%s — Le Cœur de Givre channel : à interrompre (dégâts de Givre + +10%% dégâts Givre subis cumulables 20 s). Tuer le Cœur rapidement."
+L["DN_boss2_desc3"]       = "%s — Tempêtes de givre errantes (1 min 30) qui font des dégâts à l'impact et à toute personne dans 2 m. À esquiver pendant tout le combat."
+L["DN_boss2_desc4"]       = "%s — DoT Givre toutes les 2 s pendant 16 s. Dissipable — purger sur les heals/DPS en priorité."
+L["DN_boss2_desc5"]       = "%s — À 100 d'énergie, la Sentinelle dresse un voile gelé qui absorbe 15%% PV max, repousse tout le monde et tick des dégâts de Givre par seconde jusqu'à rupture. Burn ASAP, sortir les grosses CD."
+L["DN_boss2_desc6"]       = "%s — À la mort du Cœur de Givre, une congère apparaît : -40%% vitesse mais immunité aux mouvements forcés. À utiliser pour annuler le knockback d'Hiver Éternel."
+L["DN_boss2_desc7"]       = "Mythique : %s fait tomber des éclats de glace après 6 s — les joueurs doivent les intercepter, sinon %s root tout le raid 4 s."
+-- Boss 3 — Nalorakk
+L["DN_boss3_intro"]       = "Zul'jarra (PNJ allié) combat aux côtés du groupe et s'interpose entre le tank et Nalorakk. Elle alterne entre deux rôles : protéger le tank d'Onslaught en se plaçant devant lui, et être ciblée par des Échos que le groupe doit intercepter."
+L["DN_boss3_desc1"]       = "%s — Nalorakk projette Zul'jarra en %s d'un coup de tête, puis commande à des Échos de la charger. Les Échos qui touchent leur première cible infligent %s — les DPS doivent les intercepter avant qu'ils n'atteignent Zul'jarra."
+L["DN_boss3_desc2"]       = "%s — Les joueurs marqués font apparaître un Écho à leur position après 4 s, infligeant des dégâts de Nature dans 8 m. Déposer la marque loin du groupe."
+L["DN_boss3_desc3"]       = "%s — Hurlement Physique raid, ignore l'armure, knockback 3 s. Pop perso ; positionnez-vous pour ne pas être projeté dans un Écho."
+L["DN_boss3_desc4"]       = "%s — Le tank subit des griffes répétées sur 4 s avec stack de vulnérabilité. Se placer derrière Zul'jarra pour bénéficier de %s (-50%% dégâts d'Onslaught)."
+L["DN_boss3_desc5"]       = "Mythique : %s — Les Échos appliquent un saignement cumulable 20 s aux joueurs taillés. Esquiver les trajectoires d'Échos."
 
 -- Terrasse des Magistères (MT) — uiMapId 2520
 L["MT_name"]              = "Terrasse des Magistères"
