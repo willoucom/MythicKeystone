@@ -186,6 +186,37 @@ guild["title"] = GuildFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarg
 guild["title"]:SetPoint("TOPLEFT", 5, -5)
 guild["title"]:SetText(L["Guild"])
 
+-- About / Info button (top-right of GuildFrame). Frame level is raised above
+-- GuildButton (which covers the entire frame to capture refresh clicks) so the
+-- info button receives clicks first.
+local InfoBtn = CreateFrame("Button", nil, GuildFrame)
+InfoBtn:SetSize(36, 36)
+InfoBtn:SetPoint("TOPRIGHT", GuildFrame, "TOPRIGHT", 4, 6)
+InfoBtn:SetFrameLevel(GuildButton:GetFrameLevel() + 5)
+InfoBtn:EnableMouse(true)
+InfoBtn:RegisterForClicks("LeftButtonUp")
+
+local InfoTex = InfoBtn:CreateTexture(nil, "ARTWORK")
+InfoTex:SetSize(30, 30)
+InfoTex:SetPoint("CENTER", 0, 0)
+InfoTex:SetTexture("Interface\\Common\\Help-i")
+
+local InfoHL = InfoBtn:CreateTexture(nil, "HIGHLIGHT")
+InfoHL:SetSize(30, 30)
+InfoHL:SetPoint("CENTER", 0, 0)
+InfoHL:SetTexture("Interface\\Common\\Help-i")
+InfoHL:SetBlendMode("ADD")
+
+InfoBtn:SetScript("OnClick", function()
+    if Addon.About then Addon.About:Toggle() end
+end)
+InfoBtn:SetScript("OnEnter", function(self)
+    GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
+    GameTooltip:SetText(L["ABOUT_btn_tooltip"], 1, 1, 1)
+    GameTooltip:Show()
+end)
+InfoBtn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
 guild["text"] = GuildScrollChild:CreateFontString("ARTWORK", nil, "GameFontWhite")
 guild["text"]:SetTextColor(255, 255, 255)
 guild["text"]:SetPoint("TOPLEFT", 10, 0)

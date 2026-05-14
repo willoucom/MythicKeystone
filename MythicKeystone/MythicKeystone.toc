@@ -20,6 +20,7 @@ Locales\frFR.lua
 Locales\deDE.lua
 Locales\zhTW.lua
 
+AboutFrame.lua
 MythicKeystone.lua
 AutoKeystone.lua
 TeleportButtons.lua
