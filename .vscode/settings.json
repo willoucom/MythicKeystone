@@ -390,6 +390,7 @@
         "BACKDROP_DIALOG_32_32",
         "NUM_BAG_FRAMES",
         "RaiderIO_ProfileTooltip",
+        "WTCompatibilityFrame",
         "NUM_BAG_SLOTS"
     ],
     "Lua.runtime.version": "Lua 5.1",
