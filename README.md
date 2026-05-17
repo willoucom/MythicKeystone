@@ -1,6 +1,6 @@
 # MythicKeystone — Monorepo
 
-This repository contains three World of Warcraft addons related to Mythic+ keystone tracking.
+This repository contains four World of Warcraft addons for Mythic+ players: three for keystone tracking and one for in-game dungeon guides.
 
 ---
 
@@ -38,6 +38,19 @@ Exposes your current keystone as a broker data source with a tooltip showing all
 
 **Requires:** LibMythicKeystone, MythicKeystone, and a LibDataBroker display (Titan Panel, Fubar, Bazooka…)
 
+### [MythicDungeonNotes](MythicDungeonNotes/)
+
+**Never tab out of the game again to check a strategy.**
+
+A lightweight in-game guide for Mythic+ dungeons — boss mechanics, interrupt priorities, skip routes and positioning tips, one click away.
+
+**Features:**
+- **Dungeon list view** — all dungeons laid out as vignette cards with their artwork
+- **Automatic zone detection** — opens straight to the guide of the dungeon you're in
+- **Two-column layout** — section menu on the left, notes with maps and icons on the right
+- **Beginner / Advanced tips** — color-coded so veterans can skip the basics
+- **Draggable button and window**
+
 ---
 
 ## Supported Languages
@@ -48,10 +61,10 @@ Exposes your current keystone as a broker data source with a tooltip showing all
 
 ## Local Deployment
 
-Run `deploy.ps1` at the root to copy all three addons to your local WoW installation:
+Run `deploy.py` at the root to copy all addons to your local WoW installation:
 
 ```powershell
-.\deploy.ps1
+python deploy.py
 ```
 
 ---
