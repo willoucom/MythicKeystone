@@ -28,3 +28,9 @@ Conventional commits with scope: `type(scope): description`
 - `<N>` starts at 1 each day and increments if multiple tags are created the same day
 - `.toc` files use `@project-version@` — no version bump in files
 - Annotated tag from `main` after `git status` clean, then push
+
+## External references
+
+- [wago.tools](https://wago.tools/) — game assets and DB2 dumps (map IDs, item IDs, spell IDs, currency IDs)
+- [Wowpedia: WoW API](https://wowpedia.fandom.com/wiki/World_of_Warcraft_API) — in-game Lua API reference (events, `C_*` namespaces)
+- [wow-ui-source](https://github.com/Gethe/wow-ui-source/tree/live) — Blizzard's official FrameXML/Lua source, useful to inspect how built-in panels work and which globals are stable
