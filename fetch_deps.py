@@ -18,8 +18,11 @@ Usage:
 
 import argparse
 import os
+import re
+import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 try:
@@ -80,7 +83,35 @@ def fetch_svn(url: str, dest: Path, update: bool) -> bool:
     return _run(["svn", "checkout", url, str(dest)])
 
 
-def fetch_git(url: str, dest: Path, tag: str | None, update: bool) -> bool:
+def fetch_git(url: str, dest: Path, tag: str | None, update: bool, subpath: str | None = None) -> bool:
+    # Subpath form (BigWigs packager convention `repo.git/subdir`): clone to a
+    # temp dir, then expose only `<repo>/<subpath>/` at `dest/`. Re-clones on
+    # update since `dest` itself has no .git inside.
+    if subpath:
+        if dest.exists() and any(dest.iterdir()):
+            if not update:
+                print(f"  skip (present)  {dest.name}")
+                return True
+            print(f"  re-clone (update)  {dest.name}")
+            shutil.rmtree(dest)
+
+        print(f"  git clone {url} (subpath: {subpath})  ->  {dest}")
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory() as tmp:
+            checkout = Path(tmp) / "checkout"
+            cmd = ["git", "clone", "--depth", "1"]
+            if tag:
+                cmd += ["--branch", tag]
+            cmd += [url, str(checkout)]
+            if not _run(cmd):
+                return False
+            src = checkout / subpath
+            if not src.exists():
+                print(f"    ERROR: subpath '{subpath}' not found in {url}")
+                return False
+            shutil.copytree(src, dest)
+        return True
+
     if (dest / ".git").exists():
         if update:
             print(f"  git pull  {dest.name}")
@@ -105,15 +136,29 @@ def fetch_git(url: str, dest: Path, tag: str | None, update: bool) -> bool:
 # .pkgmeta processing
 # ---------------------------------------------------------------------------
 
+_GITHUB_URL_RE = re.compile(r"^https://github\.com/([^/]+)/([^/]+?)(?:\.git)?(?:/(.+))?$")
+
+
 def parse_external(rel_path: str, spec) -> dict:
-    """Normalise an external entry to a canonical dict."""
+    """Normalise an external entry to a canonical dict.
+
+    GitHub URLs are auto-detected as git (matches the BigWigs packager convention).
+    Anything past `<user>/<repo>` is treated as a subpath: only that directory of
+    the repo is copied to the destination. Trailing `.git` is accepted but optional.
+    Non-github URLs default to SVN for backward-compat with legacy Wowace entries.
+    """
     if isinstance(spec, str):
-        return {"path": rel_path, "url": spec, "type": "svn", "tag": None}
+        m = _GITHUB_URL_RE.match(spec)
+        if m:
+            url = f"https://github.com/{m.group(1)}/{m.group(2)}.git"
+            return {"path": rel_path, "url": url, "type": "git", "tag": None, "subpath": m.group(3)}
+        return {"path": rel_path, "url": spec, "type": "svn", "tag": None, "subpath": None}
     return {
         "path": rel_path,
         "url": spec.get("url", ""),
         "type": spec.get("type", "svn").lower(),
         "tag": spec.get("tag"),
+        "subpath": spec.get("path"),
     }
 
 
@@ -156,7 +201,7 @@ def process_pkgmeta(pkgmeta_path: Path, update: bool, dry_run: bool) -> int:
                 print("  ERROR: git not found in PATH.")
                 errors += 1
                 continue
-            ok = fetch_git(ext["url"], dest, ext["tag"], update)
+            ok = fetch_git(ext["url"], dest, ext["tag"], update, ext.get("subpath"))
         else:
             print(f"  WARNING: unknown type '{ext['type']}' for {rel_path}")
             errors += 1

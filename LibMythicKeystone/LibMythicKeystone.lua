@@ -2,7 +2,8 @@ local ADDON, Addon = ...
 local MAJOR, MINOR = "LibMythicKeystone-1.0", 1;
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 if not lib then return end
-local CTL = assert(ChatThrottleLib, "AceComm-3.0 requires ChatThrottleLib")
+local LKS = assert(LibStub("LibKeystone", true), "LibMythicKeystone requires LibKeystone")
+local CTL = assert(ChatThrottleLib, "LibMythicKeystone requires ChatThrottleLib")
 
 Addon.ShortName = "MythicKeystone"
 Addon.PartyKeys = {}
@@ -12,7 +13,8 @@ Addon.Mykey = {
     ["realm"] = "sname",
     ["fullname"] = "player",
     ["current_key"] = 0,
-    ["current_keylevel"] = 0
+    ["current_keylevel"] = 0,
+    ["mplus_score"] = 0
 }
 
 Addon.ProcessingKeys = false
@@ -109,7 +111,8 @@ function Addon.getKeystone()
         ["current_keylevel"] = keystoneLevel,
         ["week"] = Addon.GetWeek(),
         ["weeklybest"] = 0,
-        ["weeklycount"] = 0
+        ["weeklycount"] = 0,
+        ["mplus_score"] = 0
     }
 
     -- Get Number of runs this week
@@ -119,6 +122,12 @@ function Addon.getKeystone()
         Addon.Mykey["weeklycount"] = rewards[1]["progress"] or 0
         -- Get best runs
         Addon.Mykey["weeklybest"] = rewards[1]["level"] or 0
+    end
+
+    -- Get Mythic+ rating
+    local mplusSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary("player")
+    if type(mplusSummary) == "table" and type(mplusSummary.currentSeasonScore) == "number" then
+        Addon.Mykey["mplus_score"] = mplusSummary.currentSeasonScore
     end
 
     Addon.PartyKeys[pname] = {
@@ -187,80 +196,225 @@ function Addon.getKeystone()
     Addon.ProcessingKeys = false
 end
 
-function Addon.sendKeystone()
-    -- Sending to group
-    if IsInGroup(LE_PARTY_CATEGORY_HOME) and not IsInRaid() then
-        local data = Addon.Mykey["current_key"] .. ":"
-            .. Addon.Mykey["current_keylevel"] .. ":"
-            .. Addon.Mykey["class"] .. ":"
-            .. Addon.Mykey["fullname"]
-        CTL:SendAddonMessage("NORMAL", Addon.ShortName, data, "PARTY")
-    end
+--
+-- LibKeystone integration
+--
+-- LibKeystone broadcasts our own key automatically (post-M+ via CHALLENGE_MODE_COMPLETED
+-- chain, or in response to peer "R" requests). It also gives us callbacks for keys
+-- received from party/guild members. We just need to (a) register a callback to absorb
+-- incoming data into our tables, and (b) call LKS.Request to seed the player list when
+-- the group/guild state changes.
 
-    -- Sending to guild
-    local GuildName = GetGuildInfo("player")
-    if not GuildName then return end
+local function OnKeystoneReceived(keyLevel, keyMap, playerRating, playerName, channel)
+    if not keyLevel or not keyMap or keyLevel <= 0 or keyMap <= 0 then return end
+
+    local name, realm = strsplit("-", playerName)
+    if not realm or realm == "" then
+        realm = GetNormalizedRealmName() or ""
+    end
+    local fullname = (realm ~= "") and (name .. "-" .. realm) or name
+
+    if channel == "PARTY" then
+        local entry = Addon.PartyKeys[name] or {}
+        Addon.PartyKeys[name] = entry
+        entry["name"] = name
+        entry["realm"] = realm
+        entry["fullname"] = fullname
+        entry["current_key"] = keyMap
+        entry["current_keylevel"] = keyLevel
+        if playerRating and playerRating > 0 then
+            entry["mplus_score"] = playerRating
+        end
+    elseif channel == "GUILD" then
+        local guildName = GetGuildInfo("player")
+        if not guildName then return end
+        LibMythicKeystoneDB = LibMythicKeystoneDB or {}
+        LibMythicKeystoneDB['Guilds'] = LibMythicKeystoneDB['Guilds'] or {}
+        LibMythicKeystoneDB['Guilds'][guildName] = LibMythicKeystoneDB['Guilds'][guildName] or {}
+        local entry = LibMythicKeystoneDB['Guilds'][guildName][fullname] or {}
+        LibMythicKeystoneDB['Guilds'][guildName][fullname] = entry
+        entry["name"] = name
+        entry["realm"] = realm
+        entry["fullname"] = fullname
+        entry["guild"] = guildName
+        entry["current_key"] = keyMap
+        entry["current_keylevel"] = keyLevel
+        entry["week"] = Addon.GetWeek()
+        if playerRating and playerRating > 0 then
+            entry["mplus_score"] = playerRating
+        end
+    end
+end
+
+LKS.Register(Addon, OnKeystoneReceived)
+
+--
+-- "MythicKeystone" wire protocol (LMK-specific, on top of LibKeystone)
+--
+-- Used for two things:
+--   1. Offline-alts broadcast on GUILD with format
+--      "<mapID>:<level>:<class>:<fullname>[:<mplus_score>]"
+--      LibKeystone only carries the currently-logged-in character; this fills
+--      the gap for alts that share the player's guild.
+--   2. ======= LEGACY COMPAT — REMOVAL TARGET: 2026-07-15 =======
+--      The same prefix used to carry the *active* character's broadcast on
+--      both PARTY and GUILD, with the 4-field form
+--      "<mapID>:<level>:<class>:<fullname>" and the request messages
+--      "requestPartyKeystone" / "requestGuildKeystone".
+--      LibKeystone replaced this for new clients, but pre-2026-05 LMK clients
+--      still speak only this protocol. Until enough peers have upgraded, we:
+--        - keep receiving on both channels (permanent — defensive, near-zero
+--          cost)
+--        - keep emitting the active character on both channels when
+--          Addon.legacyWire is true (toggle via `/lmk legacy on|off`,
+--          persisted in options.legacyWire, default true).
+--      When the sunset date passes, delete the LEGACY EMITTER block and the
+--      legacy request keywords from the receiver dispatch.
+--
+
+function Addon.sendAltsToGuild()
+    if not IsInGuild() then return end
+    local guildName = GetGuildInfo("player")
+    if not guildName then return end
+    if not LibMythicKeystoneDB or not LibMythicKeystoneDB['Alts'] then return end
+
+    local activeFullname = Addon.Mykey and Addon.Mykey["fullname"]
     for _, value in pairs(LibMythicKeystoneDB['Alts']) do
-        if value['guild'] == GuildName and tonumber(value["current_key"] or 0) > 0 then
+        if value['guild'] == guildName
+            and tonumber(value["current_key"] or 0) > 0
+            and value["fullname"] ~= activeFullname then
             local data = value["current_key"] .. ":"
                 .. value["current_keylevel"] .. ":"
-                .. value["class"] .. ":"
-                .. value["fullname"]
-            CTL:SendAddonMessage("NORMAL", Addon.ShortName, data, "GUILD")
+                .. (value["class"] or "") .. ":"
+                .. value["fullname"] .. ":"
+                .. (tonumber(value["mplus_score"]) or 0)
+            if Addon.dryrun then
+                if Addon.DebugLogDryRun then Addon.DebugLogDryRun(Addon.ShortName, "GUILD", data) end
+            else
+                CTL:SendAddonMessage("NORMAL", Addon.ShortName, data, "GUILD")
+            end
         end
     end
 end
 
-function Addon.receiveKeystone(addOnName, message, channel, character)
-    if channel == "PARTY" then
-        if message == "requestPartyKeystone" then
-            Addon.sendKeystone()
-        elseif string.match(message, ":") then
-            local key, keylevel, class, fullname = strsplit(":", message)
-            character = strsplit("-", fullname)
-            Addon.PartyKeys[character] = Addon.PartyKeys[character] or {}
-            Addon.PartyKeys[character]["class"] = class
-            Addon.PartyKeys[character]["current_key"] = tonumber(key)
-            Addon.PartyKeys[character]["current_keylevel"] = tonumber(keylevel)
-        end
+function Addon.requestGuildAlts()
+    if not IsInGuild() then return end
+    if Addon.dryrun then
+        if Addon.DebugLogDryRun then Addon.DebugLogDryRun(Addon.ShortName, "GUILD", "requestGuildAlts") end
+        return
     end
-    if channel == "GUILD" then
-        if message == "requestGuildKeystone" then
-            Addon.sendKeystone()
-        elseif string.match(message, ":") then
-            local key, keylevel, class, fullname = strsplit(":", message)
-            local name, realm = strsplit("-", fullname)
-            local GuildName = GetGuildInfo("player")
-            if not GuildName then return end
-            LibMythicKeystoneDB['Guilds'] = LibMythicKeystoneDB['Guilds'] or {}
-            LibMythicKeystoneDB['Guilds'][GuildName] = LibMythicKeystoneDB['Guilds'][GuildName] or {}
-            LibMythicKeystoneDB['Guilds'][GuildName][fullname] = LibMythicKeystoneDB['Guilds'][GuildName][fullname] or {}
-            LibMythicKeystoneDB['Guilds'][GuildName][fullname]["fullname"] = fullname
-            LibMythicKeystoneDB['Guilds'][GuildName][fullname]["week"] = Addon.GetWeek()
-            LibMythicKeystoneDB['Guilds'][GuildName][fullname]["guild"] = GuildName
-            LibMythicKeystoneDB['Guilds'][GuildName][fullname]["current_key"] = tonumber(key)
-            LibMythicKeystoneDB['Guilds'][GuildName][fullname]["current_keylevel"] = tonumber(keylevel)
-            LibMythicKeystoneDB['Guilds'][GuildName][fullname]["class"] = class
-            LibMythicKeystoneDB['Guilds'][GuildName][fullname]["name"] = name
-            LibMythicKeystoneDB['Guilds'][GuildName][fullname]["realm"] = realm
-        end
+    CTL:SendAddonMessage("NORMAL", Addon.ShortName, "requestGuildAlts", "GUILD")
+end
+
+-- ====== LEGACY EMITTER (remove with the surrounding block on sunset) ======
+
+local function sendOnLegacy(channel, payload)
+    if Addon.dryrun then
+        if Addon.DebugLogDryRun then Addon.DebugLogDryRun(Addon.ShortName, channel, payload) end
+    else
+        CTL:SendAddonMessage("NORMAL", Addon.ShortName, payload, channel)
     end
 end
 
-function Addon.requestGuildKeystone()
-    local GuildName = GetGuildInfo("player")
-    if not GuildName then return end
-    CTL:SendAddonMessage("NORMAL", Addon.ShortName, "requestGuildKeystone", "GUILD")
-end
-
-function Addon.requestPartyKeystone()
+function Addon.sendLegacyActiveKeystone()
+    if not Addon.legacyWire then return end
+    local m = Addon.Mykey
+    if not m or not m.current_key or tonumber(m.current_key) == 0 then return end
+    if not m.fullname or m.fullname == "" then return end
+    local payload = string.format("%s:%s:%s:%s",
+        tostring(m.current_key), tostring(m.current_keylevel or 0),
+        m.class or "", m.fullname)
     if IsInGroup(LE_PARTY_CATEGORY_HOME) and not IsInRaid() then
-        CTL:SendAddonMessage("NORMAL", Addon.ShortName, "requestPartyKeystone", "PARTY")
+        sendOnLegacy("PARTY", payload)
+    end
+    if IsInGuild() then
+        sendOnLegacy("GUILD", payload)
     end
 end
 
--- Register library for chat msg addon
+function Addon.requestLegacyKeystone()
+    if not Addon.legacyWire then return end
+    if IsInGroup(LE_PARTY_CATEGORY_HOME) and not IsInRaid() then
+        sendOnLegacy("PARTY", "requestPartyKeystone")
+    end
+    if IsInGuild() then
+        sendOnLegacy("GUILD", "requestGuildKeystone")
+    end
+end
+
+-- ====== END LEGACY EMITTER ======
+
+local function OnLegacyReceived(message, channel)
+    -- Request keywords
+    if message == "requestGuildAlts" then
+        if channel == "GUILD" then Addon.sendAltsToGuild() end
+        return
+    end
+    -- LEGACY: requests from pre-2026-05 clients
+    if message == "requestPartyKeystone" then
+        if channel == "PARTY" then Addon.sendLegacyActiveKeystone() end
+        return
+    end
+    if message == "requestGuildKeystone" then
+        if channel == "GUILD" then
+            Addon.sendLegacyActiveKeystone()
+            Addon.sendAltsToGuild()
+        end
+        return
+    end
+
+    -- Data payload: "<mapID>:<level>:<class>:<fullname>[:<mplus_score>]"
+    if not string.match(message, ":") then return end
+    local key, keylevel, class, fullname, mplus_score = strsplit(":", message)
+    if not fullname or fullname == "" then return end
+    local keyNum = tonumber(key)
+    local levelNum = tonumber(keylevel)
+    if not keyNum or not levelNum or keyNum <= 0 or levelNum <= 0 then return end
+    local score = tonumber(mplus_score)
+
+    if channel == "PARTY" then
+        local name = strsplit("-", fullname)
+        if not name or name == "" then return end
+        local entry = Addon.PartyKeys[name] or {}
+        Addon.PartyKeys[name] = entry
+        entry["name"] = name
+        entry["realm"] = select(2, strsplit("-", fullname))
+        entry["fullname"] = fullname
+        entry["current_key"] = keyNum
+        entry["current_keylevel"] = levelNum
+        if class and class ~= "" then entry["class"] = class end
+        if score and score > 0 then entry["mplus_score"] = score end
+    elseif channel == "GUILD" then
+        local name, realm = strsplit("-", fullname)
+        if not name or not realm then return end
+        local guildName = GetGuildInfo("player")
+        if not guildName then return end
+        LibMythicKeystoneDB = LibMythicKeystoneDB or {}
+        LibMythicKeystoneDB['Guilds'] = LibMythicKeystoneDB['Guilds'] or {}
+        LibMythicKeystoneDB['Guilds'][guildName] = LibMythicKeystoneDB['Guilds'][guildName] or {}
+        local entry = LibMythicKeystoneDB['Guilds'][guildName][fullname] or {}
+        LibMythicKeystoneDB['Guilds'][guildName][fullname] = entry
+        entry["name"] = name
+        entry["realm"] = realm
+        entry["fullname"] = fullname
+        entry["guild"] = guildName
+        entry["current_key"] = keyNum
+        entry["current_keylevel"] = levelNum
+        if class and class ~= "" then entry["class"] = class end
+        if score and score > 0 then entry["mplus_score"] = score end
+        entry["week"] = Addon.GetWeek()
+    end
+end
+
 C_ChatInfo.RegisterAddonMessagePrefix(Addon.ShortName)
+
+local legacyListener = CreateFrame("Frame")
+legacyListener:RegisterEvent("CHAT_MSG_ADDON")
+legacyListener:SetScript("OnEvent", function(_, _, prefix, message, channel)
+    if prefix == Addon.ShortName then
+        OnLegacyReceived(message, channel)
+    end
+end)
 
 --
 -- Frames
@@ -269,21 +423,6 @@ C_ChatInfo.RegisterAddonMessagePrefix(Addon.ShortName)
 local LibMythicKeystoneFrame = CreateFrame("Frame")
 local LibMythicKeystoneFrames = {}
 
-LibMythicKeystoneFrames["PartyEvent"] = CreateFrame("Frame", nil, LibMythicKeystoneFrame)
-LibMythicKeystoneFrames["PartyEvent"]:RegisterEvent("CHAT_MSG_ADDON")
-LibMythicKeystoneFrames["PartyEvent"]:SetScript("OnEvent",
-    function(self, event, addOnName, message, channel, character, ...)
-        if addOnName == Addon.ShortName then
-            Addon.receiveKeystone(addOnName, message, channel, character)
-        end
-    end)
-
-LibMythicKeystoneFrames["RequestGuildKeyEvent"] = CreateFrame("Frame", nil, LibMythicKeystoneFrame)
-LibMythicKeystoneFrames["RequestGuildKeyEvent"]:RegisterEvent("PLAYER_ENTERING_WORLD")
-LibMythicKeystoneFrames["RequestGuildKeyEvent"]:SetScript("OnEvent", function(self, event, ...)
-    C_Timer.After(10, Addon.requestGuildKeystone)
-end)
-
 LibMythicKeystoneFrames["SendkeyEvent"] = CreateFrame("Frame", nil, LibMythicKeystoneFrame)
 LibMythicKeystoneFrames["SendkeyEvent"]:RegisterEvent("PLAYER_ENTERING_WORLD")
 LibMythicKeystoneFrames["SendkeyEvent"]:RegisterEvent("GROUP_JOINED")
@@ -291,12 +430,17 @@ LibMythicKeystoneFrames["SendkeyEvent"]:RegisterEvent("GROUP_LEFT")
 LibMythicKeystoneFrames["SendkeyEvent"]:RegisterEvent("GROUP_ROSTER_UPDATE")
 LibMythicKeystoneFrames["SendkeyEvent"]:RegisterEvent("CHALLENGE_MODE_MEMBER_INFO_UPDATED")
 LibMythicKeystoneFrames["SendkeyEvent"]:RegisterEvent("ITEM_CHANGED")
-LibMythicKeystoneFrames["SendkeyEvent"]:SetScript("OnEvent", function(self, event, ...)
+LibMythicKeystoneFrames["SendkeyEvent"]:SetScript("OnEvent", function()
     C_Timer.After(10, function()
         Addon.getKeystone()
-        Addon.sendKeystone()
-        Addon.requestPartyKeystone()
-        Addon.requestGuildKeystone()
+        LKS.Request("PARTY")
+        LKS.Request("GUILD")
+        Addon.sendAltsToGuild()
+        Addon.requestGuildAlts()
+        -- LEGACY COMPAT (remove on sunset): broadcast active char on the old
+        -- MythicKeystone prefix and request keys from old peers.
+        Addon.sendLegacyActiveKeystone()
+        Addon.requestLegacyKeystone()
     end)
 end)
 

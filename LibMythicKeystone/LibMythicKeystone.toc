@@ -11,6 +11,7 @@
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
 Libs\ChatThrottleLib\ChatThrottleLib.lua
+Libs\LibKeystone\LibKeystone.lua
 #@end-no-lib-strip@
 
 # for debug

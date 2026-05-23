@@ -3,6 +3,7 @@ package-as: LibMythicKeystone
 externals:
   Libs/LibStub: https://github.com/WoWUIDev/Ace3/LibStub
   Libs/ChatThrottleLib: https://github.com/wowace-clone/ChatThrottleLib
+  Libs/LibKeystone: https://github.com/BigWigsMods/LibKeystone.git/LibKeystone
 
 ignore:
   - .gitignore
