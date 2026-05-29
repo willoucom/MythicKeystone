@@ -1,9 +1,11 @@
-## Interface: 120001, 120005
+## Interface: 120005, 120007
 ## Title: Mythic Dungeon Notes
 ## Title-frFR: Mythic Dungeon Notes
+## Title-ruRU: Заметки к М+ подземельям
 ## Version: @project-version@
 ## Notes: Mythic Dungeon Notes
 ## Notes-frFR: Notes pour les donjons Mythique
+## Notes-ruRU: Заметки с подробным описанием для каждого актуального М+ подземелья
 ## SavedVariables: Mythic Dungeon Notes
 ## X-Curse-Project-ID: 1515356
 ## X-Wago-ID: rN4kdzGD
@@ -16,6 +18,7 @@ Libs\AceLocale-3.0\AceLocale-3.0.xml
 # Locale files
 Locales\enUS.lua
 Locales\frFR.lua
+Locales\ruRU.lua
 
 core.lua
 
