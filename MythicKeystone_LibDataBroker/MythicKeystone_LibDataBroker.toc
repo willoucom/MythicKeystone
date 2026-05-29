@@ -1,4 +1,4 @@
-## Interface: 120001, 120005
+## Interface: 120005, 120007
 ## Title: MythicKeystone_LibDataBroker
 ## Version: @project-version@
 ## Notes: Expose Mythic Keystone in Titan/Fubar
@@ -17,5 +17,6 @@ Libs\AceLocale-3.0\AceLocale-3.0.lua
 
 Locales\enUS.lua
 Locales\frFR.lua
+Locales\ruRU.lua
 
 MythicKeystone_LibDataBroker.lua
