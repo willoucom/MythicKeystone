@@ -50,7 +50,7 @@ A small icon appears on your screen after loading in. You can drag it anywhere.
 
 ## Languages
 
-English (enUS) · Français (frFR)
+English (enUS) · Français (frFR) · Русский (ruRU)
 ---
 
 ## Feedback & contributions
