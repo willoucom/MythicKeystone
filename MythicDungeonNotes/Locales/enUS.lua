@@ -33,7 +33,7 @@ L["ABOUT_url_popup_text"] = "Copy this URL with Ctrl+C:"
 
 -- Common section labels
 L["COMMON_intro_label"]     = "Introduction"
-L["COMMON_notable_trash"]   = "Notable Trash"
+L["COMMON_notable_trash"]   = "Notable trash"
 L["COMMON_cc_immune"]       = "• Immune to CC"
 
 -------------------------------------------------------------------------------
@@ -42,7 +42,6 @@ L["COMMON_cc_immune"]       = "• Immune to CC"
 
 -- Algeth'ar Academy (AA) — uiMapId 2097
 L["AA_name"]              = "Algeth'ar Academy"
-L["AA_entrance_label"]    = "Entrance"
 L["AA_entrance_intro"]    = "Algeth'ar Academy — Dragonflight Legacy, Dragon Isles."
 L["AA_entrance_bosses"]   = "4 bosses: Overgrown Ancient -> Crawth -> Vexamus -> Echo of Doragosa."
 L["AA_entrance_desc"]     = "Each teacher grants a buff depending on their dragonflight."
@@ -58,11 +57,6 @@ L["AA_black_drake_desc"]  = "Black Dragonflight Recruiter"
 L["AA_black_drake"]       = "5% Critical Strike"
 
 -- Section names
-L["AA_boss1"]             = "First boss: Overgrown Ancient"
-L["AA_boss2"]             = "Second boss: Crawth"
-L["AA_boss3"]             = "Third boss: Vexamus"
-L["AA_boss4"]             = "Fourth boss: Echo of Doragosa"
-L["AA_trash_label"]       = "Trash"
 
 -- Mob names
 L["AA_boss1_name"]        = "Overgrown Ancient"
@@ -260,7 +254,6 @@ L["DN_incense_label"]     = "Warding Incense"
 L["DN_incense_desc"]      = "A Warding Incense brazier is located near the dungeon entrance."
 L["DN_buff_alchemy_desc"] = "Midnight Alchemists (skill 25) and Bear Form Druids can burn incense: +1% Versatility for 10 minutes for the whole party."
 -- Notable Trash
-L["DN_trash_label"]       = "Notable Trash"
 L["DN_trash_todo"]        = "TODO: list notable Amani trash (Beasthandlers, Frost Loa Initiates, patrolling Wind Serpents) and their key abilities."
 -- Boss names (used as section titles)
 L["DN_boss1"]             = "The Hoardmonger"
@@ -294,7 +287,6 @@ L["MT_intro_label"]       = "Introduction"
 L["MT_intro_desc1"]       = "Magisters' Terrace — New dungeon, Midnight Season 1."
 L["MT_intro_desc2"]       = "4 bosses: Arcanotron Custos -> Seranel Sunlash -> Gemellus -> Degentrius."
 L["MT_library_note"]      = "After defeating the first enemy in the library, a book appears on the lectern — click it to grant the group +5%% Haste for 30 minutes."
-L["MT_trash_label"]       = "Notable Trash"
 -- Boss names (used as section titles)
 L["MT_boss1"]             = "Arcanotron Custos"
 L["MT_boss2"]             = "Seranel Sunlash"

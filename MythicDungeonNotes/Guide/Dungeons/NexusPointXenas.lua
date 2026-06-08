@@ -26,6 +26,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            icon = "interface/lfgframe/ui-lfg-background-nexuspointxenas",
             htmlContent = table.concat({
                 p(L["NPX_intro_desc1"]),
                 p(L["NPX_intro_desc2"]),
@@ -34,6 +35,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Trash notable ─────────────────────────────────────────────────
         {
             name = L["COMMON_notable_trash"],
+            icon = "interface/lfgframe/ui-lfg-background-randomscenario",
             htmlContent = table.concat({
                 h1(L["NPX_trash_arcanist_name"]),
                 p(fmt("NPX_trash_arcanist_desc1", ns.Spell(1285445), ns.Spell(1249815))),
@@ -56,6 +58,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Chief Corewright Kasreth ─────────────────────────────
         {
             name = L["NPX_boss1_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-chiefcorewrightkasreth",
             htmlContent = table.concat({
                 h1(L["NPX_boss1_name"]),
                 p(fmt("NPX_boss1_desc1", ns.Spell(1251579), ns.Spell(1251772))),
@@ -67,6 +70,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Corewarden Nysarra ───────────────────────────────────
         {
             name = L["NPX_boss2_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-corewardennysarra",
             htmlContent = table.concat({
                 h1(L["NPX_boss2_name"]),
                 p(fmt("NPX_boss2_desc1", ns.Spell(1249014))),
@@ -78,6 +82,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Lothraxion ───────────────────────────────────────────
         {
             name = L["NPX_boss3_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-lothraxion",
             htmlContent = table.concat({
                 h1(L["NPX_boss3_name"]),
                 p(fmt("NPX_boss3_desc1", ns.Spell(1253950))),

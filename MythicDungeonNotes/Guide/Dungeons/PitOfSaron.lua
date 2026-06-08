@@ -26,6 +26,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            icon = "interface/lfgframe/ui-lfg-background-pitofsaron",
             htmlContent = table.concat({
                 p(L["POS_intro_desc1"]),
                 p(L["POS_intro_desc2"]),
@@ -35,6 +36,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Trash notable ─────────────────────────────────────────────────
         {
             name = L["COMMON_notable_trash"],
+            icon = "interface/lfgframe/ui-lfg-background-randomscenario",
             htmlContent = table.concat({
                 h1(L["POS_trash1_name"]),
                 p(fmt("POS_trash1_desc1", ns.Spell(1271074), ns.Spell(1258798), ns.Spell(1258826))),
@@ -55,6 +57,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Forgemaster Garfrost ─────────────────────────────────
         {
             name = L["POS_boss1_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-forgemaster garfrost",
             htmlContent = table.concat({
                 h1(L["POS_boss1_name"]),
                 p(fmt("POS_boss1_desc1", ns.Spell(1261299))),
@@ -66,6 +69,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Ick &amp; Krick ──────────────────────────────────────
         {
             name = L["POS_boss2_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-ickandkrick",
             htmlContent = table.concat({
                 h1(L["POS_boss2_name"]),
                 p(fmt("POS_boss2_desc1", ns.Spell(1264192))),
@@ -77,6 +81,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Scourgelord Tyrannus ─────────────────────────────────
         {
             name = L["POS_boss3_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-scourgelordtyrannus",
             htmlContent = table.concat({
                 h1(L["POS_boss3_name"]),
                 p(fmt("POS_boss3_desc1", ns.Spell(1262582), ns.Spell(1263756), ns.Spell(1276948))),

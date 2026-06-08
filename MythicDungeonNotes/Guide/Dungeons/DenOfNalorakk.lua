@@ -25,6 +25,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["DN_intro_label"],
+            icon = "interface/lfgframe/ui-lfg-background-proveyourworth",
             htmlContent = table.concat({
                 p(L["DN_intro_desc1"]),
                 p(L["DN_intro_desc2"]),
@@ -41,7 +42,8 @@ ns.guideData[#ns.guideData + 1] = {
         },
         -- ── Trash notable ─────────────────────────────────────────────────
         {
-            name = L["DN_trash_label"],
+            name = L["COMMON_notable_trash"],
+            icon = "interface/lfgframe/ui-lfg-background-randomscenario",
             htmlContent = table.concat({
                 p(L["DN_trash_todo"]),
             }),
@@ -49,6 +51,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : The Hoardmonger ──────────────────────────────────────
         {
             name = L["DN_boss1"],
+            -- icon: TODO (not yet in datamined assets)
             htmlContent = table.concat({
                 h1(L["DN_boss1"]),
                 p(fmt("DN_boss1_desc1", ns.Spell(1235072))),
@@ -62,6 +65,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Sentinel of Winter ───────────────────────────────────
         {
             name = L["DN_boss2"],
+            -- icon: TODO (not yet in datamined assets)
             htmlContent = table.concat({
                 h1(L["DN_boss2"]),
                 p(fmt("DN_boss2_desc1", ns.Spell(1235783))),
@@ -77,6 +81,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Nalorakk ─────────────────────────────────────────────
         {
             name = L["DN_boss3"],
+            icon = "interface/encounterjournal/ui-ej-boss-nalorakk",
             htmlContent = table.concat({
                 h1(L["DN_boss3"]),
                 p(L["DN_boss3_intro"]),

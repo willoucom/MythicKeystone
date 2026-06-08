@@ -29,9 +29,10 @@ ns.guideData[#ns.guideData + 1] = {
     spellportalid = 393273,
     mapIds    = { 2097 },
     sections  = {
-        -- ── Entrée ─────────────────────────────────────────────────────────
+        -- ── Introduction ──────────────────────────────────────────────────
         {
-            name = L["AA_entrance_label"],
+            name = L["COMMON_intro_label"],
+            icon = "interface/lfgframe/ui-lfg-background-theacademy",
             htmlContent = table.concat({
                 p(L["AA_entrance_intro"]),
                 p(L["AA_entrance_bosses"]),
@@ -46,7 +47,8 @@ ns.guideData[#ns.guideData + 1] = {
         },
         -- ── Trash ──────────────────────────────────────────────────────────
         {
-            name = L["AA_trash_label"],
+            name = L["COMMON_notable_trash"],
+            icon = "interface/lfgframe/ui-lfg-background-randomscenario",
             htmlContent = table.concat({
                 h1(L["AA_trash1_mob1_name"]),
                 p(L["COMMON_cc_immune"]),
@@ -87,7 +89,8 @@ ns.guideData[#ns.guideData + 1] = {
         },
         -- ── Boss 1 : Overgrown Ancient ─────────────────────────────────────
         {
-            name = L["AA_boss1"],
+            name = L["AA_boss1_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-overgrown ancient",
             htmlContent = table.concat({
                 h1(L["AA_boss1_name"]),
                 p(L["AA_boss1_desc0"]),
@@ -100,7 +103,8 @@ ns.guideData[#ns.guideData + 1] = {
         },
         -- ── Boss 2 : Crawth ────────────────────────────────────────────────
         {
-            name = L["AA_boss2"],
+            name = L["AA_boss2_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-crawth",
             htmlContent = table.concat({
                 h1(L["AA_boss2_name"]),
                 p(fmt("AA_boss2_desc0",  ns.Spell(376997))),
@@ -111,7 +115,8 @@ ns.guideData[#ns.guideData + 1] = {
         },
         -- ── Boss 3 : Vexamus ───────────────────────────────────────────────
         {
-            name = L["AA_boss3"],
+            name = L["AA_boss3_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-vexamus",
             htmlContent = table.concat({
                 h1(L["AA_boss3_name"]),
                 p(fmt("AA_boss3_desc1", ns.Spell(387691))),
@@ -121,7 +126,8 @@ ns.guideData[#ns.guideData + 1] = {
         },
         -- ── Boss 4 : Echo of Doragosa ──────────────────────────────────────
         {
-            name = L["AA_boss4"],
+            name = L["AA_boss4_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-echo of doragosa",
             htmlContent = table.concat({
                 h1(L["AA_boss4_name"]),
                 p(L["AA_boss4_desc0"]),

@@ -26,6 +26,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            icon = "interface/lfgframe/ui-lfg-background-skyreach",
             htmlContent = table.concat({
                 p(L["SKY_intro_desc1"]),
                 p(L["SKY_intro_desc2"]),
@@ -34,6 +35,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Trash notable ─────────────────────────────────────────────────
         {
             name = L["COMMON_notable_trash"],
+            icon = "interface/lfgframe/ui-lfg-background-randomscenario",
             htmlContent = table.concat({
                 h1(L["SKY_trash1_name"]),
                 p(fmt("SKY_trash1_desc1", ns.Spell(1254666))),
@@ -52,6 +54,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Ranjit ───────────────────────────────────────────────
         {
             name = L["SKY_boss1_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-ranjit",
             htmlContent = table.concat({
                 h1(L["SKY_boss1_name"]),
                 p(fmt("SKY_boss1_desc1", ns.Spell(1252690), ns.Spell(156793))),
@@ -61,6 +64,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Araknath ─────────────────────────────────────────────
         {
             name = L["SKY_boss2_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-araknath",
             htmlContent = table.concat({
                 h1(L["SKY_boss2_name"]),
                 p(fmt("SKY_boss2_desc1", ns.Spell(154139), ns.Spell(154135))),
@@ -70,6 +74,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Rukhran ──────────────────────────────────────────────
         {
             name = L["SKY_boss3_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-rukhran",
             htmlContent = table.concat({
                 h1(L["SKY_boss3_name"]),
                 p(fmt("SKY_boss3_desc1", ns.Spell(1253510), ns.Spell(1253511))),
@@ -79,6 +84,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 4 : High Sage Viryx ──────────────────────────────────────
         {
             name = L["SKY_boss4_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-high sage viryx",
             htmlContent = table.concat({
                 h1(L["SKY_boss4_name"]),
                 p(fmt("SKY_boss4_desc1", ns.Spell(154396), ns.Spell(1253543))),

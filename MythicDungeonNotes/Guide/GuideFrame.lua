@@ -183,9 +183,42 @@ end
 -- Button factories (called once per new button, then the button is recycled)
 -------------------------------------------------------------------------------
 
+-- Section icon dimensions (Encounter Journal boss portraits render at 2:1)
+local MENU_ICON_W = 64
+local MENU_ICON_H = 32
+local MENU_ICON_PAD_L = 4
+local MENU_ICON_PAD_R = 6
+local MENU_ROW_H = 38
+local MENU_LABEL_RIGHT_PAD = 4
+local MENU_LABEL_MAX_W = LEFT_CW - (MENU_ICON_PAD_L + MENU_ICON_W + MENU_ICON_PAD_R) - MENU_LABEL_RIGHT_PAD
+
+-- Sets `text` on a FontString, replacing the tail with "…" if it would overflow
+-- MENU_LABEL_MAX_W. UTF-8 aware: only truncates on codepoint boundaries.
+local function SetTruncatedLabel(fs, text)
+    fs:SetText(text)
+    if fs:GetStringWidth() <= MENU_LABEL_MAX_W then return end
+
+    -- Collect the byte index of the last byte of each codepoint, so we can
+    -- safely cut between characters (an é is 2 bytes, etc.).
+    local cuts = {}
+    local i = 1
+    while i <= #text do
+        local b = text:byte(i)
+        local n = (b < 128) and 1 or (b < 224) and 2 or (b < 240) and 3 or 4
+        i = i + n
+        cuts[#cuts + 1] = i - 1
+    end
+
+    for k = #cuts - 1, 1, -1 do
+        fs:SetText(text:sub(1, cuts[k]) .. "…")
+        if fs:GetStringWidth() <= MENU_LABEL_MAX_W then return end
+    end
+    fs:SetText("…")
+end
+
 local function NewMenuBtn(parent)
     local btn = CreateFrame("Button", nil, parent)
-    btn:SetHeight(28)
+    btn:SetHeight(MENU_ROW_H)
     btn:EnableMouse(true)
     btn:RegisterForClicks("LeftButtonUp")
 
@@ -201,9 +234,17 @@ local function NewMenuBtn(parent)
     hl:SetAllPoints()
     hl:SetColorTexture(0.30, 0.55, 0.90, 0.20)
 
-    -- Section name label
+    -- Section icon (boss portrait, etc.) — hidden when section has no icon,
+    -- but the slot's horizontal footprint is always reserved so labels align.
+    local iconTex = btn:CreateTexture(nil, "ARTWORK")
+    iconTex:SetSize(MENU_ICON_W, MENU_ICON_H)
+    iconTex:SetPoint("LEFT", MENU_ICON_PAD_L, 0)
+    iconTex:Hide()
+    btn.iconTex = iconTex
+
+    -- Section name label, anchored after the reserved icon slot
     local label = btn:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    label:SetPoint("LEFT",  8, 0)
+    label:SetPoint("LEFT",  MENU_ICON_PAD_L + MENU_ICON_W + MENU_ICON_PAD_R, 0)
     label:SetPoint("RIGHT", -4, 0)
     label:SetJustifyH("LEFT")
     label:SetWordWrap(false)
@@ -402,9 +443,16 @@ local function RenderMenu(dungeon)
         local btn = BtnGet(LeftContent, NewMenuBtn)
         btn:SetPoint("TOPLEFT",  LeftContent, "TOPLEFT",  0, y)
         btn:SetPoint("TOPRIGHT", LeftContent, "TOPRIGHT", 0, y)
-        btn.label:SetText(section.name)
+        SetTruncatedLabel(btn.label, section.name)
         btn.label:SetTextColor(0.72, 0.72, 0.72)
         btn.selBg:Hide()
+
+        if section.icon then
+            btn.iconTex:SetTexture(section.icon)
+            btn.iconTex:Show()
+        else
+            btn.iconTex:Hide()
+        end
 
         btn:SetScript("OnClick", function()
             SelectSection(sec, btn)

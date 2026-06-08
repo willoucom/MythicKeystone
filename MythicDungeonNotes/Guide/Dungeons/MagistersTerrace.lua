@@ -26,6 +26,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["MT_intro_label"],
+            icon = "interface/lfgframe/ui-lfg-background-magistersterrace-midnight",
             htmlContent = table.concat({
                 p(L["MT_intro_desc1"]),
                 p(L["MT_intro_desc2"]),
@@ -36,7 +37,8 @@ ns.guideData[#ns.guideData + 1] = {
         },
         -- ── Trash notable ─────────────────────────────────────────────────
         {
-            name = L["MT_trash_label"],
+            name = L["COMMON_notable_trash"],
+            icon = "interface/lfgframe/ui-lfg-background-randomscenario",
             htmlContent = table.concat({
                 h1(L["MT_trash_arcane_sentry_name"]),
                 p(L["COMMON_cc_immune"]),
@@ -95,6 +97,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Arcanotron Custos ─────────────────────────────────────
         {
             name = L["MT_boss1"],
+            icon = "interface/encounterjournal/ui-ej-boss-arcane crowd dispersing construct",
             htmlContent = table.concat({
                 h1(L["MT_boss1"]),
                 p(fmt("MT_boss1_desc1", ns.Spell(1214081))),
@@ -106,6 +109,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Seranel Sunlash ───────────────────────────────────────
         {
             name = L["MT_boss2"],
+            icon = "interface/encounterjournal/ui-ej-boss-seranel sunlash",
             htmlContent = table.concat({
                 h1(L["MT_boss2"]),
                 p(fmt("MT_boss2_desc1", ns.Spell(1224903), ns.Spell(1225792))),
@@ -117,6 +121,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Gemellus ──────────────────────────────────────────────
         {
             name = L["MT_boss3"],
+            icon = "interface/encounterjournal/ui-ej-boss-gemellus",
             htmlContent = table.concat({
                 h1(L["MT_boss3"]),
                 p(fmt("MT_boss3_desc1", ns.Spell(1223847))),
@@ -128,6 +133,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 4 : Degentrius ────────────────────────────────────────────
         {
             name = L["MT_boss4"],
+            icon = "interface/encounterjournal/ui-ej-boss-degentrius",
             htmlContent = table.concat({
                 h1(L["MT_boss4"]),
                 p(fmt("MT_boss4_desc4", ns.Spell(1215087), ns.Spell(1215941))),

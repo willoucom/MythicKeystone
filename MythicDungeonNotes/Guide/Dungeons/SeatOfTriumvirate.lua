@@ -26,6 +26,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            icon = "interface/lfgframe/ui-lfg-background-seatofthetriumvirate",
             htmlContent = table.concat({
                 p(L["SOT_intro_desc1"]),
                 p(L["SOT_intro_desc2"]),
@@ -34,6 +35,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Trash notable ─────────────────────────────────────────────────
         {
             name = L["COMMON_notable_trash"],
+            icon = "interface/lfgframe/ui-lfg-background-randomscenario",
             htmlContent = table.concat({
                 h1(L["SOT_trash1_name"]),
                 p(L["COMMON_cc_immune"]),
@@ -52,6 +54,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Zuraal the Ascended ──────────────────────────────────
         {
             name = L["SOT_boss1_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-zuraaltheascended",
             htmlContent = table.concat({
                 h1(L["SOT_boss1_name"]),
                 p(fmt("SOT_boss1_desc1", ns.Spell(1263399), ns.Spell(1263297))),
@@ -61,6 +64,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Saprish ──────────────────────────────────────────────
         {
             name = L["SOT_boss2_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-saprish",
             htmlContent = table.concat({
                 h1(L["SOT_boss2_name"]),
                 p(fmt("SOT_boss2_desc1", ns.Spell(1263523), ns.Spell(1280067), ns.Spell(246026))),
@@ -70,6 +74,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Viceroy Nezhar ───────────────────────────────────────
         {
             name = L["SOT_boss3_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-viceroynezhar",
             htmlContent = table.concat({
                 h1(L["SOT_boss3_name"]),
                 p(fmt("SOT_boss3_desc1", ns.Spell(1277358), ns.Spell(1264257), ns.Spell(1263529))),
@@ -79,6 +84,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 4 : L'ura ────────────────────────────────────────────────
         {
             name = L["SOT_boss4_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-lura-midnight",
             htmlContent = table.concat({
                 h1(L["SOT_boss4_name"]),
                 p(fmt("SOT_boss4_desc1", ns.Spell(1265421), ns.Spell(1265650), ns.Spell(1265464), ns.Spell(1265419))),

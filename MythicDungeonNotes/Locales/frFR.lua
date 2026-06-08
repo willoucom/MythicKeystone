@@ -35,7 +35,7 @@ L["ABOUT_url_popup_text"] = "Copiez cette URL avec Ctrl+C :"
 
 -- Labels communs
 L["COMMON_intro_label"]     = "Introduction"
-L["COMMON_notable_trash"]   = "Trash notable"
+L["COMMON_notable_trash"]   = "Ennemis notables"
 L["COMMON_cc_immune"]       = "• Immunisé aux CC"
 
 -------------------------------------------------------------------------------
@@ -44,7 +44,6 @@ L["COMMON_cc_immune"]       = "• Immunisé aux CC"
 
 -- Académie d'Algeth'ar (AA) — uiMapId 2097
 L["AA_name"]              = "Académie d'Algeth'ar"
-L["AA_entrance_label"]    = "Entrée"
 L["AA_entrance_intro"]    = "Académie d'Algeth'ar — Héritage Dragonflight, Île aux Dragons."
 L["AA_entrance_bosses"]   = "4 bosses : Arbre-ancêtre envahi -> Crawth -> Vexamus -> Écho de Doragosa."
 L["AA_entrance_desc"]     = "Chaque professeur vous octroie un buff selon le type de sa Légion."
@@ -60,11 +59,6 @@ L["AA_black_drake_desc"]  = "Noir"
 L["AA_black_drake"]       = "Chance de Coup Critique"
 
 -- Noms des sections
-L["AA_boss1"]             = "Premier boss : Ancien Embroussaillé"
-L["AA_boss2"]             = "Deuxième boss : Tricérabec"
-L["AA_boss3"]             = "Troisième boss : Vexamus"
-L["AA_boss4"]             = "Quatrième boss : Écho de Doragosa"
-L["AA_trash_label"]       = "Trash"
 
 -- Noms des mobs
 L["AA_boss1_name"]        = "Ancien Embroussaillé"
@@ -262,7 +256,6 @@ L["DN_incense_label"]     = "Encens Protecteur"
 L["DN_incense_desc"]      = "Un brasero d'Encens Protecteur est situé près de l'entrée du donjon."
 L["DN_buff_alchemy_desc"] = "Les Alchimistes de Minuit (compétence 25) et les Druides en forme d'ours peuvent brûler l'encens : +1% Polyvalence pendant 10 minutes pour tout le groupe."
 -- Trash notable
-L["DN_trash_label"]       = "Trash notable"
 L["DN_trash_todo"]        = "TODO : lister les trash Amani notables (Maîtres-bêtes, Initiés du Loa de Glace, Serpents-vents en patrouille) et leurs sorts clés."
 -- Noms de sections (titres de boss)
 L["DN_boss1"]             = "Le Thésauriseur"
@@ -296,9 +289,8 @@ L["MT_intro_label"]       = "Introduction"
 L["MT_intro_desc1"]       = "Terrasse des Magistères — Midnight Saison 1, nouveau donjon."
 L["MT_intro_desc2"]       = "4 bosses : Arcanotron Custos -> Seranel Cinglesoleil -> Gemellus -> Degentrius."
 L["MT_library_note"]      = "Après la mort du premier ennemi dans la bibliothèque, un livre apparaît sur le lutrin — cliquez dessus pour octroyer +5%% de Hâte au groupe pendant 30 minutes."
-L["MT_trash_label"]       = "Trash notable"
 -- Noms de sections (titres de boss)
-L["MT_boss1"]             = "Arcanotron Custos"
+L["MT_boss1"]             = "Assemblage arcanique de dispersion des foules"
 L["MT_boss2"]             = "Seranel Cinglesoleil"
 L["MT_boss3"]             = "Gemellus"
 L["MT_boss4"]             = "Degentrius"
@@ -491,11 +483,11 @@ L["WRS_trash_woebringer_desc1"] = "%s : interrompre. %s : cast protégé par un 
 L["WRS_trash_behemoth_desc1"]   = "%s : se disperser pour éviter les dégâts de débordement. %s : tank buster — défensif."
 L["WRS_trash_mystic_desc1"]     = "%s : interrompre. %s : enrage à 50%% de vie — soothe immédiat."
 -- Boss 1 : Emberdawn
-L["WRS_boss1_name"]             = "Emberdawn"
+L["WRS_boss1_name"]             = "Aube-de-braise"
 L["WRS_boss1_desc1"]            = "%s : debuff sur 2 joueurs — se diriger vers les bords de l'arène pour y déposer la flaque avant qu'elle explose."
 L["WRS_boss1_desc2"]            = "%s : intermission avec dégâts massifs et frontales de feu — cooldowns de groupe et se déplacer hors des cônes. %s : tank buster avec DoT — défensif à chaque cast."
 -- Boss 2 : Duo Délabré (Kalis & Latch)
-L["WRS_boss2_name"]             = "Duo Délabré (Kalis & Latch)"
+L["WRS_boss2_name"]             = "Duo abandonné (Kalis et Clenche)"
 L["WRS_boss2_desc1"]            = "%s : cast de Kalis — rotation d'interruptions permanente. %s : malédiction — dispel immédiat."
 L["WRS_boss2_desc2"]            = "%s + %s : les deux bosses combinent leurs effets simultanément — défensifs et mobilité. %s : se disperser pour éviter les dégâts de débordement."
 L["WRS_boss2_desc3"]            = "%s : canal ciblant le tank — défensif puissant."
@@ -504,7 +496,7 @@ L["WRS_boss3_name"]             = "Commandant Kroluk"
 L["WRS_boss3_desc1"]            = "%s : caste en rafale, cible toujours le joueur le plus éloigné — rester groupé près du tank sauf la cible désignée qui s'éloigne. %s : mécanique de proximité — s'éloigner du boss."
 L["WRS_boss3_desc2"]            = "%s : invoque des adds à 66%% et 33%% — cooldowns de groupe. %s : fixate sur un joueur — kiter en cercle. %s : canal tank — défensif."
 -- Boss 4 : The Restless Heart
-L["WRS_boss4_name"]             = "Le Cœur sans repos"
+L["WRS_boss4_name"]             = "Le Cœur fébrile"
 L["WRS_boss4_desc1"]            = "%s : debuff stackant — se placer sur les flèches au sol pour l'effacer avant %s. %s : invoque des %s — esquiver les flèches en mouvement."
 L["WRS_boss4_desc2"]            = "%s : spread — efface également les flaques au sol, utiliser à bon escient. %s : frontal vers un joueur aléatoire — la cible reste immobile pour faciliter l'esquive des autres. %s : tank buster avec knockback — défensif."
 

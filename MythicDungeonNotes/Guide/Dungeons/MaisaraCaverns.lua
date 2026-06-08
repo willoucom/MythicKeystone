@@ -26,6 +26,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            icon = "interface/lfgframe/ui-lfg-background-maisarahills",
             htmlContent = table.concat({
                 p(L["MC_intro_desc1"]),
                 p(L["MC_intro_desc2"]),
@@ -34,6 +35,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Trash notable ─────────────────────────────────────────────────
         {
             name = L["COMMON_notable_trash"],
+            icon = "interface/lfgframe/ui-lfg-background-randomscenario",
             htmlContent = table.concat({
                 h1(L["MC_trash_berserker_name"]),
                 p(fmt("MC_trash_berserker_desc1", ns.Spell(1255765), ns.Spell(1255966))),
@@ -57,6 +59,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Muro'jin & Nekraxx ───────────────────────────────────
         {
             name = L["MC_boss1_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-murojinandnekraxx",
             htmlContent = table.concat({
                 h1(L["MC_boss1_name"]),
                 p(fmt("MC_boss1_desc1", ns.Spell(1249948), ns.Spell(1249789))),
@@ -70,6 +73,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Vordaza ──────────────────────────────────────────────
         {
             name = L["MC_boss2_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-vordaza",
             htmlContent = table.concat({
                 h1(L["MC_boss2_name"]),
                 p(fmt("MC_boss2_desc1", ns.Spell(1251204))),
@@ -81,6 +85,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Rak'tul, Vessel of Souls ────────────────────────────
         {
             name = L["MC_boss3_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-raktulvesselofsouls",
             htmlContent = table.concat({
                 h1(L["MC_boss3_name"]),
                 p(fmt("MC_boss3_desc1", ns.Spell(1248863))),

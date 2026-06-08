@@ -28,6 +28,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            icon = "interface/lfgframe/ui-lfg-background-windrunnerspire",
             htmlContent = table.concat({
                 p(L["WRS_intro_desc1"]),
                 p(L["WRS_intro_desc2"]),
@@ -36,6 +37,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Trash notable ─────────────────────────────────────────────────
         {
             name = L["COMMON_notable_trash"],
+            icon = "interface/lfgframe/ui-lfg-background-randomscenario",
             htmlContent = table.concat({
                 h1(L["WRS_trash_magus_name"]),
                 p(fmt("WRS_trash_magus_desc1", ns.Spell(1216250), ns.Spell(1253683))),
@@ -52,6 +54,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Emberdawn ────────────────────────────────────────────
         {
             name = L["WRS_boss1_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-emberdawn",
             htmlContent = table.concat({
                 h1(L["WRS_boss1_name"]),
                 p(fmt("WRS_boss1_desc1", ns.Spell(466556))),
@@ -61,6 +64,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Duo Délabré (Kalis & Latch) ─────────────────────────
         {
             name = L["WRS_boss2_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-derelict duo",
             htmlContent = table.concat({
                 h1(L["WRS_boss2_name"]),
                 p(fmt("WRS_boss2_desc1", ns.Spell(472724), ns.Spell(474105))),
@@ -71,6 +75,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Commander Kroluk ─────────────────────────────────────
         {
             name = L["WRS_boss3_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-commander kroluk",
             htmlContent = table.concat({
                 h1(L["WRS_boss3_name"]),
                 p(fmt("WRS_boss3_desc1", ns.Spell(472054), ns.Spell(1253026))),
@@ -80,6 +85,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 4 : The Restless Heart ───────────────────────────────────
         {
             name = L["WRS_boss4_name"],
+            icon = "interface/encounterjournal/ui-ej-boss-the restless heart",
             htmlContent = table.concat({
                 h1(L["WRS_boss4_name"]),
                 p(fmt("WRS_boss4_desc1", ns.Spell(1216042), ns.Spell(468429), ns.Spell(472556), ns.Spell(1253977))),
