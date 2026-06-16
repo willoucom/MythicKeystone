@@ -4,5 +4,5 @@ local L = LibStub("AceLocale-3.0"):NewLocale(myname, "frFR", false)
 if not L then return end
 
 L["AddonName"] = "Clés Mythiques"
-L["Alts"] = "Mes Personnages"
-L["Guild"] = "Ma Guilde"
+L["Alts"] = "Personnages"
+L["Guild"] = "Guilde"
