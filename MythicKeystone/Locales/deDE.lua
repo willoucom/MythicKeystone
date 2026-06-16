@@ -1,6 +1,7 @@
 local myname, ns = ...
 
-local L = LibStub("AceLocale-3.0"):NewLocale(myname, "deDE", true)
+local L = LibStub("AceLocale-3.0"):NewLocale(myname, "deDE", false)
+if not L then return end
 
 L["AddonName"] = "Mythic Keystones"
 L["Alts"] = "Figuren"
@@ -14,7 +15,6 @@ L["Ready"] = "Bereit ?"
 L["DungeonCountdown"] = "MythicKeystone: Schlüsselaktivierung in 5 Sekunden, schnallt euch an und macht euch bereit."
 L["DungeonStarted"] = "MythicKeystone: Schlüssel eingesetzt, viel Spaß beim Run, gebt euer Bestes und passt auf die Flammen auf!"
 L["DungeonCountdownStop"] = "MythicKeystone: Schlüsselaktivierung gestoppt."
-L["DungeonCompleted"] = "MythicKeystone: GG alle, danke für den Run!"
 
 -- About popup (English placeholders, awaiting German translation)
 L["ABOUT_btn_tooltip"]      = "About this addon"
