@@ -308,7 +308,7 @@ L["MT_trash_shredder_name"]           = "Опустошенный кромсат
 L["MT_trash_voidwalker_name"]         = "Чудовищный демон Бездны"
 L["MT_trash_voidcaller_name"]         = "Теневой призыватель Бездны"
 L["MT_trash_unstable_name"]           = "Нестабильное порождение Бездны"
-L["MT_trash_void_infuser_name"]       = "Насыщатель Бездны"
+L["MT_trash_void_infuser_name"]       = "Ужасень Бездны"
 L["MT_trash_tyrant_name"]             = "Пожирающий тиран"
 -- Trash descriptions — Arcane Sentry
 L["MT_trash_arcane_sentry_desc1"]     = "• %s - нацеливается на танка; используйте снятие корней или магическое развеивание, чтобы убрать эффект."
