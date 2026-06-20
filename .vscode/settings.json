@@ -396,7 +396,9 @@
         "TimerTracker",
         "BACKPACK_CONTAINER",
         "GameTooltip_AddBlankLineToTooltip",
-        "RAID_CLASS_COLORS"
+        "RAID_CLASS_COLORS",
+        "YES",
+        "NO"
     ],
     "Lua.runtime.version": "Lua 5.1",
     "Lua.runtime.builtin": {
