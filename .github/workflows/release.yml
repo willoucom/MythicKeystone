@@ -40,8 +40,38 @@ jobs:
             mythicdungeonnotes:
               - 'MythicDungeonNotes/**'
 
-  release-libmythickeystone:
+  # Create the GitHub release once, up front, so the per-addon packager jobs
+  # below only ever *update* an existing release. Without this, the parallel
+  # jobs race to create the same release and the losers fail with HTTP 422
+  # "already_exists" on the GitHub step.
+  create-release:
     needs: changes
+    if: >-
+      needs.changes.outputs.libmythickeystone == 'true' ||
+      needs.changes.outputs.mythickeystone == 'true' ||
+      needs.changes.outputs.mythickeystone-libdatabroker == 'true' ||
+      needs.changes.outputs.mythicdungeonnotes == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Ensure the GitHub release exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Release $GITHUB_REF_NAME already exists; packager jobs will update it."
+          else
+            gh release create "$GITHUB_REF_NAME" --verify-tag \
+              --title "$GITHUB_REF_NAME" --notes "Automated release $GITHUB_REF_NAME"
+          fi
+
+  release-libmythickeystone:
+    needs: [changes, create-release]
     if: needs.changes.outputs.libmythickeystone == 'true'
     runs-on: ubuntu-latest
     env:
@@ -64,7 +94,7 @@ jobs:
           args: -t LibMythicKeystone
 
   release-mythickeystone:
-    needs: changes
+    needs: [changes, create-release]
     if: needs.changes.outputs.mythickeystone == 'true'
     runs-on: ubuntu-latest
     env:
@@ -87,7 +117,7 @@ jobs:
           args: -t MythicKeystone
 
   release-mythickeystone-libdatabroker:
-    needs: changes
+    needs: [changes, create-release]
     if: needs.changes.outputs.mythickeystone-libdatabroker == 'true'
     runs-on: ubuntu-latest
     env:
@@ -110,7 +140,7 @@ jobs:
           args: -t MythicKeystone_LibDataBroker
 
   release-mythicdungeonnotes:
-    needs: changes
+    needs: [changes, create-release]
     if: needs.changes.outputs.mythicdungeonnotes == 'true'
     runs-on: ubuntu-latest
     env:
