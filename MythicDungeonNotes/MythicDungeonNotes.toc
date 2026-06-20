@@ -12,8 +12,13 @@
 ## IconTexture: 525134
 
 # Libraries
+#@no-lib-strip@
 Libs\LibStub\LibStub.lua
 Libs\AceLocale-3.0\AceLocale-3.0.xml
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0\LibDBIcon-1.0.lua
+#@end-no-lib-strip@
 
 # Locale files
 Locales\enUS.lua
@@ -26,6 +31,7 @@ core.lua
 Guide\GuideData.lua
 Guide\GuideFrame.lua
 Guide\AboutFrame.lua
+Guide\Launcher.lua
 
 # Guide — one file per dungeon (loaded after GuideData.lua)
 Guide\Dungeons\AlgetharAcademy.lua
