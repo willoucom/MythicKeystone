@@ -137,6 +137,8 @@ jobs:
         run: python convert_assets.py
       - name: Stage generated TGA files for packager
         run: git add -f MythicDungeonNotes/Guide/Dungeons/Images/
+      - name: Install Subversion (for the LibDBIcon-1.0 external)
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends subversion
       - name: Package and release MythicDungeonNotes
         uses: BigWigsMods/packager@v2
         with:
