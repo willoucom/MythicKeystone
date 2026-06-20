@@ -1,0 +1,13 @@
+# Normalize all text files to LF in the repository. This keeps Windows and
+# Linux/WSL clones consistent without any per-machine git config, and travels
+# with the repo (CI included). Working copies are checked out as LF on every
+# platform; set `core.autocrlf=true` locally if you want CRLF working copies on
+# Windows.
+* text=auto
+
+# Binary assets — never apply EOL conversion.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.tga  binary
+*.pdn  binary
