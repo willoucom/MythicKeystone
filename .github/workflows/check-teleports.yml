@@ -1,0 +1,25 @@
+name: Check generated data
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'MythicDungeonNotes/Guide/Dungeons/**'
+      - 'generate_teleports.py'
+      - 'MythicKeystone/TeleportData.lua'
+  pull_request:
+    paths:
+      - 'MythicDungeonNotes/Guide/Dungeons/**'
+      - 'generate_teleports.py'
+      - 'MythicKeystone/TeleportData.lua'
+
+jobs:
+  teleports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Verify MythicKeystone/TeleportData.lua matches MythicDungeonNotes data
+        run: python generate_teleports.py --check
