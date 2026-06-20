@@ -26,3 +26,4 @@ MythicKeystone.lua
 AutoKeystone.lua
 TeleportData.lua
 TeleportButtons.lua
+Options.lua

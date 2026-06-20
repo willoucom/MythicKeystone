@@ -398,7 +398,16 @@ function Addon.UpdateGuildFrame()
     guild["text"]:SetText(table.concat(textParts))
 end
 
+-- Show/hide the three panels according to the options (default = shown).
+function Addon.ApplyPanelVisibility()
+    local db = MythicKeystoneDB or {}
+    AltsFrame:SetShown(db.showAlts ~= false)
+    GroupFrame:SetShown(db.showGroup ~= false)
+    GuildFrame:SetShown(db.showGuild ~= false)
+end
+
 PVEFrame:SetScript("OnShow", function(...)
+    Addon.ApplyPanelVisibility()
     -- Move raider io frame
     if RaiderIO_ProfileTooltip then
         RaiderIO_ProfileTooltip:SetPoint("TOPLEFT", PVEFrame:GetWidth() - GuildFrame:GetWidth() + 15, 0)

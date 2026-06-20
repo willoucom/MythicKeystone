@@ -85,6 +85,9 @@ local function setTeleportVisible(visible)
     end
 end
 
+-- Exposed for the options panel.
+ns.SetTeleportVisible = setTeleportVisible
+
 local function createToggleButton()
     local toggle = CreateFrame("Button", nil, UIParent)
     toggle:SetSize(18, 18)

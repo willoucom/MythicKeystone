@@ -20,6 +20,22 @@ L["Countdown_cancel"] = "Cancel"
 L["TELEPORT_hide"] = "Hide teleports"
 L["TELEPORT_show"] = "Show teleports"
 
+-- Options panel
+L["OPT_showAlts"]       = "Show Alts panel"
+L["OPT_showAlts_tip"]   = "Display your alts' keystones on the LFG frame."
+L["OPT_showGroup"]      = "Show Group panel"
+L["OPT_showGroup_tip"]  = "Display your party members' keystones."
+L["OPT_showGuild"]      = "Show Guild panel"
+L["OPT_showGuild_tip"]  = "Display your guild's keystones."
+L["OPT_teleports"]      = "Show teleport buttons"
+L["OPT_teleports_tip"]  = "Show dungeon teleport buttons on the Mythic+ UI."
+L["OPT_autoSlot"]       = "Auto-slot keystone"
+L["OPT_autoSlot_tip"]   = "Automatically slot your keystone when opening the Mythic+ UI."
+L["OPT_readyCheck"]     = "Show Ready Check button"
+L["OPT_readyCheck_tip"] = "Add a Ready Check button to the Mythic+ start dialog."
+L["OPT_countdown"]      = "Show Countdown button"
+L["OPT_countdown_tip"]  = "Add a Countdown button to the Mythic+ start dialog."
+
 -- About popup
 L["ABOUT_btn_tooltip"]      = "About this addon"
 L["ABOUT_title"]            = "About MythicKeystone"
