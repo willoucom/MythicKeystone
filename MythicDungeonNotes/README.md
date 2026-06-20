@@ -13,8 +13,7 @@ A small floating button sits on your screen. Click it to open a full guide panel
 - **Dungeon list view** — all dungeons laid out as vignette cards with their artwork
 - **Automatic zone detection** — opening the panel while inside a dungeon goes straight to that dungeon's guide
 - **Two-column layout** — section menu on the left, detailed notes on the right with maps and icons
-- **Beginner / Advanced tips** — color-coded so veterans can skip the basics and newer players aren't overwhelmed
-- **Draggable button and window** — put them wherever they fit your UI
+- **Draggable button and window** — put them wherever they fit your UI; positions are saved between sessions
 
 ---
 

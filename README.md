@@ -48,14 +48,15 @@ A lightweight in-game guide for Mythic+ dungeons — boss mechanics, interrupt p
 - **Dungeon list view** — all dungeons laid out as vignette cards with their artwork
 - **Automatic zone detection** — opens straight to the guide of the dungeon you're in
 - **Two-column layout** — section menu on the left, notes with maps and icons on the right
-- **Beginner / Advanced tips** — color-coded so veterans can skip the basics
-- **Draggable button and window**
+- **Draggable button and window** — positions saved between sessions
 
 ---
 
 ## Supported Languages
 
-🇺🇸 English &nbsp;|&nbsp; 🇫🇷 Français &nbsp;|&nbsp; 🇩🇪 Deutsch &nbsp;|&nbsp; 🇹🇼 繁體中文
+🇺🇸 English &nbsp;|&nbsp; 🇫🇷 Français &nbsp;|&nbsp; 🇷🇺 Русский &nbsp;|&nbsp; 🇩🇪 Deutsch &nbsp;|&nbsp; 🇹🇼 繁體中文
+
+Coverage varies by addon: English, French and Russian are available across all addons; German and Traditional Chinese cover the MythicKeystone interface.
 
 ---
 
