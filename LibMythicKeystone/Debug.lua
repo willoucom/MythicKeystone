@@ -781,13 +781,33 @@ local function PrintHelp()
     print("  /lmk show <party|mykey|alts|guild|all>")
     print("  /lmk broadcast        LKS.Request PARTY + GUILD")
     print("  /lmk request          alias of broadcast")
-    print("  /lmk reset            wipe Alts + Guilds (no confirmation)")
+    print("  /lmk reset            wipe Alts + Guilds (asks confirmation)")
+    print("  /lmk reset confirm    wipe immediately, no popup")
     print("  /lmk fake <party|alt|guild>")
     print("  /lmk wipefakes        remove all _fake entries")
     print("  /lmk dryrun on|off    block outgoing TX (log as DRY)")
     print("  /lmk legacy on|off    toggle legacy MythicKeystone wire compat")
     print("  /lmk log on|off|clear")
 end
+
+local function ResetDB()
+    LibMythicKeystoneDB = LibMythicKeystoneDB or {}
+    LibMythicKeystoneDB["Alts"] = {}
+    LibMythicKeystoneDB["Guilds"] = {}
+    print("|cffff5555LMK:|r DB reset (Alts + Guilds wiped).")
+end
+
+StaticPopupDialogs["LMK_RESET_CONFIRM"] = {
+    text = "MythicKeystone: wipe all stored Alts and Guild keystones?\nThis cannot be undone.",
+    button1 = YES,
+    button2 = NO,
+    OnAccept = ResetDB,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = true,
+    showAlert = true,
+    preferredIndex = 3,
+}
 
 SLASH_LMK1 = "/lmk"
 SlashCmdList["LMK"] = function(msg)
@@ -838,10 +858,11 @@ SlashCmdList["LMK"] = function(msg)
     end
 
     if cmd == "reset" then
-        LibMythicKeystoneDB = LibMythicKeystoneDB or {}
-        LibMythicKeystoneDB["Alts"] = {}
-        LibMythicKeystoneDB["Guilds"] = {}
-        print("|cffff5555LMK:|r DB reset.")
+        if rest == "confirm" then
+            ResetDB()
+        else
+            StaticPopup_Show("LMK_RESET_CONFIRM")
+        end
         return
     end
 
