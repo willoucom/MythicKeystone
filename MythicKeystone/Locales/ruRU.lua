@@ -17,6 +17,10 @@ L["ReadyCheck"] = "Проверка готовности"
 L["Countdown"] = "Обратный отсчёт"
 L["Countdown_cancel"] = "Отмена"
 
+-- Кнопки телепортации
+L["TELEPORT_hide"] = "Скрыть телепорты"
+L["TELEPORT_show"] = "Показать телепорты"
+
 -- About popup
 L["ABOUT_btn_tooltip"] = "Об этом аддоне"
 L["ABOUT_title"] = "О MythicKeystone"
@@ -28,7 +32,7 @@ L["ABOUT_other_feature_1"] = "• Все M+ подземелья"
 L["ABOUT_other_feature_2"] = "• Стратегии боссов, советы по трешу, прерывания"
 L["ABOUT_other_feature_3"] = "• Автоопределение зоны открывает нужное руководство"
 L["ABOUT_other_feature_4"] = "• Встроенные кнопки телепортации"
-L["ABOUT_other_companion"] = "Советы для новичков и опытных игроков выделены цветом, чтобы опытные игроки могли пропускать основы."
+L["ABOUT_other_companion"] = "Всё в удобном двухколоночном формате, с картами и иконками заклинаний."
 L["ABOUT_links_header"] = "Ссылки"
 L["ABOUT_link_curseforge"] = "CurseForge"
 L["ABOUT_link_wago"] = "Wago"

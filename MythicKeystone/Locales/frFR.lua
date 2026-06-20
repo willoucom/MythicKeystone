@@ -16,6 +16,10 @@ L["DungeonCountdown"] = "MythicKeystone: Activation de la clé dans 5 secondes, 
 L["DungeonStarted"] = "MythicKeystone: Clé insérée, profitez de la run, faites de votre mieux et attention aux flammes !"
 L["DungeonCountdownStop"] = "MythicKeystone: Activation de la clé annulée."
 
+-- Boutons de téléportation
+L["TELEPORT_hide"] = "Masquer les téléports"
+L["TELEPORT_show"] = "Afficher les téléports"
+
 -- Popup À propos
 L["ABOUT_btn_tooltip"]      = "À propos de l'addon"
 L["ABOUT_title"]            = "À propos de MythicKeystone"
@@ -27,7 +31,7 @@ L["ABOUT_other_feature_1"]  = "• Tous les donjons Mythique+ couverts"
 L["ABOUT_other_feature_2"]  = "• Stratégies de boss, trash, interrupts"
 L["ABOUT_other_feature_3"]  = "• Détection automatique de la zone"
 L["ABOUT_other_feature_4"]  = "• Boutons de téléportation intégrés"
-L["ABOUT_other_companion"]  = "Notes Débutant et Avancé en codes couleurs pour que les vétérans puissent passer les bases."
+L["ABOUT_other_companion"]  = "Le tout dans un lecteur clair en deux colonnes, avec cartes et icônes de sorts."
 L["ABOUT_links_header"]     = "Liens"
 L["ABOUT_link_curseforge"]  = "CurseForge"
 L["ABOUT_link_wago"]        = "Wago"

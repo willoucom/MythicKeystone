@@ -16,6 +16,10 @@ L["DungeonCountdown"] = "MythicKeystone: Schlüsselaktivierung in 5 Sekunden, sc
 L["DungeonStarted"] = "MythicKeystone: Schlüssel eingesetzt, viel Spaß beim Run, gebt euer Bestes und passt auf die Flammen auf!"
 L["DungeonCountdownStop"] = "MythicKeystone: Schlüsselaktivierung gestoppt."
 
+-- Teleport-Schaltflächen
+L["TELEPORT_hide"] = "Teleports ausblenden"
+L["TELEPORT_show"] = "Teleports anzeigen"
+
 -- About popup (English placeholders, awaiting German translation)
 L["ABOUT_btn_tooltip"]      = "About this addon"
 L["ABOUT_title"]            = "About MythicKeystone"
@@ -27,7 +31,7 @@ L["ABOUT_other_feature_1"]  = "• All Mythic+ dungeons covered"
 L["ABOUT_other_feature_2"]  = "• Boss strategies, trash tips, interrupts"
 L["ABOUT_other_feature_3"]  = "• Auto zone detection opens the right guide"
 L["ABOUT_other_feature_4"]  = "• Integrated teleport buttons"
-L["ABOUT_other_companion"]  = "Beginner and Advanced tips are color-coded so veterans can skip the basics."
+L["ABOUT_other_companion"]  = "Everything in a clean two-column reader, with maps and spell icons."
 L["ABOUT_links_header"]     = "Links"
 L["ABOUT_link_curseforge"]  = "CurseForge"
 L["ABOUT_link_wago"]        = "Wago"

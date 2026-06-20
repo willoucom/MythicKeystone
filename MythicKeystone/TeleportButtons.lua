@@ -1,4 +1,5 @@
-local _ = ...
+local ADDON = ...
+local L = LibStub("AceLocale-3.0"):GetLocale(ADDON)
 
 local DUNGEON_ID_FIELDS = { "mapId", "challengeMapID", "dungeonID", "mapID" }
 
@@ -123,12 +124,12 @@ local function createToggleButton()
         setTeleportVisible(not teleportVisible)
         updateToggle()
         if GameTooltip:IsOwned(toggle) then
-            GameTooltip:SetText(teleportVisible and "Masquer les téléports" or "Afficher les téléports", 1, 1, 1)
+            GameTooltip:SetText(teleportVisible and L["TELEPORT_hide"] or L["TELEPORT_show"], 1, 1, 1)
         end
     end)
     toggle:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
-        GameTooltip:SetText(teleportVisible and "Masquer les téléports" or "Afficher les téléports", 1, 1, 1)
+        GameTooltip:SetText(teleportVisible and L["TELEPORT_hide"] or L["TELEPORT_show"], 1, 1, 1)
         GameTooltip:Show()
     end)
     toggle:SetScript("OnLeave", function()
