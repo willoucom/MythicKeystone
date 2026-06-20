@@ -1,4 +1,4 @@
-## Interface: 120005, 120007
+## Interface: 120007, 120100
 ## Title: MythicKeystone_LibDataBroker
 ## Version: @project-version@
 ## Notes: Expose Mythic Keystone in Titan/Fubar
