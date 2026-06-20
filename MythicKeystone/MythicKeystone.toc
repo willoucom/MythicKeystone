@@ -24,4 +24,5 @@ Locales\ruRU.lua
 AboutFrame.lua
 MythicKeystone.lua
 AutoKeystone.lua
+TeleportData.lua
 TeleportButtons.lua

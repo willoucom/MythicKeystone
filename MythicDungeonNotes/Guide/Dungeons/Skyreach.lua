@@ -22,6 +22,7 @@ ns.guideData[#ns.guideData + 1] = {
     background = "interface/lfgframe/ui-lfg-background-skyreach",
     vignette = "interface/lfgframe/ui-lfg-background-skyreach",
     spellportalid = 159898,
+    challengeMapID = 161,
     sections  = {
         -- ── Introduction ──────────────────────────────────────────────────
         {

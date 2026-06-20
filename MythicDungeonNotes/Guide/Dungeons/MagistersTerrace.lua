@@ -21,6 +21,7 @@ ns.guideData[#ns.guideData + 1] = {
     background = "interface/encounterjournal/ui-ej-background-magistersterrace-midnight",
     vignette   = "interface/lfgframe/ui-lfg-background-magistersterrace-midnight",
     spellportalid = 1254572,
+    challengeMapID = 558,
     mapIds    = { 2515, 2520 },
     sections  = {
         -- ── Introduction ──────────────────────────────────────────────────

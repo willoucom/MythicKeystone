@@ -20,6 +20,7 @@ ns.guideData[#ns.guideData + 1] = {
     background = "interface/encounterjournal/ui-ej-background-nexuspointxenas",
     vignette = "interface/lfgframe/ui-lfg-background-nexuspointxenas",
     spellportalid = 1254563,
+    challengeMapID = 559,
     groups = {"S1"},
     mapIds    = { 2556 },
     sections  = {

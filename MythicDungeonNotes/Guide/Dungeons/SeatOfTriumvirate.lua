@@ -21,6 +21,7 @@ ns.guideData[#ns.guideData + 1] = {
     background = "interface/encounterjournal/ui-ej-background-seatofthetriumvirate",
     vignette = "interface/lfgframe/ui-lfg-background-seatofthetriumvirate",
     spellportalid = 1254551,
+    challengeMapID = 239,
     mapIds    = { 903 },
     sections  = {
         -- ── Introduction ──────────────────────────────────────────────────

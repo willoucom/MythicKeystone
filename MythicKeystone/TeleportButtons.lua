@@ -1,19 +1,13 @@
-local ADDON = ...
+local ADDON, ns = ...
 local L = LibStub("AceLocale-3.0"):GetLocale(ADDON)
 
 local DUNGEON_ID_FIELDS = { "mapId", "challengeMapID", "dungeonID", "mapID" }
 
--- challengeMapID -> teleport spellID, sourced from MythicDungeonNotes dungeon definitions.
-local TELEPORT_SPELLS = {
-    [239] = 1254551, -- Siège du Triumvirat
-    [161] = 159898,  -- Orée-du-ciel
-    [560] = 1254559, -- Cavernes de Maisara
-    [402] = 393273,  -- Académie Algethar
-    [557] = 1254400, -- Coursevent (Windrunner Spire)
-    [556] = 1254555, -- Fosse de Saron
-    [558] = 1254572, -- Terrasse des Magistères
-    [559] = 1254563, -- Point Nexus Xenas
-}
+-- challengeMapID -> teleport spellID. Single source of truth: the
+-- MythicDungeonNotes dungeon definitions, surfaced here via the generated
+-- TeleportData.lua (ns.TeleportSpells). Run `python generate_teleports.py`
+-- to refresh after editing dungeon data.
+local TELEPORT_SPELLS = ns.TeleportSpells or {}
 
 local function findDungeonFrames()
     local found = {}

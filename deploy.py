@@ -3,8 +3,9 @@
 deploy.py - Build and deploy WoW addons to the local WoW installation.
 
 Pre-processing steps (run before the copy):
-  1. fetch_deps.py  – download / update external dependencies
-  2. convert_assets.py – convert source images to TGA
+  1. generate_teleports.py – regenerate MythicKeystone/TeleportData.lua from MDN
+  2. fetch_deps.py  – download / update external dependencies
+  3. convert_assets.py – convert source images to TGA
 
 Then each addon folder is mirrored to the WoW AddOns directory via robocopy.
 
@@ -103,9 +104,19 @@ def _mirror(source: Path, dest: Path, exclude_files: set[str], dry_run: bool) ->
 # Pre-processing steps
 # ---------------------------------------------------------------------------
 
+def step_generate_teleports() -> bool:
+    print("\n" + "=" * 60)
+    print("STEP 1 – Generating data tables")
+    print("=" * 60)
+    ok = _run_script(ROOT / "generate_teleports.py")
+    if not ok:
+        print("generate_teleports.py failed.")
+    return ok
+
+
 def step_fetch_deps(update: bool) -> bool:
     print("\n" + "=" * 60)
-    print("STEP 1 – Fetching external dependencies")
+    print("STEP 2 – Fetching external dependencies")
     print("=" * 60)
     script = ROOT / "fetch_deps.py"
     args = ["--update"] if update else []
@@ -117,7 +128,7 @@ def step_fetch_deps(update: bool) -> bool:
 
 def step_convert_assets() -> bool:
     print("\n" + "=" * 60)
-    print("STEP 2 – Converting assets to TGA")
+    print("STEP 3 – Converting assets to TGA")
     print("=" * 60)
     script = ROOT / "convert_assets.py"
     ok = _run_script(script)
@@ -132,7 +143,7 @@ def step_convert_assets() -> bool:
 
 def step_deploy(addon_filter: str | None, dry_run: bool) -> bool:
     print("\n" + "=" * 60)
-    print("STEP 3 – Deploying addons")
+    print("STEP 4 – Deploying addons")
     print("=" * 60)
 
     has_error = False
@@ -183,6 +194,10 @@ def main() -> None:
         help="Print what would be done without copying any files.",
     )
     parser.add_argument(
+        "--skip-generate", action="store_true",
+        help="Skip the generate_teleports pre-processing step.",
+    )
+    parser.add_argument(
         "--skip-fetch", action="store_true",
         help="Skip the fetch_deps pre-processing step.",
     )
@@ -193,6 +208,9 @@ def main() -> None:
     args = parser.parse_args()
 
     ok = True
+
+    if not args.skip_generate:
+        ok = step_generate_teleports() and ok
 
     if not args.skip_fetch:
         ok = step_fetch_deps(update=args.update) and ok
