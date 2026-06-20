@@ -56,6 +56,28 @@ local THUMB_COLS = math.max(1, math.floor((LIST_CW + THUMB_GAP) / (THUMB_W + THU
 local GuideBtn       -- floating toggle button
 local GuideWin       -- main window
 local BackBtn        -- "< Liste" button in title bar
+local DB             -- SavedVariables table (MythicDungeonNotesDB)
+
+-------------------------------------------------------------------------------
+-- Position persistence
+-------------------------------------------------------------------------------
+
+-- Save a frame's current anchor into the SavedVariables table under `key`.
+-- Always stored relative to UIParent so it restores cleanly across sessions.
+local function SavePosition(frame, key)
+    if not DB then return end
+    local point, _, relPoint, x, y = frame:GetPoint()
+    if not point then return end
+    DB[key] = { point = point, relPoint = relPoint, x = x, y = y }
+end
+
+-- Restore a frame's anchor from the SavedVariables table; no-op if unset.
+local function RestorePosition(frame, key)
+    local p = DB and DB[key]
+    if not (p and p.point) then return end
+    frame:ClearAllPoints()
+    frame:SetPoint(p.point, UIParent, p.relPoint or p.point, p.x or 0, p.y or 0)
+end
 
 -- Layout frames (created once, shown/hidden per view)
 local DungeonHeader     -- frame: dungeon name row (dungeon view)
@@ -782,7 +804,10 @@ local function BuildButton()
     hl:SetAlpha(0.35)
 
     GuideBtn:SetScript("OnDragStart", GuideBtn.StartMoving)
-    GuideBtn:SetScript("OnDragStop",  GuideBtn.StopMovingOrSizing)
+    GuideBtn:SetScript("OnDragStop",  function(self)
+        self:StopMovingOrSizing()
+        SavePosition(self, "guideBtn")
+    end)
     GuideBtn:SetScript("OnClick", function(_, btn)
         if btn == "LeftButton" then Guide:Toggle() end
     end)
@@ -794,6 +819,8 @@ local function BuildButton()
         GameTooltip:Show()
     end)
     GuideBtn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
+    RestorePosition(GuideBtn, "guideBtn")
 end
 
 -------------------------------------------------------------------------------
@@ -827,7 +854,10 @@ local function BuildWindow()
     titleBar:EnableMouse(true)
     titleBar:RegisterForDrag("LeftButton")
     titleBar:SetScript("OnDragStart", function() GuideWin:StartMoving() end)
-    titleBar:SetScript("OnDragStop",  function() GuideWin:StopMovingOrSizing() end)
+    titleBar:SetScript("OnDragStop",  function()
+        GuideWin:StopMovingOrSizing()
+        SavePosition(GuideWin, "guideWin")
+    end)
 
     local titleFS = titleBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     titleFS:SetPoint("LEFT", 10, 0)
@@ -979,8 +1009,12 @@ end
 -------------------------------------------------------------------------------
 
 function Guide:Init()
+    MythicDungeonNotesDB = MythicDungeonNotesDB or {}
+    DB = MythicDungeonNotesDB
+
     BuildButton()
     BuildWindow()
+    RestorePosition(GuideWin, "guideWin")
 
     local evt = CreateFrame("Frame")
     evt:RegisterEvent("PLAYER_ENTERING_WORLD")

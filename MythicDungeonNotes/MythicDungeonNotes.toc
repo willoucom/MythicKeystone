@@ -6,7 +6,7 @@
 ## Notes: Mythic Dungeon Notes
 ## Notes-frFR: Notes pour les donjons Mythique
 ## Notes-ruRU: Заметки с подробным описанием для каждого актуального М+ подземелья
-## SavedVariables: Mythic Dungeon Notes
+## SavedVariables: MythicDungeonNotesDB
 ## X-Curse-Project-ID: 1515356
 ## X-Wago-ID: rN4kdzGD
 ## IconTexture: 525134
