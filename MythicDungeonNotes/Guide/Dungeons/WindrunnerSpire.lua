@@ -23,6 +23,7 @@ ns.guideData[#ns.guideData + 1] = {
     vignette = "interface/lfgframe/ui-lfg-background-windrunnerspire",
     spellportal = "Path of the Windrunners",
     spellportalid = 1254400,
+    challengeMapID = 557,
     mapIds    = { 2492, 2496, 2557, 2558 },
     sections  = {
         -- ── Introduction ──────────────────────────────────────────────────

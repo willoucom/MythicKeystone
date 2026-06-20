@@ -16,7 +16,8 @@ Conventional commits with scope: `type(scope): description`
 
 ## Scripts (repo root)
 
-- `deploy.py` — copy all addons to local WoW install (runs `fetch_deps.py` + `convert_assets.py` first)
+- `deploy.py` — copy all addons to local WoW install (runs `generate_teleports.py` + `fetch_deps.py` + `convert_assets.py` first)
+- `generate_teleports.py` — regenerate `MythicKeystone/TeleportData.lua` from the MythicDungeonNotes dungeon data (single source of truth for teleport spell ids); `--check` enforces no drift in CI
 - `fetch_deps.py` — resolve pkgmeta externals
 - `convert_assets.py` — convert source images to TGA
 - `preview_guides.py` — local guide preview

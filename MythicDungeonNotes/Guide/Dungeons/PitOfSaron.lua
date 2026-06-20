@@ -22,6 +22,7 @@ ns.guideData[#ns.guideData + 1] = {
     background = "interface/encounterjournal/ui-ej-background-pitofsaron",
     vignette = "interface/lfgframe/ui-lfg-background-pitofsaron",
     spellportalid = 1254555,
+    challengeMapID = 556,
     sections  = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
