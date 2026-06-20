@@ -20,6 +20,22 @@ L["DungeonCountdownStop"] = "MythicKeystone: Activation de la clé annulée."
 L["TELEPORT_hide"] = "Masquer les téléports"
 L["TELEPORT_show"] = "Afficher les téléports"
 
+-- Panneau d'options
+L["OPT_showAlts"]       = "Afficher le panneau Personnages"
+L["OPT_showAlts_tip"]   = "Affiche les clés de vos personnages dans la fenêtre LFG."
+L["OPT_showGroup"]      = "Afficher le panneau Groupe"
+L["OPT_showGroup_tip"]  = "Affiche les clés des membres de votre groupe."
+L["OPT_showGuild"]      = "Afficher le panneau Guilde"
+L["OPT_showGuild_tip"]  = "Affiche les clés de votre guilde."
+L["OPT_teleports"]      = "Afficher les boutons de téléportation"
+L["OPT_teleports_tip"]  = "Affiche les boutons de téléportation de donjon dans l'interface Mythique+."
+L["OPT_autoSlot"]       = "Insérer la clé automatiquement"
+L["OPT_autoSlot_tip"]   = "Insère automatiquement votre clé à l'ouverture de l'interface Mythique+."
+L["OPT_readyCheck"]     = "Afficher le bouton Appel"
+L["OPT_readyCheck_tip"] = "Ajoute un bouton d'appel à la fenêtre de départ Mythique+."
+L["OPT_countdown"]      = "Afficher le bouton Décompte"
+L["OPT_countdown_tip"]  = "Ajoute un bouton de décompte à la fenêtre de départ Mythique+."
+
 -- Popup À propos
 L["ABOUT_btn_tooltip"]      = "À propos de l'addon"
 L["ABOUT_title"]            = "À propos de MythicKeystone"

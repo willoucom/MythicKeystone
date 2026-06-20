@@ -1,16 +1,24 @@
-local ADDON = ...
+local ADDON, Addon = ...
 local L = LibStub("AceLocale-3.0"):GetLocale(ADDON)
 local button = {}
 
+-- Show/hide the Ready Check and Countdown buttons per the options (default = shown).
+function Addon.ApplyAutoKeystoneButtons()
+    local db = MythicKeystoneDB or {}
+    if button[0] then button[0]:SetShown(db.showReadyCheck ~= false) end
+    if button[1] then button[1]:SetShown(db.showCountdown ~= false) end
+end
 
 local OnShow = function()
-    for bag = 0, NUM_BAG_SLOTS do
-        for slot = 1, C_Container.GetContainerNumSlots(bag) do
-            local item = C_Container.GetContainerItemInfo(bag, slot)
-            if (item and item["hyperlink"]:match("keystone")) then
-                C_Container.PickupContainerItem(bag, slot)
-                if (CursorHasItem()) then
-                    C_ChallengeMode.SlotKeystone()
+    if (MythicKeystoneDB or {}).autoSlot ~= false then
+        for bag = 0, NUM_BAG_SLOTS do
+            for slot = 1, C_Container.GetContainerNumSlots(bag) do
+                local item = C_Container.GetContainerItemInfo(bag, slot)
+                if (item and item["hyperlink"]:match("keystone")) then
+                    C_Container.PickupContainerItem(bag, slot)
+                    if (CursorHasItem()) then
+                        C_ChallengeMode.SlotKeystone()
+                    end
                 end
             end
         end
@@ -94,6 +102,8 @@ local OnEvent = function(self, event, ...)
                 self:SetText(L["Countdown"])
             end
         end)
+
+        Addon.ApplyAutoKeystoneButtons()
     end
 end
 
