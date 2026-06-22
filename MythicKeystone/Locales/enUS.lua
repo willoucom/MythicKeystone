@@ -35,6 +35,7 @@ L["OPT_readyCheck"]     = "Show Ready Check button"
 L["OPT_readyCheck_tip"] = "Add a Ready Check button to the Mythic+ start dialog."
 L["OPT_countdown"]      = "Show Countdown button"
 L["OPT_countdown_tip"]  = "Add a Countdown button to the Mythic+ start dialog."
+L["OPT_btn_tooltip"]    = "Options"
 
 -- About popup
 L["ABOUT_btn_tooltip"]      = "About this addon"

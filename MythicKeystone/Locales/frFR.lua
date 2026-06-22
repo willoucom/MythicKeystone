@@ -35,6 +35,7 @@ L["OPT_readyCheck"]     = "Afficher le bouton Appel"
 L["OPT_readyCheck_tip"] = "Ajoute un bouton d'appel à la fenêtre de départ Mythique+."
 L["OPT_countdown"]      = "Afficher le bouton Décompte"
 L["OPT_countdown_tip"]  = "Ajoute un bouton de décompte à la fenêtre de départ Mythique+."
+L["OPT_btn_tooltip"]    = "Options"
 
 -- Popup À propos
 L["ABOUT_btn_tooltip"]      = "À propos de l'addon"
