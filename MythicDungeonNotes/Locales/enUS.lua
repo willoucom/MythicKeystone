@@ -13,6 +13,13 @@ L["GUIDE_tooltip_drag"]   = "Drag: move the button"
 L["GUIDE_vignette_tooltip"] = "Open dungeon guide"
 L["GUIDE_portal_tooltip"]   = "Teleport to this dungeon"
 
+-- Options panel
+L["OPT_btn_tooltip"]      = "Options"
+L["OPT_showButton"]       = "Show floating button"
+L["OPT_showButton_tip"]   = "Display the draggable button that opens the guide."
+L["OPT_showMinimap"]      = "Show minimap icon"
+L["OPT_showMinimap_tip"]  = "Display the minimap button that opens the guide."
+
 -- About popup
 L["ABOUT_btn_tooltip"]    = "About this addon"
 L["ABOUT_title"]          = "About Mythic Dungeon Notes"

@@ -15,6 +15,13 @@ L["GUIDE_tooltip_drag"]   = "Glisser : déplacer le bouton"
 L["GUIDE_vignette_tooltip"] = "Ouvrir le guide du donjon"
 L["GUIDE_portal_tooltip"]   = "Se téléporter dans ce donjon"
 
+-- Panneau d'options
+L["OPT_btn_tooltip"]      = "Options"
+L["OPT_showButton"]       = "Afficher le bouton flottant"
+L["OPT_showButton_tip"]   = "Affiche le bouton déplaçable qui ouvre le guide."
+L["OPT_showMinimap"]      = "Afficher l'icône de la minicarte"
+L["OPT_showMinimap_tip"]  = "Affiche le bouton de la minicarte qui ouvre le guide."
+
 -- Popup À propos
 L["ABOUT_btn_tooltip"]    = "À propos de l'addon"
 L["ABOUT_title"]          = "À propos de Mythic Dungeon Notes"

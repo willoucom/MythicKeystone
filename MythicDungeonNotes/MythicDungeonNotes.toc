@@ -32,6 +32,7 @@ Guide\GuideData.lua
 Guide\GuideFrame.lua
 Guide\AboutFrame.lua
 Guide\Launcher.lua
+Guide\Options.lua
 
 # Guide — one file per dungeon (loaded after GuideData.lua)
 Guide\Dungeons\AlgetharAcademy.lua

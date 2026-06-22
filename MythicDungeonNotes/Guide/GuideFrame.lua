@@ -756,6 +756,12 @@ function Guide:Toggle()
     if isVisible then Guide:Close() else Guide:Open() end
 end
 
+-- Show/hide the floating toggle button (driven by the showButton option).
+function ns.SetButtonVisible(show)
+    if not GuideBtn then return end
+    if show then GuideBtn:Show() else GuideBtn:Hide() end
+end
+
 -------------------------------------------------------------------------------
 -- Zone detection
 -------------------------------------------------------------------------------
@@ -871,7 +877,7 @@ local function BuildWindow()
     -- ── Info button — opens the About popup ───────────────────────────────
     local InfoBtn = CreateFrame("Button", nil, GuideWin)
     InfoBtn:SetSize(36, 36)
-    InfoBtn:SetPoint("RIGHT", closeBtn, "LEFT", 6, 0)
+    InfoBtn:SetPoint("RIGHT", closeBtn, "LEFT", 2, 0)
     InfoBtn:SetFrameLevel(closeBtn:GetFrameLevel() + 1)
     InfoBtn:EnableMouse(true)
     InfoBtn:RegisterForClicks("LeftButtonUp")
@@ -897,13 +903,41 @@ local function BuildWindow()
     end)
     InfoBtn:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
+    -- ── Options (gear) button — opens the Blizzard settings panel ──────────
+    local OptionsBtn = CreateFrame("Button", nil, GuideWin)
+    OptionsBtn:SetSize(36, 36)
+    OptionsBtn:SetPoint("RIGHT", InfoBtn, "LEFT", 10, 0)
+    OptionsBtn:SetFrameLevel(closeBtn:GetFrameLevel() + 1)
+    OptionsBtn:EnableMouse(true)
+    OptionsBtn:RegisterForClicks("LeftButtonUp")
+
+    local gearTex = OptionsBtn:CreateTexture(nil, "ARTWORK")
+    gearTex:SetSize(26, 26)
+    gearTex:SetPoint("CENTER", 0, 0)
+    gearTex:SetTexture("Interface\\WorldMap\\GEAR_64GREY")
+
+    local gearHL = OptionsBtn:CreateTexture(nil, "HIGHLIGHT")
+    gearHL:SetSize(22, 22)
+    gearHL:SetPoint("CENTER", 0, 0)
+    gearHL:SetTexture("Interface\\WorldMap\\GEAR_64GREY")
+    gearHL:SetBlendMode("ADD")
+    OptionsBtn:SetScript("OnClick", function()
+        if ns.OpenOptions then ns.OpenOptions() end
+    end)
+    OptionsBtn:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
+        GameTooltip:SetText(L["OPT_btn_tooltip"], 1, 1, 1)
+        GameTooltip:Show()
+    end)
+    OptionsBtn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
     -- ── "< Liste" back button — child of titleBar for correct z-order ──────
     BackBtn = CreateFrame("Button", nil, titleBar, "UIPanelButtonTemplate")
     BackBtn:SetText(L["GUIDE_back_btn"])
     local btnText = BackBtn:GetFontString()
     BackBtn:SetWidth(btnText:GetStringWidth() + 24)
     BackBtn:SetHeight(closeBtn:GetHeight())
-    BackBtn:SetPoint("RIGHT", InfoBtn, "LEFT", -4, 1)
+    BackBtn:SetPoint("RIGHT", OptionsBtn, "LEFT", -4, 1)
 
     BackBtn:SetScript("OnClick", function()
         selectedDungeon = nil
@@ -1015,6 +1049,9 @@ function Guide:Init()
     BuildButton()
     BuildWindow()
     RestorePosition(GuideWin, "guideWin")
+
+    -- Apply the saved "show floating button" option (defaults to shown).
+    if DB.showButton == false then GuideBtn:Hide() end
 
     local evt = CreateFrame("Frame")
     evt:RegisterEvent("PLAYER_ENTERING_WORLD")
