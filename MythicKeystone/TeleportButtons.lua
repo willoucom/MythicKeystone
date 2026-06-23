@@ -140,6 +140,45 @@ local function createToggleButton()
     return toggle
 end
 
+-- Gear button sitting just below the teleport toggle; opens the Blizzard
+-- settings panel registered in Options.lua (ns.settingsCategory). Parented to
+-- the toggle so it inherits its show/hide with ChallengesFrame.
+local function createOptionsButton(parent)
+    local btn = CreateFrame("Button", nil, parent)
+    btn:SetSize(18, 18)
+    btn:SetPoint("TOP", parent, "BOTTOM", 0, -4)
+    btn:SetFrameStrata("HIGH")
+    btn:EnableMouse(true)
+
+    -- Texture overflows the button slightly to compensate for the gear's
+    -- built-in transparent margin (otherwise it looks smaller than the toggle).
+    local icon = btn:CreateTexture(nil, "ARTWORK")
+    icon:SetPoint("TOPLEFT",     -2,  2)
+    icon:SetPoint("BOTTOMRIGHT",  2, -2)
+    icon:SetTexture("Interface\\WorldMap\\GEAR_64GREY")
+
+    local highlight = btn:CreateTexture(nil, "HIGHLIGHT")
+    highlight:SetAllPoints(icon)
+    highlight:SetTexture("Interface\\WorldMap\\GEAR_64GREY")
+    highlight:SetBlendMode("ADD")
+
+    btn:SetScript("OnClick", function()
+        if ns.settingsCategory and Settings and Settings.OpenToCategory then
+            Settings.OpenToCategory(ns.settingsCategory:GetID())
+        end
+    end)
+    btn:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
+        GameTooltip:SetText(L["OPT_btn_tooltip"], 1, 1, 1)
+        GameTooltip:Show()
+    end)
+    btn:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+
+    return btn
+end
+
 local function updateButtonPositions()
     for _, entry in ipairs(findDungeonFrames()) do
         local btn = teleportButtons[entry.mapID]
@@ -170,7 +209,8 @@ local function initTeleportButtons()
 
     initialized = next(teleportButtons) ~= nil
     if initialized then
-        createToggleButton()
+        local toggle = createToggleButton()
+        createOptionsButton(toggle)
         ChallengesFrame:HookScript("OnShow", updateButtonPositions)
     end
 end

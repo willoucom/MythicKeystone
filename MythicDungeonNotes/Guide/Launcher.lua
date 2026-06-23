@@ -22,9 +22,26 @@ local function OnTooltipShow(tt)
     tt:AddLine(L["GUIDE_tooltip_click"], 1, 1, 1)
 end
 
+-- Toggle the minimap icon. `show` is the positive option value (showMinimap);
+-- LibDBIcon persists the inverse as MythicDungeonNotesDB.minimap.hide.
+function ns.SetMinimapVisible(show)
+    MythicDungeonNotesDB = MythicDungeonNotesDB or {}
+    MythicDungeonNotesDB.minimap = MythicDungeonNotesDB.minimap or { hide = false }
+    MythicDungeonNotesDB.minimap.hide = not show
+    if LDBIcon and LDBIcon:IsRegistered(myname) then
+        if show then LDBIcon:Show(myname) else LDBIcon:Hide(myname) end
+    end
+end
+
 local function Init()
     MythicDungeonNotesDB = MythicDungeonNotesDB or {}
     MythicDungeonNotesDB.minimap = MythicDungeonNotesDB.minimap or { hide = false }
+
+    -- Keep LibDBIcon's persisted hide flag in sync with the showMinimap option
+    -- (set on the first PLAYER_LOGIN by Options.lua) before registering.
+    if MythicDungeonNotesDB.showMinimap ~= nil then
+        MythicDungeonNotesDB.minimap.hide = not MythicDungeonNotesDB.showMinimap
+    end
 
     if LDB then
         dataobj = LDB:NewDataObject(myname, {
