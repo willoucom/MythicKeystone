@@ -13,6 +13,7 @@ Usage:
   python deploy.py                  # fetch missing deps, convert assets, deploy all
   python deploy.py --update         # also update already-present deps
   python deploy.py --addon NAME     # single addon (skips fetch/convert for others)
+  python deploy.py --ptr            # deploy to the PTR client (_ptr_) instead of _retail_
   python deploy.py --dry-run        # print what would be done, no copy
 """
 
@@ -24,19 +25,19 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 
-_WIN_WOW_PATH = r"C:\Games\World of Warcraft\_retail_\Interface\AddOns"
+_WIN_WOW_DIR = r"C:\Games\World of Warcraft"
 
-def _resolve_wow_base() -> Path:
-    """Return the WoW AddOns path for the current platform (Windows or WSL)."""
+def _resolve_wow_base(flavor: str) -> Path:
+    """Return the WoW AddOns path for the given flavor ("_retail_" / "_ptr_"),
+    adjusted for the current platform (Windows or WSL)."""
+    win_path = rf"{_WIN_WOW_DIR}\{flavor}\Interface\AddOns"
     platform = sys.platform  # avoid Pyright's static sys.platform narrowing
     # WSL: convert C:\foo\bar → /mnt/c/foo/bar
     if platform != "win32":
-        drive = _WIN_WOW_PATH[0].lower()
-        rest = _WIN_WOW_PATH[2:].replace("\\", "/")
+        drive = win_path[0].lower()
+        rest = win_path[2:].replace("\\", "/")
         return Path(f"/mnt/{drive}{rest}")
-    return Path(_WIN_WOW_PATH)
-
-WOW_BASE = _resolve_wow_base()
+    return Path(win_path)
 
 ADDONS: list[dict] = [
     {
@@ -141,10 +142,11 @@ def step_convert_assets() -> bool:
 # Deploy step
 # ---------------------------------------------------------------------------
 
-def step_deploy(addon_filter: str | None, dry_run: bool) -> bool:
+def step_deploy(addon_filter: str | None, dry_run: bool, wow_base: Path) -> bool:
     print("\n" + "=" * 60)
     print("STEP 4 – Deploying addons")
     print("=" * 60)
+    print(f"Target: {wow_base}")
 
     has_error = False
 
@@ -154,7 +156,7 @@ def step_deploy(addon_filter: str | None, dry_run: bool) -> bool:
             continue
 
         source = ROOT / name
-        dest = WOW_BASE / name
+        dest = wow_base / name
 
         print(f"\nDeploying {name}...")
         print(f"  From : {source}")
@@ -194,6 +196,10 @@ def main() -> None:
         help="Print what would be done without copying any files.",
     )
     parser.add_argument(
+        "--ptr", action="store_true",
+        help="Deploy to the PTR client (_ptr_) instead of _retail_.",
+    )
+    parser.add_argument(
         "--skip-generate", action="store_true",
         help="Skip the generate_teleports pre-processing step.",
     )
@@ -218,7 +224,8 @@ def main() -> None:
     if not args.skip_convert:
         ok = step_convert_assets() and ok
 
-    ok = step_deploy(addon_filter=args.addon, dry_run=args.dry_run) and ok
+    wow_base = _resolve_wow_base("_ptr_" if args.ptr else "_retail_")
+    ok = step_deploy(addon_filter=args.addon, dry_run=args.dry_run, wow_base=wow_base) and ok
 
     print()
     if ok:
