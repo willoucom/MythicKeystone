@@ -416,7 +416,28 @@ local function RenderDetail(section)
         return
     end
     RightHTML:SetHeight(200)   -- allow full layout before measuring
-    local html = section.htmlContent
+    -- Boss sections (with an `encounterID`) get an auto EJ intro (name + lore)
+    -- prepended to any curated content.
+    local content = section.htmlContent or ""
+    if section.encounterID then
+        -- Drop a leading curated <h1>title</h1> so the EJ-provided title (added by
+        -- BossIntroHTML) isn't duplicated, then prepend the EJ intro.
+        content = content:gsub("^%s*<h1>.-</h1>", "")
+        local intro = ns.BossIntroHTML(section.encounterID)
+        if intro ~= "" and content ~= "" then
+            intro = intro .. "<br/>"   -- blank line between EJ lore and curated notes
+        end
+        content = intro .. content
+    elseif section.instanceID then
+        -- Intro section: prepend the dungeon's EJ lore description.
+        local lore = ns.InstanceLore(section.instanceID)
+        if lore and lore ~= "" then
+            local block = "<p>" .. lore .. "</p>"
+            if content ~= "" then block = block .. "<br/>" end
+            content = block .. content
+        end
+    end
+    local html = content
         :gsub("<h1>", "<br/><h1>")
         :gsub("</h1>", "</h1><br/>")
     RightHTML:SetText("<html><body>" .. html .. "</body></html>")
@@ -465,12 +486,22 @@ local function RenderMenu(dungeon)
         local btn = BtnGet(LeftContent, NewMenuBtn)
         btn:SetPoint("TOPLEFT",  LeftContent, "TOPLEFT",  0, y)
         btn:SetPoint("TOPRIGHT", LeftContent, "TOPRIGHT", 0, y)
-        SetTruncatedLabel(btn.label, section.name)
+        -- Boss sections carry an `encounterID`: pull the name + portrait from the
+        -- Encounter Journal at runtime (official, localized). Static sections keep
+        -- their hardcoded name/icon.
+        local label = section.name
+        local icon  = section.icon
+        if section.encounterID then
+            label = ns.EncounterName(section.encounterID) or label
+            icon  = icon or ns.EncounterIcon(section.encounterID)
+        end
+
+        SetTruncatedLabel(btn.label, label)
         btn.label:SetTextColor(0.72, 0.72, 0.72)
         btn.selBg:Hide()
 
-        if section.icon then
-            btn.iconTex:SetTexture(section.icon)
+        if icon then
+            btn.iconTex:SetTexture(icon)
             btn.iconTex:Show()
         else
             btn.iconTex:Hide()
@@ -505,13 +536,15 @@ local function RenderDungeon(dungeon)
     DungeonHeader:Show()
 
     -- Icon (|T...|t escape) + dungeon name in the header row
-    local iconStr = dungeon.icon and ("|T" .. dungeon.icon .. ":22:22:0:0|t  ") or ""
-    DungeonHeaderFS:SetText(iconStr .. "|cffFFD700" .. dungeon.name .. "|r")
+    local icon = ns.DungeonIcon(dungeon)
+    local iconStr = icon and ("|T" .. icon .. ":22:22:0:0|t  ") or ""
+    DungeonHeaderFS:SetText(iconStr .. "|cffFFD700" .. ns.DungeonName(dungeon) .. "|r")
 
     -- Right-panel background texture
     if RightBg then
-        if dungeon.background then
-            RightBg:SetTexture(dungeon.background)
+        local background = ns.DungeonBackground(dungeon)
+        if background then
+            RightBg:SetTexture(background)
             RightBg:Show()
         else
             RightBg:Hide()
@@ -568,14 +601,15 @@ local function RenderThumbnailGrid(dungeons, startY)
         end
 
         -- Icon
-        if dungeon.icon then
-            btn.iconTex:SetTexture(dungeon.icon)
+        local icon = ns.DungeonIcon(dungeon)
+        if icon then
+            btn.iconTex:SetTexture(icon)
             btn.iconTex:Show()
         else
             btn.iconTex:Hide()
         end
 
-        btn.label:SetText(dungeon.name)
+        btn.label:SetText(ns.DungeonName(dungeon))
 
         if hasData then
             btn.vignetteTex:SetAlpha(1)
@@ -615,7 +649,7 @@ local function RenderThumbnailGrid(dungeons, startY)
                 btn.portalBtn:SetAttribute("macrotext", "/cast " .. spellName)
                 btn.portalBtn:ClearAllPoints()
                 btn.portalBtn:SetPoint("BOTTOMLEFT", btn, "BOTTOMLEFT", 0, 0)
-                local dName = dungeon.name
+                local dName = ns.DungeonName(dungeon)
                 btn.portalBtn:SetScript("OnEnter", function(self)
                     GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
                     GameTooltip:SetText(L["GUIDE_portal_tooltip"], 1, 1, 1)
@@ -660,18 +694,18 @@ local function RenderList()
     ThumbBtnFlush(ListContent)
     ListScroll:SetVerticalScroll(0)
 
-    -- Separate S1 dungeons from others
-    local s1Dungeons    = {}
-    local otherDungeons = {}
+    -- Separate dungeons by season (first S1/S2 group tag wins)
+    local s1Dungeons = {}
+    local s2Dungeons = {}
     for _, dungeon in ipairs(ns.guideData) do
-        local isS1 = false
+        local season
         for _, g in ipairs(dungeon.groups or {}) do
-            if g == "S1" then isS1 = true; break end
+            if g == "S1" or g == "S2" then season = g; break end
         end
-        if isS1 then
+        if season == "S1" then
             s1Dungeons[#s1Dungeons + 1] = dungeon
-        else
-            otherDungeons[#otherDungeons + 1] = dungeon
+        elseif season == "S2" then
+            s2Dungeons[#s2Dungeons + 1] = dungeon
         end
     end
 
@@ -689,8 +723,8 @@ local function RenderList()
     y = RenderThumbnailGrid(s1Dungeons, y)
     y = y + THUMB_GAP  -- remove trailing gap after last row
 
-    -- Optional section: other dungeons (e.g. S2)
-    if #otherDungeons > 0 then
+    -- Optional section: Season 2 dungeons
+    if #s2Dungeons > 0 then
         y = y - 20
 
         -- Horizontal separator
@@ -706,15 +740,15 @@ local function RenderList()
 
         y = y - 16
 
-        -- Other dungeons label
-        local otherHdrFS = FSGet(ListContent, "GameFontNormalLarge")
-        otherHdrFS:SetPoint("TOPLEFT", ListContent, "TOPLEFT", 6, y)
-        otherHdrFS:SetWidth(LIST_CW - 12)
-        otherHdrFS:SetText("|cffAAAAFF" .. L["GUIDE_other_dungeons"] .. "|r")
-        otherHdrFS:SetJustifyH("LEFT")
-        y = y - otherHdrFS:GetStringHeight() - 10
+        -- Season 2 label
+        local s2HdrFS = FSGet(ListContent, "GameFontNormalLarge")
+        s2HdrFS:SetPoint("TOPLEFT", ListContent, "TOPLEFT", 6, y)
+        s2HdrFS:SetWidth(LIST_CW - 12)
+        s2HdrFS:SetText("|cffAAAAFF" .. L["GUIDE_s2_header"] .. "|r")
+        s2HdrFS:SetJustifyH("LEFT")
+        y = y - s2HdrFS:GetStringHeight() - 10
 
-        y = RenderThumbnailGrid(otherDungeons, y)
+        y = RenderThumbnailGrid(s2Dungeons, y)
         y = y + THUMB_GAP
     else
         if ListSepTex then ListSepTex:Hide() end

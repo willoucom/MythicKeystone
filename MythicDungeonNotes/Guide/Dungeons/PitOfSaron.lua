@@ -27,6 +27,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            instanceID = 278,
             icon = "interface/lfgframe/ui-lfg-background-pitofsaron",
             htmlContent = table.concat({
                 p(L["POS_intro_desc1"]),
@@ -58,6 +59,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Forgemaster Garfrost ─────────────────────────────────
         {
             name = L["POS_boss1_name"],
+            encounterID = 608,
             icon = "interface/encounterjournal/ui-ej-boss-forgemaster garfrost",
             htmlContent = table.concat({
                 h1(L["POS_boss1_name"]),
@@ -70,6 +72,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Ick &amp; Krick ──────────────────────────────────────
         {
             name = L["POS_boss2_name"],
+            encounterID = 609,
             icon = "interface/encounterjournal/ui-ej-boss-ickandkrick",
             htmlContent = table.concat({
                 h1(L["POS_boss2_name"]),
@@ -82,6 +85,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Scourgelord Tyrannus ─────────────────────────────────
         {
             name = L["POS_boss3_name"],
+            encounterID = 610,
             icon = "interface/encounterjournal/ui-ej-boss-scourgelordtyrannus",
             htmlContent = table.concat({
                 h1(L["POS_boss3_name"]),

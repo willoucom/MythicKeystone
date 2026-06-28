@@ -27,6 +27,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            instanceID = 476,
             icon = "interface/lfgframe/ui-lfg-background-skyreach",
             htmlContent = table.concat({
                 p(L["SKY_intro_desc1"]),
@@ -55,6 +56,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Ranjit ───────────────────────────────────────────────
         {
             name = L["SKY_boss1_name"],
+            encounterID = 965,
             icon = "interface/encounterjournal/ui-ej-boss-ranjit",
             htmlContent = table.concat({
                 h1(L["SKY_boss1_name"]),
@@ -65,6 +67,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Araknath ─────────────────────────────────────────────
         {
             name = L["SKY_boss2_name"],
+            encounterID = 966,
             icon = "interface/encounterjournal/ui-ej-boss-araknath",
             htmlContent = table.concat({
                 h1(L["SKY_boss2_name"]),
@@ -75,6 +78,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Rukhran ──────────────────────────────────────────────
         {
             name = L["SKY_boss3_name"],
+            encounterID = 967,
             icon = "interface/encounterjournal/ui-ej-boss-rukhran",
             htmlContent = table.concat({
                 h1(L["SKY_boss3_name"]),
@@ -85,6 +89,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 4 : High Sage Viryx ──────────────────────────────────────
         {
             name = L["SKY_boss4_name"],
+            encounterID = 968,
             icon = "interface/encounterjournal/ui-ej-boss-high sage viryx",
             htmlContent = table.concat({
                 h1(L["SKY_boss4_name"]),

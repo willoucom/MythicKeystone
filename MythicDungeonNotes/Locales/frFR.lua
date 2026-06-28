@@ -9,7 +9,7 @@ L["GUIDE_back_btn"]       = "Retour à la Liste"
 L["GUIDE_coming_soon"]    = "(à venir)"
 L["GUIDE_wip"]            = "Le guide de ce donjon est en cours de rédaction."
 L["GUIDE_s1_header"]      = "Donjons Midnight — Saison 1"
-L["GUIDE_other_dungeons"] = "Autres donjons"
+L["GUIDE_s2_header"]      = "Donjons Midnight — Saison 2"
 L["GUIDE_tooltip_click"]  = "Clic gauche : ouvrir / fermer"
 L["GUIDE_tooltip_drag"]   = "Glisser : déplacer le bouton"
 L["GUIDE_vignette_tooltip"] = "Ouvrir le guide du donjon"
@@ -44,6 +44,8 @@ L["ABOUT_url_popup_text"] = "Copiez cette URL avec Ctrl+C :"
 L["COMMON_intro_label"]     = "Introduction"
 L["COMMON_notable_trash"]   = "Ennemis notables"
 L["COMMON_cc_immune"]       = "• Immunisé aux CC"
+L["COMMON_strats_soon"]     = "Notes de stratégie à venir."
+L["COMMON_dungeon_buffs"]   = "Buffs de donjon"
 
 -------------------------------------------------------------------------------
 -- Midnight — Donjons Legacy S1
@@ -259,7 +261,6 @@ L["DN_name"]              = "Antre de Nalorakk"
 L["DN_intro_label"]       = "Introduction"
 L["DN_intro_desc1"]       = "Antre de Nalorakk — Midnight Saison 2, nouveau donjon."
 L["DN_intro_desc2"]       = "3 boss : Le Thésauriseur -> Sentinelle de l'hiver -> Nalorakk."
-L["DN_incense_label"]     = "Encens Protecteur"
 L["DN_incense_desc"]      = "Un brasero d'Encens Protecteur est situé près de l'entrée du donjon."
 L["DN_buff_alchemy_desc"] = "Les Alchimistes de Minuit (compétence 25) et les Druides en forme d'ours peuvent brûler l'encens : +1% Polyvalence pendant 10 minutes pour tout le groupe."
 -- Trash notable
@@ -512,3 +513,15 @@ L["MR_name"]              = "Allée du meurtre"
 
 -- Voidscar Arena (VA)
 L["VA_name"]              = "Arène de la Cicatrice du Vide"
+
+-- Altar of Fangs (AF) — Midnight S2
+L["AF_name"]              = "Autel des crochets"
+
+-- Kings' Rest (KR) — Legacy (BfA)
+L["KR_name"]              = "Repos des rois"
+
+-- Ruby Life Pools (RLP) — Legacy (Dragonflight)
+L["RLP_name"]             = "Bassins de l'Essence rubis"
+
+-- Temple of Sethraliss (TOS) — Legacy (BfA)
+L["TOS_name"]             = "Temple de Sethraliss"

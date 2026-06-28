@@ -27,6 +27,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            instanceID = 1316,
             icon = "interface/lfgframe/ui-lfg-background-nexuspointxenas",
             htmlContent = table.concat({
                 p(L["NPX_intro_desc1"]),
@@ -59,6 +60,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Chief Corewright Kasreth ─────────────────────────────
         {
             name = L["NPX_boss1_name"],
+            encounterID = 2813,
             icon = "interface/encounterjournal/ui-ej-boss-chiefcorewrightkasreth",
             htmlContent = table.concat({
                 h1(L["NPX_boss1_name"]),
@@ -71,6 +73,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Corewarden Nysarra ───────────────────────────────────
         {
             name = L["NPX_boss2_name"],
+            encounterID = 2814,
             icon = "interface/encounterjournal/ui-ej-boss-corewardennysarra",
             htmlContent = table.concat({
                 h1(L["NPX_boss2_name"]),
@@ -83,6 +86,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Lothraxion ───────────────────────────────────────────
         {
             name = L["NPX_boss3_name"],
+            encounterID = 2815,
             icon = "interface/encounterjournal/ui-ej-boss-lothraxion",
             htmlContent = table.concat({
                 h1(L["NPX_boss3_name"]),

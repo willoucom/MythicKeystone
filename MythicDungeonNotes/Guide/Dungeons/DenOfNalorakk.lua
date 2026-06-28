@@ -2,8 +2,10 @@ local myname, ns = ...
 local L = ns.L
 
 -------------------------------------------------------------------------------
--- Den of Nalorakk (DN) — Midnight S2
--- uiMapIds: 2513 (main), 2514 (sub-zone)
+-- Den of Nalorakk (DN) — Midnight S2 (new)
+-- uiMapIds: 2513 (main), 2514, 2564 (additional floors)
+-- challengeMapID: 586 | spellportalid: 1286807 (Path of the Worthy Aspirant)
+-- IDs from 12.1 PTR (build 12.1.0.68301) — verify @ S2 launch.
 -- Bosses: The Hoardmonger, Sentinel of Winter, Nalorakk
 -------------------------------------------------------------------------------
 
@@ -20,11 +22,14 @@ ns.guideData[#ns.guideData + 1] = {
     icon       = "interface/lfgframe/lfgicon-proveyourworth",
     background = "interface/encounterjournal/ui-ej-background-proveyourworth",
     vignette   = "interface/lfgframe/ui-lfg-background-proveyourworth",
-    mapIds    = { 2513, 2514 },
+    spellportalid = 1286807,   -- 12.1 PTR, verify @ launch
+    challengeMapID = 586,
+    mapIds    = { 2513, 2514, 2564 },
     sections  = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["DN_intro_label"],
+            instanceID = 1311,
             icon = "interface/lfgframe/ui-lfg-background-proveyourworth",
             htmlContent = table.concat({
                 p(L["DN_intro_desc1"]),
@@ -33,7 +38,8 @@ ns.guideData[#ns.guideData + 1] = {
         },
         -- ── Warding Incense (entrée) ──────────────────────────────────────
         {
-            name = L["DN_incense_label"],
+            name = L["COMMON_dungeon_buffs"],
+            icon = "interface/lfgframe/ui-lfg-background-randomdungeon",
             htmlContent =
                 "<p>" .. L["DN_incense_desc"] .. "</p><br/>" ..
                 "<img src='Interface/Addons/" .. myname .. "/Guide/Dungeons/Images/DN_incense' width='400' height='300'/>" ..
@@ -51,6 +57,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : The Hoardmonger ──────────────────────────────────────
         {
             name = L["DN_boss1"],
+            encounterID = 2776,
             -- icon: TODO (not yet in datamined assets)
             htmlContent = table.concat({
                 h1(L["DN_boss1"]),
@@ -65,6 +72,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Sentinel of Winter ───────────────────────────────────
         {
             name = L["DN_boss2"],
+            encounterID = 2777,
             -- icon: TODO (not yet in datamined assets)
             htmlContent = table.concat({
                 h1(L["DN_boss2"]),
@@ -81,6 +89,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Nalorakk ─────────────────────────────────────────────
         {
             name = L["DN_boss3"],
+            encounterID = 2778,
             icon = "interface/encounterjournal/ui-ej-boss-nalorakk",
             htmlContent = table.concat({
                 h1(L["DN_boss3"]),

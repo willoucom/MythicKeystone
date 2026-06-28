@@ -33,10 +33,18 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            instanceID = 1201,
             icon = "interface/lfgframe/ui-lfg-background-theacademy",
             htmlContent = table.concat({
                 p(L["AA_entrance_intro"]),
                 p(L["AA_entrance_bosses"]),
+            }),
+        },
+        -- ── Dungeon buffs ──────────────────────────────────────────────────
+        {
+            name = L["COMMON_dungeon_buffs"],
+            icon = "interface/lfgframe/ui-lfg-background-randomdungeon",
+            htmlContent = table.concat({
                 p(L["AA_entrance_desc"]),
                 "<img src='Interface/Addons/" .. myname .. "/Guide/Dungeons/Images/AA_map' width='500' height='300'/>",
                 p("|cffCD9B3A• |r" .. ICON_BRONZE .. " |cffCD9B3A" .. L["AA_bronze_drake_desc"] .. "|r — " .. L["AA_bronze_drake"] .. " — " .. ns.Spell(389512)),
@@ -91,6 +99,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Overgrown Ancient ─────────────────────────────────────
         {
             name = L["AA_boss1_name"],
+            encounterID = 2512,
             icon = "interface/encounterjournal/ui-ej-boss-overgrown ancient",
             htmlContent = table.concat({
                 h1(L["AA_boss1_name"]),
@@ -105,6 +114,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Crawth ────────────────────────────────────────────────
         {
             name = L["AA_boss2_name"],
+            encounterID = 2495,
             icon = "interface/encounterjournal/ui-ej-boss-crawth",
             htmlContent = table.concat({
                 h1(L["AA_boss2_name"]),
@@ -117,6 +127,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Vexamus ───────────────────────────────────────────────
         {
             name = L["AA_boss3_name"],
+            encounterID = 2509,
             icon = "interface/encounterjournal/ui-ej-boss-vexamus",
             htmlContent = table.concat({
                 h1(L["AA_boss3_name"]),
@@ -128,6 +139,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 4 : Echo of Doragosa ──────────────────────────────────────
         {
             name = L["AA_boss4_name"],
+            encounterID = 2514,
             icon = "interface/encounterjournal/ui-ej-boss-echo of doragosa",
             htmlContent = table.concat({
                 h1(L["AA_boss4_name"]),

@@ -47,3 +47,7 @@ Guide\Dungeons\Skyreach.lua
 Guide\Dungeons\WindrunnerSpire.lua
 Guide\Dungeons\MurderRow.lua
 Guide\Dungeons\VoidscarArena.lua
+Guide\Dungeons\AltarOfFangs.lua
+Guide\Dungeons\KingsRest.lua
+Guide\Dungeons\RubyLifePools.lua
+Guide\Dungeons\TempleOfSethraliss.lua

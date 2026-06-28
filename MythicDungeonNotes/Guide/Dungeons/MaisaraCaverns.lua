@@ -27,6 +27,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            instanceID = 1315,
             icon = "interface/lfgframe/ui-lfg-background-maisarahills",
             htmlContent = table.concat({
                 p(L["MC_intro_desc1"]),
@@ -60,6 +61,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Muro'jin & Nekraxx ───────────────────────────────────
         {
             name = L["MC_boss1_name"],
+            encounterID = 2810,
             icon = "interface/encounterjournal/ui-ej-boss-murojinandnekraxx",
             htmlContent = table.concat({
                 h1(L["MC_boss1_name"]),
@@ -74,6 +76,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Vordaza ──────────────────────────────────────────────
         {
             name = L["MC_boss2_name"],
+            encounterID = 2811,
             icon = "interface/encounterjournal/ui-ej-boss-vordaza",
             htmlContent = table.concat({
                 h1(L["MC_boss2_name"]),
@@ -86,6 +89,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Rak'tul, Vessel of Souls ────────────────────────────
         {
             name = L["MC_boss3_name"],
+            encounterID = 2812,
             icon = "interface/encounterjournal/ui-ej-boss-raktulvesselofsouls",
             htmlContent = table.concat({
                 h1(L["MC_boss3_name"]),

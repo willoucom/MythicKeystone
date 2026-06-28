@@ -29,6 +29,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            instanceID = 1299,
             icon = "interface/lfgframe/ui-lfg-background-windrunnerspire",
             htmlContent = table.concat({
                 p(L["WRS_intro_desc1"]),
@@ -55,6 +56,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Emberdawn ────────────────────────────────────────────
         {
             name = L["WRS_boss1_name"],
+            encounterID = 2655,
             icon = "interface/encounterjournal/ui-ej-boss-emberdawn",
             htmlContent = table.concat({
                 h1(L["WRS_boss1_name"]),
@@ -65,6 +67,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Duo Délabré (Kalis & Latch) ─────────────────────────
         {
             name = L["WRS_boss2_name"],
+            encounterID = 2656,
             icon = "interface/encounterjournal/ui-ej-boss-derelict duo",
             htmlContent = table.concat({
                 h1(L["WRS_boss2_name"]),
@@ -76,6 +79,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Commander Kroluk ─────────────────────────────────────
         {
             name = L["WRS_boss3_name"],
+            encounterID = 2657,
             icon = "interface/encounterjournal/ui-ej-boss-commander kroluk",
             htmlContent = table.concat({
                 h1(L["WRS_boss3_name"]),
@@ -86,6 +90,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 4 : The Restless Heart ───────────────────────────────────
         {
             name = L["WRS_boss4_name"],
+            encounterID = 2658,
             icon = "interface/encounterjournal/ui-ej-boss-the restless heart",
             htmlContent = table.concat({
                 h1(L["WRS_boss4_name"]),

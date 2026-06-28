@@ -7,7 +7,7 @@ L["GUIDE_back_btn"]       = "Back to List"
 L["GUIDE_coming_soon"]    = "(Coming soon)"
 L["GUIDE_wip"]            = "The guide for this dungeon is being written."
 L["GUIDE_s1_header"]      = "Midnight Dungeons — Season 1"
-L["GUIDE_other_dungeons"] = "Other Dungeons"
+L["GUIDE_s2_header"]      = "Midnight Dungeons — Season 2"
 L["GUIDE_tooltip_click"]  = "Left-click: open / close"
 L["GUIDE_tooltip_drag"]   = "Drag: move the button"
 L["GUIDE_vignette_tooltip"] = "Open dungeon guide"
@@ -42,6 +42,8 @@ L["ABOUT_url_popup_text"] = "Copy this URL with Ctrl+C:"
 L["COMMON_intro_label"]     = "Introduction"
 L["COMMON_notable_trash"]   = "Notable trash"
 L["COMMON_cc_immune"]       = "• Immune to CC"
+L["COMMON_strats_soon"]     = "Strategy notes coming soon."
+L["COMMON_dungeon_buffs"]   = "Dungeon Buffs"
 
 -------------------------------------------------------------------------------
 -- Midnight — Legacy Dungeons (S1)
@@ -257,7 +259,6 @@ L["DN_name"]              = "Den of Nalorakk"
 L["DN_intro_label"]       = "Introduction"
 L["DN_intro_desc1"]       = "Den of Nalorakk — New dungeon, Midnight Season 2."
 L["DN_intro_desc2"]       = "3 bosses: The Hoardmonger -> Sentinel of Winter -> Nalorakk."
-L["DN_incense_label"]     = "Warding Incense"
 L["DN_incense_desc"]      = "A Warding Incense brazier is located near the dungeon entrance."
 L["DN_buff_alchemy_desc"] = "Midnight Alchemists (skill 25) and Bear Form Druids can burn incense: +1% Versatility for 10 minutes for the whole party."
 -- Notable Trash
@@ -510,3 +511,15 @@ L["MR_name"]              = "Murder Row"
 
 -- Voidscar Arena (VA)
 L["VA_name"]              = "Voidscar Arena"
+
+-- Altar of Fangs (AF) — Midnight S2
+L["AF_name"]              = "Altar of Fangs"
+
+-- Kings' Rest (KR) — Legacy (BfA)
+L["KR_name"]              = "Kings' Rest"
+
+-- Ruby Life Pools (RLP) — Legacy (Dragonflight)
+L["RLP_name"]             = "Ruby Life Pools"
+
+-- Temple of Sethraliss (TOS) — Legacy (BfA)
+L["TOS_name"]             = "Temple of Sethraliss"

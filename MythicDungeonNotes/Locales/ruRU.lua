@@ -8,7 +8,7 @@ L["GUIDE_back_btn"]         = "Назад к списку"
 L["GUIDE_coming_soon"]      = "(Скоро)"
 L["GUIDE_wip"]              = "Руководство для этого подземелья пишется."
 L["GUIDE_s1_header"]        = "Подземелья 'Полночи' - 1-й сезон"
-L["GUIDE_other_dungeons"]   = "Другие подземелья"
+L["GUIDE_s2_header"]        = "Подземелья 'Полночи' - 2-й сезон"
 L["GUIDE_tooltip_click"]    = "ЛКМ: открыть/закрыть"
 L["GUIDE_tooltip_drag"]     = "Перетаскивание: переместить кнопку"
 L["GUIDE_vignette_tooltip"] = "Открыть руководство по подземелью"
@@ -43,6 +43,8 @@ L["ABOUT_url_popup_text"]     = "Скопируйте этот URL с помощ
 L["COMMON_intro_label"]       = "Введение"
 L["COMMON_notable_trash"]     = "Важный трэш"
 L["COMMON_cc_immune"]         = "• Иммунитет к контролю"
+L["COMMON_strats_soon"]       = "Заметки по тактике скоро появятся."
+L["COMMON_dungeon_buffs"]     = "Усиления подземелья"
 
 -------------------------------------------------------------------------------
 -- Midnight — Legacy Dungeons (S1)
@@ -258,7 +260,6 @@ L["DN_name"]              = "Берлога Налоракка"
 L["DN_intro_label"]       = "Введение"
 L["DN_intro_desc1"]       = "Берлога Налоракка - новое подземелье, 2-й сезон 'Полночи'."
 L["DN_intro_desc2"]       = "3 босса: Прозапасник -> Часовой зимы -> Налоракк."
-L["DN_incense_label"]     = "Оберегающее благовоние"
 L["DN_incense_desc"]      = "Оберегающее благовоние расположено у входа в подземелье."
 L["DN_buff_alchemy_desc"] = "Алхимия 'Полночи' (навык 25) и друиды в форме медведя могут зажечь благовония: +1% универсальности для всей группы на 10 минут."
 -- Notable Trash
@@ -511,3 +512,15 @@ L["MR_name"]              = "Закоулок душегубов"
 
 -- Voidscar Arena (VA)
 L["VA_name"]              = "Арена Шрама Бездны"
+
+-- Altar of Fangs (AF) — Midnight S2
+L["AF_name"]              = "Алтарь Клыков"
+
+-- Kings' Rest (KR) — Legacy (BfA)
+L["KR_name"]              = "Покои королей"
+
+-- Ruby Life Pools (RLP) — Legacy (Dragonflight)
+L["RLP_name"]             = "Рубиновые заводи жизни"
+
+-- Temple of Sethraliss (TOS) — Legacy (BfA)
+L["TOS_name"]             = "Храм Сетралисса"

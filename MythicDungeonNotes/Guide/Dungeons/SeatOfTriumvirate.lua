@@ -27,6 +27,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Introduction ──────────────────────────────────────────────────
         {
             name = L["COMMON_intro_label"],
+            instanceID = 945,
             icon = "interface/lfgframe/ui-lfg-background-seatofthetriumvirate",
             htmlContent = table.concat({
                 p(L["SOT_intro_desc1"]),
@@ -55,6 +56,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 1 : Zuraal the Ascended ──────────────────────────────────
         {
             name = L["SOT_boss1_name"],
+            encounterID = 1979,
             icon = "interface/encounterjournal/ui-ej-boss-zuraaltheascended",
             htmlContent = table.concat({
                 h1(L["SOT_boss1_name"]),
@@ -65,6 +67,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 2 : Saprish ──────────────────────────────────────────────
         {
             name = L["SOT_boss2_name"],
+            encounterID = 1980,
             icon = "interface/encounterjournal/ui-ej-boss-saprish",
             htmlContent = table.concat({
                 h1(L["SOT_boss2_name"]),
@@ -75,6 +78,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 3 : Viceroy Nezhar ───────────────────────────────────────
         {
             name = L["SOT_boss3_name"],
+            encounterID = 1981,
             icon = "interface/encounterjournal/ui-ej-boss-viceroynezhar",
             htmlContent = table.concat({
                 h1(L["SOT_boss3_name"]),
@@ -85,6 +89,7 @@ ns.guideData[#ns.guideData + 1] = {
         -- ── Boss 4 : L'ura ────────────────────────────────────────────────
         {
             name = L["SOT_boss4_name"],
+            encounterID = 1982,
             icon = "interface/encounterjournal/ui-ej-boss-lura-midnight",
             htmlContent = table.concat({
                 h1(L["SOT_boss4_name"]),
