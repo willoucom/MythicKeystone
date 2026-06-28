@@ -44,7 +44,7 @@ L["COMMON_intro_label"]       = "Введение"
 L["COMMON_notable_trash"]     = "Важный трэш"
 L["COMMON_cc_immune"]         = "• Иммунитет к контролю"
 L["COMMON_strats_soon"]       = "Заметки по тактике скоро появятся."
-L["COMMON_dungeon_buffs"]     = "Усиления подземелья"
+L["COMMON_dungeon_buffs"]     = "Баффы подземелья"
 
 -------------------------------------------------------------------------------
 -- Midnight — Legacy Dungeons (S1)
@@ -517,10 +517,10 @@ L["VA_name"]              = "Арена Шрама Бездны"
 L["AF_name"]              = "Алтарь Клыков"
 
 -- Kings' Rest (KR) — Legacy (BfA)
-L["KR_name"]              = "Покои королей"
+L["KR_name"]              = "Гробница королей"
 
 -- Ruby Life Pools (RLP) — Legacy (Dragonflight)
-L["RLP_name"]             = "Рубиновые заводи жизни"
+L["RLP_name"]             = "Рубиновые Омуты Жизни"
 
 -- Temple of Sethraliss (TOS) — Legacy (BfA)
-L["TOS_name"]             = "Храм Сетралисса"
+L["TOS_name"]             = "Храм Сетралисс"
