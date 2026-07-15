@@ -47,6 +47,32 @@ Two addon-message prefixes are used:
   `"<mapID>:<level>:<class>:<fullname>:<mplus_score>"`. The 5th field is
   optional (older 4-field messages are still accepted).
 
+### Class on `GUILD` comes from the roster, not the wire
+
+`LibKS` carries no class at all, and the `<class>` field of the `MythicKeystone`
+payload is **ignored on `GUILD`**. Both receivers instead read it from the guild
+club roster (`C_Club.GetGuildClubId` → `GetClubMembers` → `GetMemberInfo().classID`
+→ `C_CreatureInfo.GetClassInfo`), the source Blizzard's own guild roster UI uses.
+It covers offline members, so nothing has to travel on the wire.
+
+The roster is asynchronous — `C_GuildInfo.GuildRoster()` only requests it — so
+keystones arriving before it is ready are backfilled on `GUILD_ROSTER_UPDATE`.
+Name matching is deliberate: the roster returns same-realm members bare
+(`Arkama`) and connected-realm ones suffixed (`Bob-OtherRealm`), so bare names
+get our realm appended rather than suffixed names being stripped — a short key
+would collide between two members sharing a name across connected realms.
+
+The `<class>` field is still *emitted* so that peers on older builds keep their
+class colours. A future sunset will emit it empty (`525:12::Name-Realm:2500`);
+the field itself stays in the format forever. Removing it would shift `fullname`
+into slot 3, and an old client would then read `class="Name-Realm"` and
+`fullname="2500"`, creating a junk entry — the empty field costs one byte and
+avoids that entirely.
+
+Note that `Alts` entries keep a **stored** class on purpose: an alt may be
+guildless or in another guild, and no API reports the class of a character you
+are not logged in on, so the capture made while playing it is the only source.
+
 **Legacy compatibility (sunset 2026-07-15, done):** LMK clients prior to 2026-05
 only spoke the `MythicKeystone` prefix on both `PARTY` and `GUILD`, with the
 4-field form and the `requestPartyKeystone` / `requestGuildKeystone` request
