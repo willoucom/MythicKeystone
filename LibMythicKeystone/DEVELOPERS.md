@@ -47,13 +47,14 @@ Two addon-message prefixes are used:
   `"<mapID>:<level>:<class>:<fullname>:<mplus_score>"`. The 5th field is
   optional (older 4-field messages are still accepted).
 
-**Legacy compatibility (sunset 2026-07-15):** LMK clients prior to 2026-05 only
-spoke the `MythicKeystone` prefix on both `PARTY` and `GUILD`, with the 4-field
-form and the `requestPartyKeystone` / `requestGuildKeystone` request messages.
-The current code keeps a bilingual receiver permanently and an opt-out emitter
-controlled by `Addon.legacyWire` (default on, toggle via `/lmk legacy on|off`).
-On sunset the LEGACY EMITTER block in `LibMythicKeystone.lua` can be removed
-together with the legacy request keywords in `OnLegacyReceived`.
+**Legacy compatibility (sunset 2026-07-15, done):** LMK clients prior to 2026-05
+only spoke the `MythicKeystone` prefix on both `PARTY` and `GUILD`, with the
+4-field form and the `requestPartyKeystone` / `requestGuildKeystone` request
+messages. The emitter for that protocol was removed on the sunset date, along
+with the `Addon.legacyWire` option and the `/lmk legacy` command; LibKeystone is
+the wire for the active character. Reception remains tolerant — `PARTY` payloads
+and 4-field messages are still accepted — which costs nothing and keeps data
+flowing from any peer still on an old build.
 
 Two reception sources also exist purely for interop with other addons:
 
@@ -70,7 +71,7 @@ details.
 
 - `/lmk debug` — toggle the debug panel (no reload required)
 - `/lmk help` — list all slash commands (show, broadcast, reset, fake,
-  wipefakes, dryrun, legacy, log, …)
+  wipefakes, dryrun, log, …)
 
 State is persisted in `LibMythicKeystoneDB.options`.
 
