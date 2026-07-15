@@ -142,6 +142,11 @@ function Addon.getKeystone()
     -- save in database
     if keystoneLevel > 0 and realm then
         -- save in alts
+        -- Keep ["class"] stored here. Guild members can be looked up on the
+        -- roster, but an alt may be guildless or in another guild, and no API
+        -- reports the class of a character you are not logged in on. This
+        -- capture is the only source for those alts — dropping it loses their
+        -- class colour for good, until each one is logged in again.
         LibMythicKeystoneDB['Alts'][player] = Addon.Mykey
         -- save in guild
         if GuildName ~= "none" then
@@ -205,6 +210,114 @@ end
 -- incoming data into our tables, and (b) call LKS.Request to seed the player list when
 -- the group/guild state changes.
 
+--
+-- Guild member classes
+--
+-- LibKeystone carries no class, so guild entries fed by it would have no class
+-- colour. The class is already on the client for every guild member, online or
+-- offline, via the guild club roster — the same source Blizzard's own guild
+-- roster UI reads. Looking it up here means the class never has to travel on
+-- the wire.
+--
+-- The roster is asynchronous: C_GuildInfo.GuildRoster() only *requests* it, and
+-- the data lands on GUILD_ROSTER_UPDATE. Keystones can therefore arrive before
+-- the roster is ready, so misses are backfilled when the roster shows up.
+
+local guildClassCache = {}
+local rosterRequestedAt = 0
+
+local function RequestGuildRoster()
+    -- Blizzard throttles the request to roughly once per 10s; stay under it.
+    local now = GetTime()
+    if now - rosterRequestedAt < 10 then return end
+    rosterRequestedAt = now
+    C_GuildInfo.GuildRoster()
+end
+
+local function CacheGuildClasses()
+    local clubId = C_Club.GetGuildClubId()
+    if not clubId then return false end
+    local memberIds = C_Club.GetClubMembers(clubId)
+    if not memberIds or #memberIds == 0 then return false end
+
+    local myRealm = GetNormalizedRealmName()
+    wipe(guildClassCache)
+    for _, memberId in ipairs(memberIds) do
+        local info = C_Club.GetMemberInfo(clubId, memberId)
+        if info and info.name and info.classID then
+            local classInfo = C_CreatureInfo.GetClassInfo(info.classID)
+            if classInfo and classInfo.classFile then
+                -- The roster returns same-realm members bare ("Arkama") and
+                -- connected-realm ones suffixed ("Bob-OtherRealm"), while our
+                -- stored names are always "name-realm". Add the suffix to bare
+                -- names rather than stripping it from the others: two members
+                -- can share a name across connected realms, so a short key
+                -- would collide and hand one of them the wrong class.
+                guildClassCache[info.name] = classInfo.classFile
+                if myRealm and not string.find(info.name, "-", 1, true) then
+                    guildClassCache[info.name .. "-" .. myRealm] = classInfo.classFile
+                end
+            end
+        end
+    end
+    return true
+end
+
+local function GuildClassOf(fullname, name)
+    return guildClassCache[fullname] or (name and guildClassCache[name])
+end
+
+local function BackfillGuildClasses()
+    local guildName = GetGuildInfo("player")
+    if not guildName then return end
+    local members = LibMythicKeystoneDB and LibMythicKeystoneDB['Guilds']
+        and LibMythicKeystoneDB['Guilds'][guildName]
+    if not members then return end
+
+    -- GUILD_ROSTER_UPDATE fires often; walking the stored keys is cheap, but
+    -- rebuilding the cache means a GetMemberInfo call per guild member. Only
+    -- pay for it when something is actually missing a class.
+    local missing = false
+    for _, entry in pairs(members) do
+        if not entry["class"] or entry["class"] == "" then
+            missing = true
+            break
+        end
+    end
+    if not missing then return end
+    if not CacheGuildClasses() then return end
+
+    for fullname, entry in pairs(members) do
+        if not entry["class"] or entry["class"] == "" then
+            local class = GuildClassOf(fullname, (strsplit("-", fullname)))
+            if class then entry["class"] = class end
+        end
+    end
+end
+
+-- Fills entry["class"] from the roster, or asks for the roster and lets
+-- GUILD_ROSTER_UPDATE backfill it later.
+local function ApplyGuildClass(entry, fullname, name)
+    if entry["class"] and entry["class"] ~= "" then return end
+    local class = GuildClassOf(fullname, name)
+    if not class and CacheGuildClasses() then
+        class = GuildClassOf(fullname, name)
+    end
+    if class then
+        entry["class"] = class
+    else
+        RequestGuildRoster()
+    end
+end
+
+local rosterListener = CreateFrame("Frame")
+rosterListener:RegisterEvent("GUILD_ROSTER_UPDATE")
+rosterListener:SetScript("OnEvent", BackfillGuildClasses)
+
+--
+-- LibKeystone callback
+--
+
 local function OnKeystoneReceived(keyLevel, keyMap, playerRating, playerName, channel)
     if not keyLevel or not keyMap or keyLevel <= 0 or keyMap <= 0 then return end
 
@@ -243,6 +356,7 @@ local function OnKeystoneReceived(keyLevel, keyMap, playerRating, playerName, ch
         if playerRating and playerRating > 0 then
             entry["mplus_score"] = playerRating
         end
+        ApplyGuildClass(entry, fullname, name)
     end
 end
 
@@ -341,9 +455,13 @@ local function OnMythicKeystoneReceived(message, channel)
         entry["guild"] = guildName
         entry["current_key"] = keyNum
         entry["current_keylevel"] = levelNum
-        if class and class ~= "" then entry["class"] = class end
         if score and score > 0 then entry["mplus_score"] = score end
         entry["week"] = Addon.GetWeek()
+        -- The class field on the wire is deliberately ignored here: guild
+        -- members are on the roster, which is authoritative and costs nothing.
+        -- Senders still fill it for older peers; it will be emitted empty on
+        -- the next sunset.
+        ApplyGuildClass(entry, fullname, name)
     end
 end
 
