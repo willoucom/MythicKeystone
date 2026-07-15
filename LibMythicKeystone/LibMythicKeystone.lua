@@ -251,25 +251,16 @@ LKS.Register(Addon, OnKeystoneReceived)
 --
 -- "MythicKeystone" wire protocol (LMK-specific, on top of LibKeystone)
 --
--- Used for two things:
---   1. Offline-alts broadcast on GUILD with format
---      "<mapID>:<level>:<class>:<fullname>[:<mplus_score>]"
---      LibKeystone only carries the currently-logged-in character; this fills
---      the gap for alts that share the player's guild.
---   2. ======= LEGACY COMPAT — REMOVAL TARGET: 2026-07-15 =======
---      The same prefix used to carry the *active* character's broadcast on
---      both PARTY and GUILD, with the 4-field form
---      "<mapID>:<level>:<class>:<fullname>" and the request messages
---      "requestPartyKeystone" / "requestGuildKeystone".
---      LibKeystone replaced this for new clients, but pre-2026-05 LMK clients
---      still speak only this protocol. Until enough peers have upgraded, we:
---        - keep receiving on both channels (permanent — defensive, near-zero
---          cost)
---        - keep emitting the active character on both channels when
---          Addon.legacyWire is true (toggle via `/lmk legacy on|off`,
---          persisted in options.legacyWire, default true).
---      When the sunset date passes, delete the LEGACY EMITTER block and the
---      legacy request keywords from the receiver dispatch.
+-- Carries the offline-alts broadcast on GUILD with format
+-- "<mapID>:<level>:<class>:<fullname>[:<mplus_score>]". LibKeystone only
+-- carries the currently-logged-in character; this fills the gap for alts that
+-- share the player's guild.
+--
+-- Reception stays deliberately tolerant: pre-2026-05 clients emitted the
+-- *active* character on this prefix on both PARTY and GUILD with the 4-field
+-- form, so PARTY payloads and 4-field messages are still accepted. That is
+-- defensive and near-zero cost. The matching emitter was removed on the
+-- 2026-07-15 sunset; LibKeystone is the wire for the active character.
 --
 
 function Addon.sendAltsToGuild()
@@ -306,60 +297,10 @@ function Addon.requestGuildAlts()
     CTL:SendAddonMessage("NORMAL", Addon.ShortName, "requestGuildAlts", "GUILD")
 end
 
--- ====== LEGACY EMITTER (remove with the surrounding block on sunset) ======
-
-local function sendOnLegacy(channel, payload)
-    if Addon.dryrun then
-        if Addon.DebugLogDryRun then Addon.DebugLogDryRun(Addon.ShortName, channel, payload) end
-    else
-        CTL:SendAddonMessage("NORMAL", Addon.ShortName, payload, channel)
-    end
-end
-
-function Addon.sendLegacyActiveKeystone()
-    if not Addon.legacyWire then return end
-    local m = Addon.Mykey
-    if not m or not m.current_key or tonumber(m.current_key) == 0 then return end
-    if not m.fullname or m.fullname == "" then return end
-    local payload = string.format("%s:%s:%s:%s",
-        tostring(m.current_key), tostring(m.current_keylevel or 0),
-        m.class or "", m.fullname)
-    if IsInGroup(LE_PARTY_CATEGORY_HOME) and not IsInRaid() then
-        sendOnLegacy("PARTY", payload)
-    end
-    if IsInGuild() then
-        sendOnLegacy("GUILD", payload)
-    end
-end
-
-function Addon.requestLegacyKeystone()
-    if not Addon.legacyWire then return end
-    if IsInGroup(LE_PARTY_CATEGORY_HOME) and not IsInRaid() then
-        sendOnLegacy("PARTY", "requestPartyKeystone")
-    end
-    if IsInGuild() then
-        sendOnLegacy("GUILD", "requestGuildKeystone")
-    end
-end
-
--- ====== END LEGACY EMITTER ======
-
-local function OnLegacyReceived(message, channel)
+local function OnMythicKeystoneReceived(message, channel)
     -- Request keywords
     if message == "requestGuildAlts" then
         if channel == "GUILD" then Addon.sendAltsToGuild() end
-        return
-    end
-    -- LEGACY: requests from pre-2026-05 clients
-    if message == "requestPartyKeystone" then
-        if channel == "PARTY" then Addon.sendLegacyActiveKeystone() end
-        return
-    end
-    if message == "requestGuildKeystone" then
-        if channel == "GUILD" then
-            Addon.sendLegacyActiveKeystone()
-            Addon.sendAltsToGuild()
-        end
         return
     end
 
@@ -408,11 +349,11 @@ end
 
 C_ChatInfo.RegisterAddonMessagePrefix(Addon.ShortName)
 
-local legacyListener = CreateFrame("Frame")
-legacyListener:RegisterEvent("CHAT_MSG_ADDON")
-legacyListener:SetScript("OnEvent", function(_, _, prefix, message, channel)
+local mkListener = CreateFrame("Frame")
+mkListener:RegisterEvent("CHAT_MSG_ADDON")
+mkListener:SetScript("OnEvent", function(_, _, prefix, message, channel)
     if prefix == Addon.ShortName then
-        OnLegacyReceived(message, channel)
+        OnMythicKeystoneReceived(message, channel)
     end
 end)
 
@@ -437,10 +378,6 @@ LibMythicKeystoneFrames["SendkeyEvent"]:SetScript("OnEvent", function()
         LKS.Request("GUILD")
         Addon.sendAltsToGuild()
         Addon.requestGuildAlts()
-        -- LEGACY COMPAT (remove on sunset): broadcast active char on the old
-        -- MythicKeystone prefix and request keys from old peers.
-        Addon.sendLegacyActiveKeystone()
-        Addon.requestLegacyKeystone()
     end)
 end)
 

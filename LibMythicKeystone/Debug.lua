@@ -724,7 +724,6 @@ function Addon.UpdateDebugStatus()
     end
     local flags = ""
     if Addon.dryrun then flags = flags .. "   |cffff8844[DRY-RUN]|r" end
-    if not Addon.legacyWire then flags = flags .. "   |cffff8844[LEGACY OFF]|r" end
     panel.statusText:SetText(string.format(
         "Week %d  |  Key %d:%d  |  Score %d   ||   Party %d  |  Alts %d  |  Guild[%s] %d   ||   TX %d  RX %d  DRY %d%s",
         week, key, level, score, partyN, altsN, guild, guildN, tx, rx, dry, flags))
@@ -761,7 +760,6 @@ boot:RegisterEvent("PLAYER_LOGIN")
 boot:SetScript("OnEvent", function(self)
     self:UnregisterEvent("PLAYER_LOGIN")
     Addon.dryrun = GetOption("dryrun", false) and true or false
-    Addon.legacyWire = GetOption("legacyWire", true) and true or false
     if GetOption("debug", false) then Addon.ShowDebug() end
 end)
 
@@ -786,7 +784,6 @@ local function PrintHelp()
     print("  /lmk fake <party|alt|guild>")
     print("  /lmk wipefakes        remove all _fake entries")
     print("  /lmk dryrun on|off    block outgoing TX (log as DRY)")
-    print("  /lmk legacy on|off    toggle legacy MythicKeystone wire compat")
     print("  /lmk log on|off|clear")
 end
 
@@ -892,13 +889,6 @@ SlashCmdList["LMK"] = function(msg)
         elseif rest == "off" then SetOption("commLogOn", false); print("|cff66ff66LMK:|r comm log OFF.")
         elseif rest == "clear" then wipe(commBuffer); print("|cff66ff66LMK:|r comm log cleared.")
         else print("|cffff5555LMK:|r usage: /lmk log <on|off|clear>") end
-        return
-    end
-
-    if cmd == "legacy" then
-        if rest == "on" then Addon.legacyWire = true; SetOption("legacyWire", true); print("|cff66ff66LMK:|r legacy wire ON.")
-        elseif rest == "off" then Addon.legacyWire = false; SetOption("legacyWire", false); print("|cffff8844LMK:|r legacy wire OFF.")
-        else print("|cffff5555LMK:|r usage: /lmk legacy <on|off>") end
         return
     end
 
